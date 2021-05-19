@@ -1,0 +1,58 @@
+@font-face{
+  font-family: "milan";
+  src: url(milan.ttf) format("truetype");
+}
+
+@font-face{
+  font-family: "milanbold";
+  src: url(milanbold.ttf) format("truetype");
+}
+
+
+img {
+  padding-top: 2px;
+  padding-right: 2px;
+  padding-bottom: 2px;
+  padding-left: 2px;
+
+}
+
+body {
+  background-color: var(--primary-color);
+  transition: all 300ms ease;
+}
+
+.doge {
+    justify-content: center;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+
+h1 {
+  color: var(--secondary-color);
+  font-family: "milan";
+  text-align: center;
+}
+
+#toggle {
+  border: none;
+	padding: 6px;
+  font-family: "milanbold";
+	outline: none;
+	font-size: 12px;
+	cursor: pointer;
+	color: var(--primary-color);
+	background-color: var(--secondary-color);
+	transition: all 100ms ease;
+  border-radius: 8px;
+}
+
+#toggle:hover {
+	opacity: 0.6;
+}
+
+#ursus {
+  display: block;
+}
