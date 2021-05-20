@@ -12,7 +12,7 @@ function notrickroll() {
 }
 
 
-Array.from(document.getElementsByClassName("dogey")).forEach(function(element) {
+Array.from(document.getElementsByClassName("dogeyy")).forEach(function(element) {
   element.addEventListener('click', douge);
 });
 
@@ -22,10 +22,18 @@ function douge() {
 
 
 function sussybaka() {
-  if (document.getElementById('ursus').value == 'why tf are you still here'){
+  if (document.getElementById('ursus').value == 'arebeingpleaseyou'){
     window.open('https://www.youtube.com/watch?v=Lrj2Hq7xqQ8', '_blank');
     document.getElementById('ursus').value = '';
   } else {
     document.getElementById('ursus').value = ''
   }
 }
+
+Array.from(document.getElementsByClassName("dоgeyy")).forEach(function(element) {
+  element.addEventListener('click', sussybaka);
+});
+
+Array.from(document.getElementsByClassName("tittle")).forEach(function(element) {
+  element.addEventListener('click', notrickroll);
+});
