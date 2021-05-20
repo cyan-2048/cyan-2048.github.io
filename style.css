@@ -30,13 +30,17 @@ body {
 }
 
 
+.doge > img {
+	width: auto;
+}
+
 h1 {
   color: var(--secondary-color);
   font-family: "milan";
   text-align: center;
 }
 
-#toggle {
+.bottombuttons {
   border: none;
 	padding: 6px;
   font-family: "milanbold";
@@ -49,10 +53,16 @@ h1 {
   border-radius: 8px;
 }
 
-#toggle:hover {
+.bottombuttons:hover {
 	opacity: 0.6;
 }
 
 #ursus {
   display: none;
+}
+
+.bottompart {
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
