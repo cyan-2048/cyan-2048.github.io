@@ -10,10 +10,8 @@
 
 
 img {
-  padding-top: 2px;
-  padding-right: 2px;
-  padding-bottom: 2px;
-  padding-left: 2px;
+  margin: 2px;
+
 
 }
 
@@ -33,6 +31,7 @@ body {
 .doge > img {
 	width: auto;
 	transition: all .5s ease;
+	border:none;
 }
 
 .doge > img:hover {
@@ -42,7 +41,9 @@ body {
    4px  4px 15px  ,
   -4px -4px 15px  ;
   color: var(--shadow-darken);
-  margin:    20px;
+  border: none;
+  padding: 0px;
+  margin: 20px
 }
 
 h1 {
@@ -78,3 +79,7 @@ h1 {
   align-content: center;
   justify-content: center;
 }
+
+
+
+
