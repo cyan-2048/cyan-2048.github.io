@@ -21,7 +21,7 @@ function sussybaka() {
 function groovity() {
     document.getElementById("imsuchanidiot").className = "nomoredoge";
     var u = document.createElement("script");
-    u.src = "https://cyan2048.web.fc2.com/gravity-autorun.js",
+    u.src = "gravity.js",
     document.body.appendChild(u)
     var e,
     t,
