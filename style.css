@@ -28,13 +28,13 @@ body {
 }
 
 
-.doge > img {
+.dogeyy {
 	width: auto;
 	transition: all .5s ease;
 	border:none;
 }
 
-.doge > img:hover {
+.dogeyy:hover {
   transform: scale(1.1);
   transition: all .6s ease;
   box-shadow: 
@@ -58,12 +58,15 @@ h1 {
 	margin: 10px;
   font-family: "milanbold";
 	outline: none;
+	text-align: center;
 	font-size: 12px;
 	cursor: pointer;
-	color: var(--primary-color);
-	background-color: var(--secondary-color);
+	color: var(--secondary-color);
+	background-color: rgba(0,0,0,0);
 	transition: all 100ms ease;
   border-radius: 8px;
+  display: inline-block;
+  align-content: center;
 }
 
 .bottombuttons:hover {
@@ -76,10 +79,18 @@ h1 {
 
 .bottompart {
   display: flex;
-  align-content: center;
   justify-content: center;
 }
 
 
+#datoneicon {
+	width:auto;
+	height: 16px;
+	background-image: var(--lazyafswitch);
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin-right: 5px;
+	margin-bottom: 2px;
+}
 
 

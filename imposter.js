@@ -3,7 +3,8 @@ const darkmode = new darken({
     variables: {
         "--primary-color": ["#ffffff", "#1f1f1f"],
         "--secondary-color": ["#000000", "#ffffff"],
-        "--shadow-darken": ["rgba(0, 0, 0, 0.4)", "rgba(255, 255, 255, 0.2)"]
+        "--shadow-darken": ["rgba(0, 0, 0, 0.4)", "rgba(255, 255, 255, 0.2)"],
+		"--lazyafswitch": ["url(iosoff.png)","url(ioson.png)"]
     }
 });
 function notrickroll() {
