@@ -28,13 +28,13 @@ body {
 }
 
 
-.dogeyy {
+.doge > img {
 	width: auto;
 	transition: all .5s ease;
 	border:none;
 }
 
-.dogeyy:hover {
+.doge > img:hover {
   transform: scale(1.1);
   transition: all .6s ease;
   box-shadow: 
@@ -43,7 +43,7 @@ body {
   color: var(--shadow-darken);
   border: none;
   padding: 0px;
-  margin: 20px
+  margin: 15px
 }
 
 h1 {
@@ -89,8 +89,10 @@ h1 {
 	background-image: var(--lazyafswitch);
 	background-repeat: no-repeat;
 	background-size: cover;
-	margin-right: 5px;
-	margin-bottom: 2px;
+	margin-bottom  : 0px !important ;
+	margin-left    : 0px !important ;
+	margin-top     : 0px !important ;
+	margin-right :5px !important;
 }
 
 
