@@ -57,5 +57,17 @@ function isitevenhidden() {
     }
 }
 
+function testlangpo() {
+	document.getElementById("testlangpo").innerHTML = "hahhahahaahahah";
+}
 
+function testnotdone() {
+  var x, i;
+  x = document.querySelectorAll(".dogeyy");
+  for (i = 0; i < x.length; i++) {
+  x[i].style.display = "none";}
+}
 
+window.addEventListener("load", myInit, true); function myInit(){
+isitevenhidden();
+};
