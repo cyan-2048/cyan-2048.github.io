@@ -42,18 +42,18 @@ Array.from(document.getElementsByClassName("dogeyy")).forEach(function (e) {
 });
 function hiddenSettings() {
     if (localStorage.getItem("secretbutton") == "shown") {
-        document.getElementById("ursus").style.display = "none";
+        document.getElementById("stopbeingveryverysus").style.display = "none";
         localStorage.setItem("secretbutton", "hidden")
     } else {
-        document.getElementById("ursus").style.display = "block";
+        document.getElementById("stopbeingveryverysus").style.display = "block";
         localStorage.setItem("secretbutton", "shown")
     }
 }
 function isitevenhidden() {
     if (localStorage.getItem("secretbutton") == "shown") {
-        document.getElementById("ursus").style.display = "block";
+        document.getElementById("stopbeingveryverysus").style.display = "block";
     } else {
-        document.getElementById("ursus").style.display = "none";
+        document.getElementById("stopbeingveryverysus").style.display = "none";
     }
 }
 
@@ -68,6 +68,6 @@ function testnotdone() {
   x[i].style.display = "none";}
 }
 
-window.addEventListener("load", myInit, true); function myInit(){
+window.addEventListener("load", ifthethingloads, true); function ifthethingloads(){
 isitevenhidden();
 };
