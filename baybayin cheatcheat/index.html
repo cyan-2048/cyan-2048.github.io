@@ -16,9 +16,9 @@ dumbdumb.innerHTML = dumbdumb.innerHTML.replace(/ᜀ/g,  'a')
 .replace(/ᜃ᜔/g,  'k')
 .replace(/ᜃᜒ/g,  randomChoice(["ki", "ke"]))
 .replace(/ᜃᜓ/g,  randomChoice(["ku", "ko"]))
-.replace(/ᜇ᜔/g,  'd')
-.replace(/ᜇᜒ/g,  randomChoice(["di", "de"]))
-.replace(/ᜇᜓ/g,  randomChoice(["do", "du"]))
+.replace(/ᜇ᜔/g,  randomChoice(["d", "r"]))
+.replace(/ᜇᜒ/g,  randomChoice(["di", "de", "re", "ri"]))
+.replace(/ᜇᜓ/g,  randomChoice(["do", "du", "ro", "ru"]))
 .replace(/ᜄ᜔/g,  'g')
 .replace(/ᜄᜒ/g,  randomChoice(["gi", "ge"]))
 .replace(/ᜄᜓ/g,  randomChoice(["gu", "go"]))
@@ -66,11 +66,15 @@ dumbdumb.innerHTML = dumbdumb.innerHTML.replace(/ᜏ/g,  'wa')
 .replace(/ᜎ/g,  'la')
 .replace(/ᜑ/g,  'ha')
 .replace(/ᜄ/g,  'ga')
-.replace(/ᜇ/g,  'da')
+.replace(/ᜇ/g,  randomChoice(["da", "ra"]))
 .replace(/ᜃ/g,  'ka')
 .replace(/ᜊ/g,  'ba')
 .replace(/ᜅ/g,  'nga');
 };
+
+tets();
+
+function tets(){dumbdumb.innerHTML = dumbdumb.innerHTML.replace(/\smanga\s/g,  ' mga ')};
 
 }
 function wachuknow() {
