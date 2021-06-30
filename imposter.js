@@ -20,18 +20,19 @@ function sussybaka() {
     "dogedogedogeyouarebeingsusushouldgoawaypleasejustGostOpreadingthisstopit" == document.getElementById("ursus").value ? (window.location.href = "/bonk-it.jpg", document.getElementById("ursus").value = "") : document.getElementById("ursus").value = ""
 }
 function groovity() {
-    document.getElementById("imsuchanidiot").className = "nomoredoge";
+	if( /Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		 alert("this doesn't work well on a phone sorry....");
+	} else {
+	document.getElementById("imsuchanidiot").className = "nomoredoge";
     var u = document.createElement("script");
     u.src = "gravity.js",
     document.body.appendChild(u)
-    var e,
-    t,
-    o,
-    n;
-    for (e = document.querySelectorAll(".dogeyy"), t = 0; t < e.length; t++)
-        e[t].style.width = "auto", e[t].style.height = "150px";
-    for (o = document.querySelectorAll(".dоgeyy"), n = 0; n < o.length; n++)
-        o[n].style.width = "auto", o[n].style.height = "150px";
+	var z = document.getElementById("imsuchanidiot").getElementsByTagName("img");
+	var f;
+	for (f = 0; f < z.length; f++) {
+		z[f].style.width = "auto", z[f].style.height = "150px";
+	}
+  }
 }
 Array.from(document.getElementsByClassName("dogeyy")).forEach(function (e) {
     e.addEventListener("click", douge)
@@ -70,4 +71,19 @@ function testnotdone() {
 
 window.addEventListener("load", ifthethingloads, true); function ifthethingloads(){
 isitevenhidden();
+lazyTooltips();
 };
+
+
+
+function lazyTooltips() {
+  var y = document.getElementById("imsuchanidiot").getElementsByTagName("img");
+  var i;
+  for (i = 0; i < y.length; i++) {
+  var v = y[i].getAttribute("alt");
+  var att = document.createAttribute("title");
+  att.value = v;
+  y[i].setAttributeNode(att);
+	}
+}
+
