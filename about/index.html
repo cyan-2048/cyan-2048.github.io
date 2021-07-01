@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8">
+<title>garbage about page</title>
+<link rel="shortcut icon" type="image/jpg" href="cheems.png"/>
+<meta name="description" content="things about me, nah it's just links to my social media crap(basically a rip off of Ven's website)">
+<meta name="viewport" content="width=360, initial-scale=1">
+</head>
+
+
+<div id="hibs">
+	<div id="lebox">
+		<h2>Hewo!</h2><p>yeah hi i'm Cyan... I like procrastinating and my website making skills are horrible.</p><p>Hewo!</p><p>Hewo!</p><p>Hewo!</p>
+	</div>
+</div>
+
+<style>
+:root {
+  --back: url(marble.jpeg);
+ }
+
+body {
+  background: var(--back) 0 / cover fixed;
+	object-fit: cover;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#lebox {
+  position: relative;
+  margin: auto;
+  min-width: 40%;
+  min-height: 10%;
+  overflow: hidden;
+  padding: 20px 40px;
+  background-color: rgba(22,22,22, 0.2);
+  color: rgb(255,255,255);
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px rgba(2, 2, 2, 0.3);
+}
+
+#lebox:hover {
+}
+
+#lebox::before {
+  background: var(--back) 0 / cover fixed;
+  background-size: 100vw auto;
+  filter: blur(10px);
+  content: "";
+  position: absolute;
+  left: -20px;
+    right  : -20px;
+  bottom : -20px;
+  top: -20px;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  z-index: -1;
+}
+
+#lebox::after {
+  content: "";
+  position: absolute;
+  left: 0;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-color: rgba(22,22,22, 0.4)
+}
+
+
+#hibs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+
+@font-face {
+font-family: "kaiosemojis";
+src: url(KaiOSEmoji.ttf) format("truetype");
+}
+
+h2 {
+font-family: "milan";
+}
+
+p {
+font-family: "milan";
+font-size: "16px"
+}
+
+@font-face{
+  font-family: "milan";
+  src: url(../milan.ttf) format("truetype");
+}
+
+@font-face{
+  font-family: "milanbold";
+  src: url(../milanbold.ttf) format("truetype");
+}
+
+</style>
