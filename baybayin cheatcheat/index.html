@@ -1,11 +1,25 @@
-<p id="wachuchuchu" >NgaNga nga</p>
-<input id="wachuknowboutrollingdowninthedeep" ></input>
-<button onclick="wachuknow()" >hewo</button>
+
+<textarea  id="baybayinhere" ></textarea>
+<textarea  id="baybayinoutput" ></textarea>
+<!-- <button onclick="baybayinConvert()" >hewo</button> -->
+
+<div class="keybbn" name="Baybayin Keyboard">
+<button>ᜃ</button><button>ᜄ</button><button>ᜅ</button><button id="vowels" disabled=true >ᜒ</button><button>ᜆ</button><button>ᜇ</button><button>ᜈ</button><br>
+<button>ᜉ</button><button>ᜊ</button><button>ᜋ</button><button id="vowels" disabled=true >ᜓ</button><button>ᜌ</button><button>ᜎ</button><button>ᜏ</button><br>
+<button>ᜀ</button><button>ᜁ</button><button>ᜂ</button><button id="vowels" disabled=true >᜔</button><button>ᜐ</button><button>ᜑ</button><button>⌫</button><br>
+<button id="symbols" >᜵</button><button id="spacebar" >␣</button><button id="symbols" >᜶</button>
+</div>
+
+
+
+
 <script>
-var  dumbdumb = document.getElementById("wachuchuchu")
+document.getElementById("baybayinoutput").disabled = true;
+
+var  dumbdumb = document.getElementById("baybayinoutput")
 function baybayincheater() {
 
-dumbdumb.innerHTML = dumbdumb.innerHTML.replace(/ᜀ/g,  'a')
+dumbdumb.value = dumbdumb.value.replace(/ᜀ/g,  'a')
 .replace(/ᜁ/g,  'i')
 .replace(/ᜂ/g,  'o')
 .replace(/᜵/g,  ',')
@@ -56,7 +70,7 @@ dumbdumb.innerHTML = dumbdumb.innerHTML.replace(/ᜀ/g,  'a')
 aaaaaaaa();
 
 function aaaaaaaa(){
-dumbdumb.innerHTML = dumbdumb.innerHTML.replace(/ᜏ/g,  'wa')
+dumbdumb.value = dumbdumb.value.replace(/ᜏ/g,  'wa')
 .replace(/ᜌ/g,  'ya')
 .replace(/ᜆ/g,  'ta')
 .replace(/ᜐ/g,  'sa')
@@ -74,12 +88,12 @@ dumbdumb.innerHTML = dumbdumb.innerHTML.replace(/ᜏ/g,  'wa')
 
 tets();
 
-function tets(){dumbdumb.innerHTML = dumbdumb.innerHTML.replace(/\smanga\s/g,  ' mga ')};
+function tets(){dumbdumb.value = dumbdumb.value.replace(/\smanga\s/g,  ' mga ')};
 
 }
-function wachuknow() {
-var vts = document.getElementById("wachuknowboutrollingdowninthedeep").value;
-dumbdumb.innerHTML = vts
+function baybayinConvert() {
+var vts = document.getElementById("baybayinhere").value;
+dumbdumb.value = vts
 };
 
 function randomChoice(myArray) {
@@ -87,8 +101,8 @@ function randomChoice(myArray) {
 	return myArray[r];
 }
 
-document.getElementById("wachuknowboutrollingdowninthedeep").addEventListener('input', wachuknow, true);
-document.getElementById("wachuknowboutrollingdowninthedeep").addEventListener('input', baybayincheater, true);
+document.getElementById("baybayinhere").addEventListener('input', baybayinConvert, true);
+document.getElementById("baybayinhere").addEventListener('input', baybayincheater, true);
 
 </script>
 
@@ -100,6 +114,76 @@ document.getElementById("wachuknowboutrollingdowninthedeep").addEventListener('i
 
 body {
    font-family: baybayin
+}
+
+#baybayinhere {
+	font-size: 16px;
+	font-family : baybayin;
+	border : 2px solid #ccc;
+	overflow : auto;
+	resize : none;
+	display: inline-block;
+	width: 49%;
+	height : 40%;
+	margin: 0px;
+}
+
+#baybayinoutput {
+	font-size: 16px;
+	font-family : baybayin;
+	border : 2px solid #ccc;
+	overflow : auto;
+	resize : none;
+	display: inline-block;
+	width: 49%;
+	height : 40%;
+	margin: 0px;
+}
+
+textarea:disabled {
+  background: white;
+  color: black;
+}
+
+.keybbn button {
+	transition: all .1s ease;
+	width:40px;
+	height:40px;
+	font-size:17px;
+	paddin: 0px;
+	margin: 2px; 
+	border: 1px solid rgba(0,0,0,0.4);
+	border-radius: 2px;
+}
+
+.keybbn button:hover {
+    border: 1px solid rgb(0,0,0);
+	border-radius: 3px;
+}
+
+.keybbn button:active {
+    border: 1px solid rgb(0,0,0);
+	border-radius: 9px;
+}
+
+.keybbn button[disabled=true]:hover {
+    border: 1px solid rgba(0,0,0,0.4) !important;
+	border-radius: 0px !important;
+}
+
+.keybbn button[disabled=true]:active {
+    border: 1px solid rgba(0,0,0,0.4) !important;
+	border-radius: 0px !important;
+}
+
+.keybbn button#spacebar {
+    width: 128px;
+	height: 40px;
+}
+
+.keybbn button#symbols {
+    width: 84px;
+	height: 40px;
 }
 
 </style>
