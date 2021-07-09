@@ -1,12 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8">
+<title>Cyan's garbage website</title>
+<link rel="shortcut icon" type="image/jpg" href="favicon.png"/>
+<link rel="stylesheet" href=style.css>
+<meta name="description" content="my website i made from scratch">
+<meta name="viewport" content="width=480, initial-scale=1">
+</head>
 
 <textarea  id="baybayinhere" ></textarea>
 <textarea  id="baybayinoutput" ></textarea>
 <!-- <button onclick="baybayinConvert()" >hewo</button> -->
 
-<div class="keybbn" name="Baybayin Keyboard">
-<button>ᜃ</button><button>ᜄ</button><button>ᜅ</button><button id="vowels" disabled=true >ᜒ</button><button>ᜆ</button><button>ᜇ</button><button>ᜈ</button><br>
-<button>ᜉ</button><button>ᜊ</button><button>ᜋ</button><button id="vowels" disabled=true >ᜓ</button><button>ᜌ</button><button>ᜎ</button><button>ᜏ</button><br>
-<button>ᜀ</button><button>ᜁ</button><button>ᜂ</button><button id="vowels" disabled=true >᜔</button><button>ᜐ</button><button>ᜑ</button><button>⌫</button><br>
+<div class="keybbn" phone="false" name="Baybayin Keyboard">
+<button id="alpabet" >ᜃ</button><button id="alpabet" >ᜄ</button><button id="alpabet" >ᜅ</button><button id="vowels" disabled="true" >ᜒ</button><button id="alpabet" >ᜆ</button><button id="alpabet" >ᜇ</button><button id="alpabet" >ᜈ</button><br>
+<button id="alpabet" >ᜉ</button><button id="alpabet" >ᜊ</button><button id="alpabet" >ᜋ</button><button id="vowels" disabled="true" >ᜓ</button><button id="alpabet" >ᜌ</button><button id="alpabet" >ᜎ</button><button id="alpabet" >ᜏ</button><br>
+<button >ᜀ</button><button>ᜁ</button><button>ᜂ</button><button id="vowels" disabled="true" >᜔</button><button id="alpabet" >ᜐ</button><button id="alpabet" >ᜑ</button><button>⌫</button><br>
 <button id="symbols" >᜵</button><button id="spacebar" >␣</button><button id="symbols" >᜶</button>
 </div>
 
@@ -14,6 +23,25 @@
 
 
 <script>
+var  vowels = document.getElementById("vowels");
+var  keybbn = document.getElementsByClassName("keybbn")[0];
+
+setInterval(useragentCheck,700)
+
+keybbn.setAttribute("phone", isMobile)
+
+function isMobile () {
+   // credit to Timothy Huang for this regex test:
+   // https://dev.to/timhuang/a-simple-way-to-detect-if-browser-is-on-a-mobile-device-with-javascript-44j3
+   if (/ Android | webOS | iPhone | iPad | iPod | BlackBerry | IEMobile | Opera Mini / i.test (navigator.userAgent)) {
+       return true
+   }
+   else {
+       return false
+	   }
+};
+
+
 document.getElementById("baybayinoutput").disabled = true;
 
 var  dumbdumb = document.getElementById("baybayinoutput")
@@ -123,8 +151,8 @@ body {
 	overflow : auto;
 	resize : none;
 	display: inline-block;
-	width: 49%;
-	height : 40%;
+	width: 40vw;
+	height : 40vh;
 	margin: 0px;
 }
 
@@ -135,8 +163,8 @@ body {
 	overflow : auto;
 	resize : none;
 	display: inline-block;
-	width: 49%;
-	height : 40%;
+	width: 40vw;
+	height : 40vh;
 	margin: 0px;
 }
 
@@ -156,24 +184,50 @@ textarea:disabled {
 	border-radius: 2px;
 }
 
-.keybbn button:hover {
+.keybbn[phone="false"] button:hover {
     border: 1px solid rgb(0,0,0);
 	border-radius: 3px;
 }
 
-.keybbn button:active {
+
+.keybbn[phone="false"] button:active {
+    border: 1px solid rgb(0,0,0);
+	border-radius: 9px;
+}
+
+.keybbn[phone="true"] button:active {
     border: 1px solid rgb(0,0,0);
 	border-radius: 9px;
 }
 
 .keybbn button[disabled=true]:hover {
-    border: 1px solid rgba(0,0,0,0.4) !important;
-	border-radius: 0px !important;
+	transition: all .1s ease;
+	width:40px;
+	height:40px;
+	font-size:17px;
+	paddin: 0px;
+	margin: 2px; 
+	border: 1px solid rgba(0,0,0,0.4);
+	border-radius: 2px;
+}
+
+.keybbn button[disabled="false"] {
+	color: black;
+}
+
+.keybbn button[disabled="true"] {
+	color: rgba(0,0,0,0.5);
 }
 
 .keybbn button[disabled=true]:active {
-    border: 1px solid rgba(0,0,0,0.4) !important;
-	border-radius: 0px !important;
+	transition: all .1s ease;
+	width:40px;
+	height:40px;
+	font-size:17px;
+	paddin: 0px;
+	margin: 2px; 
+	border: 1px solid rgba(0,0,0,0.4);
+	border-radius: 2px;
 }
 
 .keybbn button#spacebar {
