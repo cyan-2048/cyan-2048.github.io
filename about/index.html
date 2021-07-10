@@ -2,22 +2,75 @@
 <html>
 <head><meta charset="utf-8">
 <title>garbage about page</title>
+<link rel="prefetch" href="marble.jpeg">
 <link rel="shortcut icon" type="image/jpg" href="cheems.png"/>
 <meta name="description" content="things about me, nah it's just links to my social media crap(basically a rip off of Ven's website)">
 <meta name="viewport" content="width=device-width">
 </head>
 
-
+<body style="background: url(marble.jpeg) 0 / cover fixed;">
 <div id="hibs">
 	<div id="lebox">
-		<h2>Hewo!</h2><p>yeah hi i'm Cyan... I like procrastinating and my website making skills are horrible. I use Notepad++ for "coding" and atm I use Pop!_OS.</p><p>Hint: click on some words to know more about me...</p><p>Hint for that other hint: i havent implemented that yet lmao.</p><p>Hewo!</p>
+		<h2>Hewo!</h2><p>yeah hi i'm Cyan... I like procrastinating and my website making skills are horrible. I use Notepad++ for "coding" and atm I use Pop!_OS.</p><p><s>Hint: click on some text/elements to know more about it... </s>not yet ready</p>
+	<div id="drawer" class="">
+		<div id="hiven" class="hidden"><p>This about page is heavily inspired by <a href="https://vendicated.dev">Vendicated's website<a></a> design... Go check it out!</p><p>This about page is heavily inspired by <a href="https://vendicated.dev">Vendicated's website<a></a> design... Go check it out!</p><p>This about page is heavily inspired by <a href="https://vendicated.dev">Vendicated's website<a></a> design... Go check it out!</p><p>This about page is heavily inspired by <a href="https://vendicated.dev">Vendicated's website<a></a> design... Go check it out!</p><p>This about page is heavily inspired by <a href="https://vendicated.dev">Vendicated's website<a></a> design... Go check it out!</p><p>This about page is heavily inspired by <a href="https://vendicated.dev">Vendicated's website<a></a> design... Go check it out!</p><p>This about page is heavily inspired by <a href="https://vendicated.dev">Vendicated's website<a></a> design... Go check it out!</p><p>This about page is heavily inspired by <a href="https://vendicated.dev">Vendicated's website<a></a> design... Go check it out!</p><p>This about page is heavily inspired by <a href="https://vendicated.dev">Vendicated's website<a></a> design... Go check it out!</p><p>This about page is heavily inspired by <a href="https://vendicated.dev">Vendicated's website<a></a> design... Go check it out!</p><p>This about page is heavily inspired by <a href="https://vendicated.dev">Vendicated's website<a></a> design... Go check it out!</p><p>This about page is heavily inspired by <a href="https://vendicated.dev">Vendicated's website<a></a> design... Go check it out!</p></div>
+		<div id="tester" class="hidden"><p>This about dfghjgfgdfdfghjnbdssrdtfghfgdsfdarstdyf is heavily inspired bygn... Go check it out!</p></div>
 	</div>
-</div>
+	<div class="socials">
+		<img id="discord" src="discord.png">
+		<img id="github" src="github.png">
+		<img id="telegram" src="telegram.png">
+		<img id="email" src="internet-mail.svg">
+	</div>
+	</div>
 
+</div>
+</body>
 <style>
 :root {
   --back: url(marble.jpeg);
  }
+
+.hidden {
+	opacity: 0 !important;
+	transition: opacity 0.5s ease-in-out, top 0.2s ease;
+	position: absolute !important;
+	top: -1000px;
+	overflow:hidden !important;
+}
+
+.shown {
+	opacity: 1 !important;
+	transition: opacity 0.5s ease-in-out, top 0.2s ease;
+	position: absolute !important;
+	top: 0px;
+}
+
+.socials img {
+	height: 60px;
+	width: 60px;
+	margin-right: 10px;
+}
+
+#drawer {
+	position: relative;
+    height: 0px;
+    transition: all 0.5s ease;
+	margin-left: -4% !important;
+    margin-right: -4% !important;
+    overflow: auto;
+	background-color: rgba(0,0,0,0.5);
+	padding: 0px;
+}
+
+.openuwu {
+    height: 200px !important;
+    transition: all 0.5s ease !important;
+	padding: 10px;
+	margin-bottom: 20px;
+}
+
+
 
 body {
   background: var(--back) 0 / cover fixed;
@@ -29,6 +82,7 @@ body {
 }
 
 #lebox {
+  transition: ease 2s;
   position: relative;
   margin: auto;
   min-width: 40%;
@@ -40,6 +94,7 @@ body {
   border-radius: 5px;
   box-shadow: 5px 5px 5px rgba(2, 2, 2, 0.3);
 }
+
 
 #lebox:hover {
 }
@@ -91,7 +146,7 @@ font-family: "milan";
 
 p {
 font-family: "milan";
-font-size: "16px"
+font-size: 16px;
 }
 
 @font-face{
@@ -104,4 +159,40 @@ font-size: "16px"
   src: url(../milanbold.ttf) format("truetype");
 }
 
+
+
 </style>
+
+<script>
+
+
+
+  document.onclick = function(e) {
+    if (e.target.id == 'lebox') {
+	document.querySelector("#drawer").classList.remove("openuwu");
+	hider();
+	setTimeout(function(){
+ 	document.querySelector("#drawer").classList.add("openuwu");
+}, 600);
+	setTimeout(function(){
+ 	document.querySelector("#hiven").classList.replace("hidden","shown");
+}, 600);
+    }
+	if (e.target.id == 'discord'){
+	document.querySelector("#drawer").classList.remove("openuwu");
+	hider();
+	setTimeout(function(){
+ 	document.querySelector("#drawer").classList.add("openuwu");
+}, 600);
+	setTimeout(function(){
+ 	document.querySelector("#tester").classList.replace("hidden","shown");
+}, 600);
+	} 
+	
+  }
+  
+  function hider(){ if (document.querySelector(".shown") !== null){
+document.querySelector(".shown").classList.replace("shown","hidden")
+}}
+
+</script>
