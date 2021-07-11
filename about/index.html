@@ -29,6 +29,7 @@
 <style>
 :root {
   --back: url(marble.jpeg);
+  --blurryface: blur(9px);
  }
 
 .hidden {
@@ -55,17 +56,17 @@
 #drawer {
 	position: relative;
     height: 0px;
-    transition: all 0.5s ease;
+    transition: all 0.5s ease, margin-bottom 1.3s ease;
 	margin-left: -4% !important;
     margin-right: -4% !important;
     overflow: auto;
-	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(0,0,0,0.35);
 	padding: 0px;
 }
 
 .openuwu {
     height: 200px !important;
-    transition: all 0.5s ease !important;
+    transition: all 0.5s ease, margin-bottom 0.9s ease !important;
 	padding: 10px;
 	margin-bottom: 20px;
 }
@@ -91,7 +92,7 @@ body {
   padding: 20px 40px;
   background-color: rgba(22,22,22, 0.2);
   color: rgb(255,255,255);
-  border-radius: 5px;
+  border-radius: 12px;
   box-shadow: 5px 5px 5px rgba(2, 2, 2, 0.3);
 }
 
@@ -102,16 +103,17 @@ body {
 #lebox::before {
   background: var(--back) 0 / cover fixed;
   background-size: 100vw auto;
-  filter: blur(10px);
+  filter: var(--blurryface);
   content: "";
   position: absolute;
   left: -20px;
     right  : -20px;
   bottom : -20px;
   top: -20px;
-  width: calc(100% + 20px);
-  height: calc(100% + 20px);
+  width: calc(100% + 50px);
+  height: calc(100% + 50px);
   z-index: -1;
+  transition: filter ease 0.5s;
 }
 
 #lebox::after {
@@ -195,4 +197,19 @@ font-size: 16px;
 document.querySelector(".shown").classList.replace("shown","hidden")
 }}
 
+window.onresize = blurFix;
+
+blurFix();
+
+function blurFix(){
+if (window.innerWidth < 1089){
+	document.querySelector(':root').style.setProperty('--blurryface', 'blur(0px)');
+	document.querySelector(':root').style.setProperty('--back', 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=)');
+}
+
+if (window.innerWidth > 1089){
+	document.querySelector(':root').style.setProperty('--blurryface', 'blur(9px)');
+	document.querySelector(':root').style.setProperty('--back', 'url(marble.jpeg)');
+}
+}
 </script>
