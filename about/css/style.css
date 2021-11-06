@@ -1,3 +1,7 @@
+/* background to put when backdrop-filter is not present
+url("marble_blur.jpeg") 0 / cover fixed !important
+*/
+
 body {
 	background: url("marble.jpeg") 0 / cover fixed;
 	min-width: 1366px;
@@ -9,6 +13,13 @@ body {
 	overflow: hidden;
 }
 
+:root {
+	--backdrop: rgba(0, 0, 0, 0) !important;
+}
+
+* {
+	font-family: Segoe UI, sans-serif !important;
+}
 @media (max-width: 1365px) {
 	body {
 		overflow: auto;
@@ -93,8 +104,13 @@ body {
 .glass::before,
 .window-body::before,
 .glass > .title-bar {
-	background: url("marble_blur.jpeg") 0 / cover fixed !important;
+	background: var(--backdrop) !important;
 }
+
+.glass.window {
+	backdrop-filter: blur(5px) !important;
+}
+
 .window-body::before {
 	content: "";
 	position: absolute;
@@ -138,6 +154,7 @@ body {
 	border-top: solid 1px rgba(255, 255, 255, 0.5);
 	box-shadow: 0 -1px 0 0 #222;
 	z-index: 9999;
+	backdrop-filter: blur(5px);
 }
 #task-bar > #blur-overlay {
 	position: absolute;

@@ -85,3 +85,10 @@ updateTime = function () {
 
 updateTime();
 setInterval(updateTime, 60000);
+
+if (!CSS.supports("backdrop-filter", "blur(15px)")) {
+	document.body.style.setProperty(
+		"--backdrop",
+		'url("marble_blur.jpeg") 0 / cover fixed'
+	);
+}
