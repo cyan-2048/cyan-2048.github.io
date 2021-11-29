@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Useful MozActivity scripts</title>
+	<style>
+		button {
+			width: 100%;
+			height: 35px;
+			margin-bottom: 5px;
+			background-color: transparent;
+			border: solid 1px grey;
+			border-radius: 6px;
+			font-size: 16px;
+			color: white;
+			transition: all linear .3s
+		}
+		button:hover {
+			box-shadow: 0 0 10px #49f3ff;
+			border: solid 1px transparent;
+			transition: all linear .3s;
+			font-weight: bold;
+		}
+		body, html {
+			background-color: rgb(22,22,22);
+			color: white
+		}
+		* {
+			font-family: Open Sans;
+		}
+	</style>
+</head>
+<body>
+	<button id="hotspot">Hotspot</button>
+	<button id="color">Color-Filter</button>
+	<button id="brightness">Color Brightness</button>
+	<button id="reader">Screen Reader</button>
+	<button id="devmenu">Developer Menu</button>
+	<button id="access">Accessibility</button>
+	<button id="homes">Homescreens</button>
+	<button id="data">Data-Roaming</button>
+	<button id="connect">Connectivity</button>
+	<button id="msg">Messaging</button>
+	<button id="sims">Sim-Manager</button>
+	<button id="vol">Volume Balance</button>
+	<button id="aero">Airplane Mode</button>
+
+	<footer>
+		The scripts of this website come from <a href="https://mctechyt.blogspot.com/p/online-settings.html?m=1">here</a>... I was disappointed that most of it is closed source because of the use of blogspot.com and also since using blogspot seems to be resource extensive for KaiOS.
+	</footer>
+</body>
+<script>
+for (let a of document.querySelectorAll('button')) {
+	a.addEventListener('click', (e) => {
+		switch (e.target.id) {
+			case 'hotspot':
+				if (window.MozActivity) {
+					var act = new MozActivity({
+						name: 'configure',
+						data: { target: 'device', section: 'hotspot' },
+					});
+				}
+				break;
+			case 'color':
+				if (window.MozActivity) {
+					var act = new MozActivity({
+						name: 'configure',
+						data: { target: 'device', section: 'accessibility-colors' },
+					});
+				} else {
+					window.alert('Only Works in KaiOS Devices.');
+				}
+				break;
+			case 'brightness':
+				if (window.MozActivity) {
+					var act = new MozActivity({
+						name: 'configure',
+						data: { target: 'device', section: 'colorfilter-contrast' },
+					});
+				} else {
+					window.alert('Only Works in KaiOS Devices.');
+				}
+				break;
+			case 'reader':
+				if (window.MozActivity) {
+					var act = new MozActivity({
+						name: 'configure',
+						data: { target: 'device', section: 'accessibility-screenreader' },
+					});
+				} else {
+					window.alert('Only Works in KaiOS Devices.');
+				}
+				break;
+			case 'devmenu':
+				if (window.MozActivity) {
+					var act = new MozActivity({
+						name: 'configure',
+						data: { target: 'device', section: 'developer' },
+					});
+				} else {
+					window.alert('Only Works in KaiOS Devices.');
+				}
+				break;
+			case 'access':
+				if (window.MozActivity) {
+					var act = new MozActivity({
+						name: 'configure',
+						data: { target: 'device', section: 'accessibility' },
+					});
+				} else {
+					window.alert('Only Works in KaiOS Devices.');
+				}
+				break;
+			case 'homes':
+				if (window.MozActivity) {
+					var act = new MozActivity({
+						name: 'configure',
+						data: { target: 'device', section: 'homescreens' },
+					});
+				} else {
+					window.alert('Only Works in KaiOS Devices.');
+				}
+				break;
+			case 'data':
+				if (window.MozActivity) {
+					var act = new MozActivity({
+						name: 'configure',
+						data: { target: 'device', section: 'data-roaming' },
+					});
+				} else {
+					window.alert('Only Works in KaiOS Devices.');
+				}
+				break;
+			case 'connect':
+				if (window.MozActivity) {
+					var act = new MozActivity({
+						name: 'configure',
+						data: { target: 'device', section: 'connectivity-settings' },
+					});
+				} else {
+					window.alert('Only Works in KaiOS Devices.');
+				}
+				break;
+			case 'msg':
+				if (window.MozActivity) {
+					var act = new MozActivity({
+						name: 'configure',
+						data: { target: 'device', section: 'messaging' },
+					});
+				} else {
+					window.alert('Only Works in KaiOS Devices.');
+				}
+				break;
+			case 'sims':
+				if (window.MozActivity) {
+					var act = new MozActivity({
+						name: 'configure',
+						data: { target: 'device', section: 'sim-manager' },
+					});
+				} else {
+					window.alert('Only Works in KaiOS Devices.');
+				}
+				break;
+			case 'vol':
+				if (window.MozActivity) {
+					var act = new MozActivity({
+						name: 'configure',
+						data: { target: 'device', section: 'accessibility-volume-balance' },
+					});
+				} else {
+					window.alert('Only Works in KaiOS Devices.');
+				}
+				break;
+			case 'aero':
+				if (window.MozActivity) {
+					var act = new MozActivity({
+						name: 'configure',
+						data: { target: 'device', section: 'airplane-mode' },
+					});
+				} else {
+					window.alert('Only Works in KaiOS Devices.');
+				}
+				break;
+		}
+	});
+}
+
+</script>
+</html>
