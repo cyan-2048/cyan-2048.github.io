@@ -11,7 +11,7 @@
 </head>
 <body>
 
-  <div class="window glass" id="traits" style="left: 723px; width: 400px; top: 87px; height: 317px;">
+  <div class="window glass" id="traits" style="left: 723px; width: 400px; top: 87px; height: 317px;z-index: 1;">
     <div class="title-bar">
       <div class="title-bar-text">Another window with contents</div>
       <div class="title-bar-controls">
@@ -72,7 +72,7 @@
     </div>
   </div>
 
-  <div class="window glass" id="about" style="width: 477px; height: 413px; z-index: 10; left: 448px; top: 87px;">
+  <div class="window glass" id="about" style="width: 477px; height: 413px; z-index: 2; left: 448px; top: 87px;">
     <div class="title-bar">
       <div class="title-bar-text">About Cyan</div>
       <div class="title-bar-controls">
@@ -84,12 +84,28 @@
     </div>
   </div>
 
+
+
+<div id="backdrop-not" class="window glass is-bright" role="dialog" aria-labelledby="dialog-title" style="opacity: 0; visibility: visible; z-index: 36; left: 461px; top: 185.5px;">
+  <div class="title-bar">
+    <div class="title-bar-text" id="dialog-title">Problem Diagnostics</div>
+    <div class="title-bar-controls">
+      <button aria-label="Close" onclick="$('#backdrop-not').remove()"></button>
+    </div>
+  </div>
+  <div class="window-body">
+    <h2 class="instruction instruction-primary">backdrop-filter not working</h2>
+    <p>Hewo firefox user! please enable backdrop-filter via about:config and refresh the page to get Aero Glass to properly work... That's all thanks!!</p>
+    <div role="progressbar" class="marquee"></div>
+  </div>
+  <footer style="text-align: right">
+    <button onclick="$('#backdrop-not').remove()">Cancel</button>
+  </footer>
+</div>
+
   <div id="task-bar">
     <div id="blur-overlay"></div>
     <div id="menu-button"></div>
-    <div id="pined-items">
-      <div id="iexplore" class="pined-icon iexplore"></div>
-    </div>
     <div id="datetime">
       <span class="time"></span>
       <span class="date"></span>

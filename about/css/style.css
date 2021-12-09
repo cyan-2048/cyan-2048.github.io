@@ -3,7 +3,7 @@ url("marble_blur.jpeg") 0 / cover fixed !important
 */
 
 body {
-	background: url("marble.jpeg") 0 / cover fixed;
+	background: url('marble.jpeg') 0 / cover fixed;
 	width: 100%;
 	height: 100%;
 	margin: 0;
@@ -108,7 +108,7 @@ body {
 }
 
 .window-body::before {
-	content: "";
+	content: '';
 	position: absolute;
 	z-index: -1;
 	width: 100%;
@@ -127,6 +127,17 @@ body {
 	height: calc(100% - 50px);
 }
 
+.window[role='dialog'] {
+	width: 452px;
+	height: auto;
+	transform: none !important;
+}
+
+.window[role='dialog'] .window-body {
+	height: auto !important;
+	width: auto !important;
+}
+
 .window {
 	position: fixed !important;
 }
@@ -135,7 +146,30 @@ body {
 	user-select: none;
 }
 
-[role="tabpanel"] {
+.window.maximu .window-body {
+	margin: 0 !important;
+	margin-left: 0px;
+	width: calc(100% - 17px);
+	height: calc(100% - 34px);
+	margin-left: -1px !important;
+}
+
+.window.maximu .title-bar {
+	border-radius: 0 !important;
+	padding-top: 8px !important;
+	height: 10px;
+}
+
+.title-bar-controls.notfocused button:not(:hover) {
+	background: none;
+	border-color: rgb(131, 136, 143) !important;
+	box-shadow: none;
+}
+.title-bar-controls.notfocused {
+	border-color: rgb(131, 136, 143);
+}
+
+[role='tabpanel'] {
 	height: calc(100% - 86px);
 	overflow: auto;
 }
@@ -146,7 +180,7 @@ body {
 	bottom: 0;
 	left: 0;
 	display: block;
-	height: 40px;
+	height: 38px;
 	border-top: solid 1px rgba(255, 255, 255, 0.5);
 	box-shadow: 0 -1px 0 0 #222;
 	z-index: 9999;
@@ -166,24 +200,6 @@ body {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background: -moz-linear-gradient(
-		left,
-		rgba(0, 0, 0, 0.5) 0%,
-		rgba(0, 0, 0, 0.5) 10%,
-		rgba(0, 0, 0, 0.25) 15%,
-		rgba(0, 0, 0, 0.25) 75%,
-		rgba(0, 0, 0, 0.6) 85%,
-		rgba(0, 0, 0, 0.6) 100%
-	);
-	background: -webkit-linear-gradient(
-		left,
-		rgba(0, 0, 0, 0.5) 0%,
-		rgba(0, 0, 0, 0.5) 10%,
-		rgba(0, 0, 0, 0.25) 15%,
-		rgba(0, 0, 0, 0.25) 75%,
-		rgba(0, 0, 0, 0.6) 85%,
-		rgba(0, 0, 0, 0.6) 100%
-	);
 	background: linear-gradient(
 		to right,
 		rgba(0, 0, 0, 0.5) 0%,
@@ -194,23 +210,23 @@ body {
 		rgba(0, 0, 0, 0.6) 100%
 	);
 	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#66000000', endColorstr='#66000000', GradientType=1);
-	content: "";
+	content: '';
 	z-index: 3;
 }
 #menu-button {
 	position: absolute;
-	bottom: -7px;
-	left: 3px;
+	bottom: -10.3px;
+	left: -1.6px;
 	display: block;
-	width: 54px;
-	height: 54px;
+	width: 58px;
+	height: 58px;
 	z-index: 3;
 	background-image: url(start.png);
 	background-size: 100%;
 }
 
 #menu-button::after {
-	content: "";
+	content: '';
 	position: absolute;
 	top: 0;
 	width: 100%;
@@ -248,8 +264,8 @@ body {
 
 #datetime {
 	position: absolute;
-	top: 5px;
-	right: 30px;
+	top: 2.5px;
+	right: 24px;
 	z-index: 3;
 	text-align: center;
 	color: white;
@@ -266,20 +282,6 @@ body {
 	right: 0;
 	bottom: 0;
 	width: 15px;
-	background: -moz-linear-gradient(
-		-45deg,
-		rgba(255, 255, 255, 0.2) 0%,
-		rgba(255, 255, 255, 0) 30%,
-		rgba(0, 0, 0, 0.2) 31%,
-		rgba(0, 0, 0, 0.2) 100%
-	);
-	background: -webkit-linear-gradient(
-		-45deg,
-		rgba(255, 255, 255, 0.2) 0%,
-		rgba(255, 255, 255, 0) 30%,
-		rgba(0, 0, 0, 0.2) 31%,
-		rgba(0, 0, 0, 0.2) 100%
-	);
 	background: linear-gradient(
 		135deg,
 		rgba(255, 255, 255, 0.2) 0%,
@@ -287,10 +289,8 @@ body {
 		rgba(0, 0, 0, 0.2) 31%,
 		rgba(0, 0, 0, 0.2) 100%
 	);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33ffffff', endColorstr='#33000000',GradientType=1 );
 	border: solid 1px rgba(255, 255, 255, 0.2);
 	z-index: 3;
-	-webkit-box-shadow: -1px 0 0 0 #000;
 	box-shadow: -1px 0 0 0 #000;
 }
 
