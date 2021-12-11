@@ -160,13 +160,120 @@ body {
 	height: 10px;
 }
 
-.title-bar-controls.notfocused button:not(:hover) {
+.window#vscode .title-bar {
+	height: 30px !important;
+	box-sizing: border-box;
+	display: grid !important;
+	grid-template-columns: 35px auto 138px;
+	padding: 0px !important;
+	background: rgb(50, 50, 51) !important;
+	box-shadow: none !important;
+	border-radius: 0px;
+}
+
+.window#vscode::before {
+	border-radius: 0px !important;
+	background: rgb(50, 50, 51) !important;
+}
+
+.window#vscode {
+	border-radius: 0px !important;
+}
+
+.window#vscode iframe {
+	width: 100%;
+	height: calc(100% - 31px);
+	border: none;
+}
+
+.window#vscode .title-bar .title-bar-text {
+	width: 100% !important;
+	text-shadow: none !important;
+	color: #cccccc;
+	font-size: 12px;
+}
+
+.window#vscode .title-bar-controls {
+	box-shadow: none !important;
+	border: none !important;
+	background: none !important;
+	margin-top: -2px !important;
+	height: 30px;
+	border-radius: 0px !important;
+	display: grid !important;
+	grid-template-columns: 46px 46px 46px;
+	grid-gap: 0px;
+}
+
+.window#vscode .title-bar-controls button {
+	width: 46px !important;
+	border-radius: 0px !important;
+	box-shadow: none !important;
+	border: none !important;
+}
+
+.window#vscode .title-bar-controls button::before {
+	background: none !important;
+}
+
+.window#vscode button[aria-label='Minimize'] {
+	background: url(vscode_iframe/mini.png) !important;
+}
+
+.window#vscode button[aria-label='Restore'] {
+	background: url(vscode_iframe/res.png) !important;
+}
+
+.window#vscode button[aria-label='Maximize'] {
+	background: url(vscode_iframe/max.png) !important;
+}
+
+.window#vscode button[aria-label='Close'] {
+	background: url(vscode_iframe/close.png) !important;
+}
+
+.window#vscode button[aria-label='Minimize']:hover {
+	background: url(vscode_iframe/mini_hovered.png) !important;
+}
+
+.window#vscode button[aria-label='Restore']:hover {
+	background: url(vscode_iframe/res_hovered.png) !important;
+}
+
+.window#vscode button[aria-label='Maximize']:hover {
+	background: url(vscode_iframe/max_hovered.png) !important;
+}
+
+.window#vscode button[aria-label='Close']:hover {
+	background: url(vscode_iframe/close_hovered.png) !important;
+}
+
+.vscode_icon {
+	width: 35px;
+	height: 30px;
+	background: url(vscode_iframe/vscode\ icon\ for\ iframe.png);
+}
+
+.window:not(#vscode) .title-bar-controls.notfocused button:not(:hover) {
 	background: none;
 	border-color: rgb(131, 136, 143) !important;
 	box-shadow: none;
 }
-.title-bar-controls.notfocused {
+.window:not(#vscode) .title-bar-controls.notfocused {
 	border-color: rgb(131, 136, 143);
+	box-shadow: none;
+	background: none;
+}
+
+#minecraft .title-bar-text {
+	margin-left: 24px;
+}
+
+#minecraft iframe {
+	width: calc(100% + 12px);
+	height: calc(100% + 12px);
+	margin: -6px;
+	border: none;
 }
 
 [role='tabpanel'] {

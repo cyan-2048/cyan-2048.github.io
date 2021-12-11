@@ -7,6 +7,13 @@ $('.window#traits').resizable({
 	minHeight: 317,
 });
 
+$('.window#vscode, .window#minecraft').resizable({
+	handles: 'all',
+	containment: 'body',
+	minWidth: 576,
+	minHeight: 380,
+});
+
 $('.window').draggable({
 	handle: '.title-bar',
 	containment: 'body',
@@ -65,12 +72,30 @@ function maxsBtn(e) {
 	console.log('hmmm');
 	a.classList.add('maximu');
 	window_styles[a.id] = a.getAttribute('style');
-	a.style = `top: -2px; left: -1px; width: 100.4vw; height: calc(100vh - 42px); z-index: ${a.style.zIndex};`;
+	if (a.id == 'vscode') {
+		a.style = `top: 0px; left: -1px; width: 100vw; height: calc(-40px + 100vh); z-index: ${a.style.zIndex};`;
+	} else {
+		a.style = `top: -2px; left: -1px; width: 100.4vw; height: calc(100vh - 42px); z-index: ${a.style.zIndex};`;
+	}
 	setTimeout(() => {
 		e.outerHTML =
 			'<button onclick="resBtn(this)" aria-label="Restore"></button>';
 	}, 100);
 }
+
+$(document).on('focusout', function () {
+	setTimeout(function () {
+		// using the 'setTimout' to let the event pass the run loop
+		if (document.activeElement instanceof HTMLIFrameElement) {
+			// Do your logic here..
+			$(document.activeElement).closest('.window')[0].style['z-index'] =
+				highestZ() + 1;
+			for (let a of document.querySelectorAll('.title-bar-controls')) {
+				a.classList.add('notfocused');
+			}
+		}
+	}, 0);
+});
 
 function resBtn(e) {
 	console.log(e);
