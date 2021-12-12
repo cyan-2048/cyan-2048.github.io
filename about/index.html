@@ -17,7 +17,7 @@
       <div class="title-bar-controls">
         <button aria-label="Minimize"></button>
         <button onclick="maxsBtn(this)" aria-label="Maximize"></button>
-        <button aria-label="Close"></button>
+        <button aria-label="Close" onclick="closBtn(this)"></button>
       </div>
     </div>
     <div class="window-body">
@@ -72,34 +72,6 @@
     </div>
   </div>
 
-  <div class="window" id="vscode" style="left: 346px; width: 674px; top: 61px; height: 474px; z-index: 0;">
-    <div class="title-bar">
-      <div class="vscode_icon"></div>
-      <div class="title-bar-text">Visual Studio Code</div>
-      <div class="title-bar-controls">
-        <button aria-label="Minimize"></button>
-        <button onclick="maxsBtn(this)" aria-label="Maximize"></button>
-        <button aria-label="Close"></button>
-      </div>
-    </div>
-    <iframe src="https://vscode.dev/"></iframe>
-  </div>
-
-  <div class="window glass" id="minecraft" style="left: 346px; width: 674px; top: 61px; height: 474px; z-index: -1;">
-    <div class="title-bar">
-      <img src="css/vscode_iframe/crafting.png" style="width: 18px;height: 18px;position: absolute;left: 6px;"></img>
-      <div class="title-bar-text">Minecraft</div>
-      <div class="title-bar-controls">
-        <button aria-label="Minimize"></button>
-        <button onclick="maxsBtn(this)" aria-label="Maximize"></button>
-        <button aria-label="Close"></button>
-      </div>
-    </div>
-    <div class="window-body">
-      <iframe src="https://classic.minecraft.net"></iframe>
-    </div>
-  </div>
-
   <div class="window glass" id="about" style="width: 477px; height: 413px; z-index: 2; left: 448px; top: 87px;">
     <div class="title-bar">
       <div class="title-bar-text">About Cyan</div>
@@ -131,7 +103,13 @@
   </footer>
 </div>
 
-  <div id="task-bar">
+<div id="start_menu">
+  <div id="no_text"></div>
+  <div id="blur_start"></div>
+  <input id="start_input" placeholder="Search programs and files">
+</div>
+
+<div id="task-bar">
     <div id="blur-overlay"></div>
     <div id="menu-button"></div>
     <div id="datetime">
