@@ -457,6 +457,8 @@ body {
 	transition: opacity linear 0.2s;
 }
 
+/* not commiting github suxx sometimes*/
+
 #no_text {
 	background-image: url(no_text.png);
 	width: 100%;

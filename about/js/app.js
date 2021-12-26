@@ -323,7 +323,7 @@ function toggleStart() {
 		document.getElementById('start_menu').setAttribute('style', '');
 		setTimeout(() => {
 			document.getElementById('start_menu').style.opacity = '1';
-		}, 100);
+		}, 10);
 		document.getElementById('menu-button').style.backgroundImage =
 			'url(css/start-selected.png)';
 		document.getElementById('start_input').focus();
