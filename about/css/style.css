@@ -126,7 +126,7 @@ body {
 
 .window-body {
 	width: calc(100% - 28px);
-	height: calc(100% - 50px);
+	height: calc(100% - 48px);
 }
 
 .window[role='dialog'] {
@@ -144,7 +144,8 @@ body {
 	position: fixed !important;
 }
 
-.window * {
+.window *,
+#task-bar * {
 	user-select: none;
 }
 
@@ -318,7 +319,6 @@ body {
 		rgba(0, 0, 0, 0.6) 85%,
 		rgba(0, 0, 0, 0.6) 100%
 	);
-	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#66000000', endColorstr='#66000000', GradientType=1);
 	content: '';
 	z-index: 3;
 }
@@ -404,20 +404,6 @@ body {
 }
 
 #show-desktop:hover {
-	background: -moz-linear-gradient(
-		-45deg,
-		rgba(255, 255, 255, 0.4) 0%,
-		rgba(255, 255, 255, 0.2) 30%,
-		rgba(255, 255, 255, 0.2) 31%,
-		rgba(255, 255, 255, 0.2) 100%
-	);
-	background: -webkit-linear-gradient(
-		-45deg,
-		rgba(255, 255, 255, 0.4) 0%,
-		rgba(255, 255, 255, 0.2) 30%,
-		rgba(255, 255, 255, 255.2) 31%,
-		rgba(255, 255, 255, 0.2) 100%
-	);
 	background: linear-gradient(
 		135deg,
 		rgba(255, 255, 255, 0.4) 0%,
@@ -425,7 +411,6 @@ body {
 		rgba(255, 255, 255, 0.2) 31%,
 		rgba(255, 255, 255, 0.2) 100%
 	);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33ffffff', endColorstr='#33000000',GradientType=1 );
 	border: solid 1px rgba(255, 255, 255, 0.2);
 }
 
@@ -467,6 +452,9 @@ body {
 	box-sizing: border-box;
 	left: 0;
 	bottom: 40px;
+	z-index: 96969;
+	opacity: 0;
+	transition: opacity linear 0.2s;
 }
 
 #no_text {
@@ -482,6 +470,7 @@ body {
 	bottom: 0;
 	overflow: hidden;
 	border-radius: 6px 6px 0px 0px;
+	background: var(--backdrop);
 	backdrop-filter: blur(5px);
 	z-index: -1;
 }

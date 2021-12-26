@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>fxos-icons</title>
+		<style>
+			@font-face {
+				font-family: 'gaia-icons';
+				src: url('gaia-icons.ttf') format('truetype');
+				font-weight: 500;
+				font-style: normal;
+			}
+
+			[data-icon]:before,
+			.ligature-icons {
+				font-family: 'gaia-icons';
+				content: attr(data-icon);
+				display: inline-block;
+				width: 1em; /* stop overflow in chrome */
+				font-size: 30px;
+				font-weight: 500;
+				font-style: normal;
+				white-space: nowrap; /* stop wrapping in chrome */
+				text-align: center;
+				overflow: hidden;
+				text-decoration: inherit;
+				text-transform: none;
+				text-rendering: optimizeLegibility;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+
+			[data-icon]:not([data-l10n-id]):not([aria-label]):not([aria-hidden='true']):before {
+				/* Highlight cases where icons are not localized and still visible to screen
+	   reader */
+				background: rgba(255, 0, 0, 0.4);
+			}
+
+			[data-icon]:not([data-l10n-id]):not([aria-label]):not([aria-hidden='true']):after {
+				background: #333;
+				color: #fff;
+				position: absolute;
+				width: 20rem;
+				border-radius: 0.5rem;
+				padding: 0.5rem;
+				content: 'Icon is not localized and is still visible to screen reader. Please add data-l10n-id or aria-label for localization or use aria-hidden to hide the icon from screen reader.';
+				z-index: 9999;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			html {
+				font-size: 10px;
+			}
+
+			body {
+				font-family: 'Helvetica', sans-serif;
+				background: #eee;
+				color: #444;
+			}
+
+			section {
+				padding: 20px;
+				text-align: left;
+			}
+
+			section a {
+				box-sizing: content-box;
+				display: inline-block;
+				color: #222;
+				width: 3rem;
+				height: 3rem;
+				text-decoration: none;
+				border: solid 1px #eee;
+				text-align: center;
+				margin: -1px;
+				background: #fff;
+				line-height: 1;
+			}
+
+			section a:hover {
+				background: #f4f4f4;
+			}
+
+			section a:target {
+				background: #00caf2;
+				transform: scale(2);
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.24);
+			}
+
+			#show-view-boxes:checked ~ section a:before {
+				background: rgba(0, 0, 0, 0.12);
+			}
+
+			h1 {
+				position: absolute;
+				z-index: -1;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 140px;
+				color: #e5e5e5;
+				user-select: none;
+				letter-spacing: -2px;
+				text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.1),
+					1px 1px 0 rgba(255, 255, 255, 0.5);
+			}
+
+			footer {
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				padding: 1rem;
+				border-top: solid 1px #ddd;
+				text-align: right;
+				font-size: 13px;
+			}
+
+			footer label {
+				display: block;
+				float: right;
+				padding: 0.7rem 1rem;
+				background: rgba(0, 0, 0, 0.3);
+				border-radius: 4px;
+				cursor: pointer;
+				color: #fff;
+				-moz-user-select: none;
+				user-select: none;
+			}
+
+			footer label:hover {
+				background: rgba(0, 0, 0, 0.15);
+			}
+
+			#show-view-boxes:checked ~ footer label[for='show-view-boxes'] {
+				background: #00caf2;
+				color: #fff;
+			}
+
+			#show-view-boxes {
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<input id="show-view-boxes" type="checkbox" />
+		<a href="#"><h1>Gaia Icons</h1></a>
+		<section>
+			<a aria-hidden="true" href="#2g" id="2g" data-icon="2g"></a>
+
+			<a aria-hidden="true" href="#3g" id="3g" data-icon="3g"></a>
+
+			<a aria-hidden="true" href="#4g" id="4g" data-icon="4g"></a>
+
+			<a
+				aria-hidden="true"
+				href="#accessibility"
+				id="accessibility"
+				data-icon="accessibility"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#achievement"
+				id="achievement"
+				data-icon="achievement"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#add-contact"
+				id="add-contact"
+				data-icon="add-contact"
+			></a>
+
+			<a aria-hidden="true" href="#add" id="add" data-icon="add"></a>
+
+			<a aria-hidden="true" href="#addons" id="addons" data-icon="addons"></a>
+
+			<a
+				aria-hidden="true"
+				href="#airplane"
+				id="airplane"
+				data-icon="airplane"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#alarm-clock"
+				id="alarm-clock"
+				data-icon="alarm-clock"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#alarm-stop"
+				id="alarm-stop"
+				data-icon="alarm-stop"
+			></a>
+
+			<a aria-hidden="true" href="#alarm" id="alarm" data-icon="alarm"></a>
+
+			<a aria-hidden="true" href="#album" id="album" data-icon="album"></a>
+
+			<a
+				aria-hidden="true"
+				href="#all-day"
+				id="all-day"
+				data-icon="all-day"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#arrow-left"
+				id="arrow-left"
+				data-icon="arrow-left"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#arrow-right"
+				id="arrow-right"
+				data-icon="arrow-right"
+			></a>
+
+			<a aria-hidden="true" href="#artist" id="artist" data-icon="artist"></a>
+
+			<a
+				aria-hidden="true"
+				href="#attachment"
+				id="attachment"
+				data-icon="attachment"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#battery-0"
+				id="battery-0"
+				data-icon="battery-0"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#battery-1"
+				id="battery-1"
+				data-icon="battery-1"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#battery-10"
+				id="battery-10"
+				data-icon="battery-10"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#battery-2"
+				id="battery-2"
+				data-icon="battery-2"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#battery-3"
+				id="battery-3"
+				data-icon="battery-3"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#battery-4"
+				id="battery-4"
+				data-icon="battery-4"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#battery-5"
+				id="battery-5"
+				data-icon="battery-5"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#battery-6"
+				id="battery-6"
+				data-icon="battery-6"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#battery-7"
+				id="battery-7"
+				data-icon="battery-7"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#battery-8"
+				id="battery-8"
+				data-icon="battery-8"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#battery-9"
+				id="battery-9"
+				data-icon="battery-9"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#battery-charging"
+				id="battery-charging"
+				data-icon="battery-charging"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#battery-unknown"
+				id="battery-unknown"
+				data-icon="battery-unknown"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#bluetooth-a2dp"
+				id="bluetooth-a2dp"
+				data-icon="bluetooth-a2dp"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#bluetooth-circle"
+				id="bluetooth-circle"
+				data-icon="bluetooth-circle"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#bluetooth-transfer-circle"
+				id="bluetooth-transfer-circle"
+				data-icon="bluetooth-transfer-circle"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#bluetooth-transfer"
+				id="bluetooth-transfer"
+				data-icon="bluetooth-transfer"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#bluetooth"
+				id="bluetooth"
+				data-icon="bluetooth"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#brightness"
+				id="brightness"
+				data-icon="brightness"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#browsing"
+				id="browsing"
+				data-icon="browsing"
+			></a>
+
+			<a aria-hidden="true" href="#bug" id="bug" data-icon="bug"></a>
+
+			<a
+				aria-hidden="true"
+				href="#calendar"
+				id="calendar"
+				data-icon="calendar"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#call-bluetooth"
+				id="call-bluetooth"
+				data-icon="call-bluetooth"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#call-emergency"
+				id="call-emergency"
+				data-icon="call-emergency"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#call-forwarding"
+				id="call-forwarding"
+				data-icon="call-forwarding"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#call-hang-up"
+				id="call-hang-up"
+				data-icon="call-hang-up"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#call-hold"
+				id="call-hold"
+				data-icon="call-hold"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#call-incoming"
+				id="call-incoming"
+				data-icon="call-incoming"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#call-merge"
+				id="call-merge"
+				data-icon="call-merge"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#call-missed"
+				id="call-missed"
+				data-icon="call-missed"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#call-outgoing"
+				id="call-outgoing"
+				data-icon="call-outgoing"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#call-reversed"
+				id="call-reversed"
+				data-icon="call-reversed"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#call-ringing"
+				id="call-ringing"
+				data-icon="call-ringing"
+			></a>
+
+			<a aria-hidden="true" href="#call" id="call" data-icon="call"></a>
+
+			<a
+				aria-hidden="true"
+				href="#callback-emergency"
+				id="callback-emergency"
+				data-icon="callback-emergency"
+			></a>
+
+			<a aria-hidden="true" href="#camera" id="camera" data-icon="camera"></a>
+
+			<a
+				aria-hidden="true"
+				href="#change-wallpaper"
+				id="change-wallpaper"
+				data-icon="change-wallpaper"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#clear-input-left"
+				id="clear-input-left"
+				data-icon="clear-input-left"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#clear-input-right"
+				id="clear-input-right"
+				data-icon="clear-input-right"
+			></a>
+
+			<a aria-hidden="true" href="#close" id="close" data-icon="close"></a>
+
+			<a
+				aria-hidden="true"
+				href="#compose"
+				id="compose"
+				data-icon="compose"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#contact-find"
+				id="contact-find"
+				data-icon="contact-find"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#contacts"
+				id="contacts"
+				data-icon="contacts"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#crashed"
+				id="crashed"
+				data-icon="crashed"
+			></a>
+
+			<a aria-hidden="true" href="#crop" id="crop" data-icon="crop"></a>
+
+			<a aria-hidden="true" href="#data" id="data" data-icon="data"></a>
+
+			<a aria-hidden="true" href="#delete" id="delete" data-icon="delete"></a>
+
+			<a
+				aria-hidden="true"
+				href="#developer"
+				id="developer"
+				data-icon="developer"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#device-info"
+				id="device-info"
+				data-icon="device-info"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#dialpad"
+				id="dialpad"
+				data-icon="dialpad"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#dismiss-keyboard"
+				id="dismiss-keyboard"
+				data-icon="dismiss-keyboard"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#do-not-track"
+				id="do-not-track"
+				data-icon="do-not-track"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#download-circle"
+				id="download-circle"
+				data-icon="download-circle"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#download"
+				id="download"
+				data-icon="download"
+			></a>
+
+			<a aria-hidden="true" href="#edge" id="edge" data-icon="edge"></a>
+
+			<a
+				aria-hidden="true"
+				href="#edit-contact"
+				id="edit-contact"
+				data-icon="edit-contact"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#edit-image"
+				id="edit-image"
+				data-icon="edit-image"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#edit-left"
+				id="edit-left"
+				data-icon="edit-left"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#edit-right"
+				id="edit-right"
+				data-icon="edit-right"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#effects"
+				id="effects"
+				data-icon="effects"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#email-forward"
+				id="email-forward"
+				data-icon="email-forward"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#email-mark-read"
+				id="email-mark-read"
+				data-icon="email-mark-read"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#email-mark-unread"
+				id="email-mark-unread"
+				data-icon="email-mark-unread"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#email-move"
+				id="email-move"
+				data-icon="email-move"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#email-reply"
+				id="email-reply"
+				data-icon="email-reply"
+			></a>
+
+			<a aria-hidden="true" href="#email" id="email" data-icon="email"></a>
+
+			<a
+				aria-hidden="true"
+				href="#exclamation"
+				id="exclamation"
+				data-icon="exclamation"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#expand-left"
+				id="expand-left"
+				data-icon="expand-left"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#expand-right"
+				id="expand-right"
+				data-icon="expand-right"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#facebook"
+				id="facebook"
+				data-icon="facebook"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#feedback"
+				id="feedback"
+				data-icon="feedback"
+			></a>
+
+			<a aria-hidden="true" href="#find" id="find" data-icon="find"></a>
+
+			<a
+				aria-hidden="true"
+				href="#firefox"
+				id="firefox"
+				data-icon="firefox"
+			></a>
+
+			<a aria-hidden="true" href="#flag" id="flag" data-icon="flag"></a>
+
+			<a
+				aria-hidden="true"
+				href="#flash-auto"
+				id="flash-auto"
+				data-icon="flash-auto"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#flash-off"
+				id="flash-off"
+				data-icon="flash-off"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#flash-on"
+				id="flash-on"
+				data-icon="flash-on"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#focus-locked"
+				id="focus-locked"
+				data-icon="focus-locked"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#focus-locking"
+				id="focus-locking"
+				data-icon="focus-locking"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#gesture"
+				id="gesture"
+				data-icon="gesture"
+			></a>
+
+			<a aria-hidden="true" href="#gmail" id="gmail" data-icon="gmail"></a>
+
+			<a
+				aria-hidden="true"
+				href="#grid-circular"
+				id="grid-circular"
+				data-icon="grid-circular"
+			></a>
+
+			<a aria-hidden="true" href="#grid" id="grid" data-icon="grid"></a>
+
+			<a aria-hidden="true" href="#gsm" id="gsm" data-icon="gsm"></a>
+
+			<a
+				aria-hidden="true"
+				href="#hdr-boxed"
+				id="hdr-boxed"
+				data-icon="hdr-boxed"
+			></a>
+
+			<a aria-hidden="true" href="#hdr" id="hdr" data-icon="hdr"></a>
+
+			<a
+				aria-hidden="true"
+				href="#headphones"
+				id="headphones"
+				data-icon="headphones"
+			></a>
+
+			<a aria-hidden="true" href="#help" id="help" data-icon="help"></a>
+
+			<a
+				aria-hidden="true"
+				href="#homescreen"
+				id="homescreen"
+				data-icon="homescreen"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#hspa-plus"
+				id="hspa-plus"
+				data-icon="hspa-plus"
+			></a>
+
+			<a aria-hidden="true" href="#hspa" id="hspa" data-icon="hspa"></a>
+
+			<a
+				aria-hidden="true"
+				href="#import-memorycard-circle"
+				id="import-memorycard-circle"
+				data-icon="import-memorycard-circle"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#incoming-sms"
+				id="incoming-sms"
+				data-icon="incoming-sms"
+			></a>
+
+			<a aria-hidden="true" href="#info" id="info" data-icon="info"></a>
+
+			<a
+				aria-hidden="true"
+				href="#keyboard-circle"
+				id="keyboard-circle"
+				data-icon="keyboard-circle"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#keyboard"
+				id="keyboard"
+				data-icon="keyboard"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#languages"
+				id="languages"
+				data-icon="languages"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#left-light"
+				id="left-light"
+				data-icon="left-light"
+			></a>
+
+			<a aria-hidden="true" href="#left" id="left" data-icon="left"></a>
+
+			<a aria-hidden="true" href="#link" id="link" data-icon="link"></a>
+
+			<a
+				aria-hidden="true"
+				href="#location"
+				id="location"
+				data-icon="location"
+			></a>
+
+			<a aria-hidden="true" href="#lock" id="lock" data-icon="lock"></a>
+
+			<a
+				aria-hidden="true"
+				href="#media-storage"
+				id="media-storage"
+				data-icon="media-storage"
+			></a>
+
+			<a aria-hidden="true" href="#menu" id="menu" data-icon="menu"></a>
+
+			<a
+				aria-hidden="true"
+				href="#messages"
+				id="messages"
+				data-icon="messages"
+			></a>
+
+			<a aria-hidden="true" href="#mic" id="mic" data-icon="mic"></a>
+
+			<a aria-hidden="true" href="#minus" id="minus" data-icon="minus"></a>
+
+			<a aria-hidden="true" href="#moon" id="moon" data-icon="moon"></a>
+
+			<a aria-hidden="true" href="#more" id="more" data-icon="more"></a>
+
+			<a aria-hidden="true" href="#mute" id="mute" data-icon="mute"></a>
+
+			<a aria-hidden="true" href="#nfc" id="nfc" data-icon="nfc"></a>
+
+			<a aria-hidden="true" href="#no-sim" id="no-sim" data-icon="no-sim"></a>
+
+			<a
+				aria-hidden="true"
+				href="#notifications"
+				id="notifications"
+				data-icon="notifications"
+			></a>
+
+			<a aria-hidden="true" href="#o" id="o" data-icon="o"></a>
+
+			<a
+				aria-hidden="true"
+				href="#outgoing-sms"
+				id="outgoing-sms"
+				data-icon="outgoing-sms"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#outlook"
+				id="outlook"
+				data-icon="outlook"
+			></a>
+
+			<a aria-hidden="true" href="#pause" id="pause" data-icon="pause"></a>
+
+			<a
+				aria-hidden="true"
+				href="#picture-size"
+				id="picture-size"
+				data-icon="picture-size"
+			></a>
+
+			<a aria-hidden="true" href="#pin" id="pin" data-icon="pin"></a>
+
+			<a
+				aria-hidden="true"
+				href="#play-circle"
+				id="play-circle"
+				data-icon="play-circle"
+			></a>
+
+			<a aria-hidden="true" href="#play" id="play" data-icon="play"></a>
+
+			<a
+				aria-hidden="true"
+				href="#playlist"
+				id="playlist"
+				data-icon="playlist"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#privacy"
+				id="privacy"
+				data-icon="privacy"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#recent-calls"
+				id="recent-calls"
+				data-icon="recent-calls"
+			></a>
+
+			<a aria-hidden="true" href="#reload" id="reload" data-icon="reload"></a>
+
+			<a
+				aria-hidden="true"
+				href="#repeat-once"
+				id="repeat-once"
+				data-icon="repeat-once"
+			></a>
+
+			<a aria-hidden="true" href="#repeat" id="repeat" data-icon="repeat"></a>
+
+			<a
+				aria-hidden="true"
+				href="#reply-all"
+				id="reply-all"
+				data-icon="reply-all"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#right-light"
+				id="right-light"
+				data-icon="right-light"
+			></a>
+
+			<a aria-hidden="true" href="#right" id="right" data-icon="right"></a>
+
+			<a aria-hidden="true" href="#rocket" id="rocket" data-icon="rocket"></a>
+
+			<a aria-hidden="true" href="#rotate" id="rotate" data-icon="rotate"></a>
+
+			<a aria-hidden="true" href="#scene" id="scene" data-icon="scene"></a>
+
+			<a
+				aria-hidden="true"
+				href="#sd-card"
+				id="sd-card"
+				data-icon="sd-card"
+			></a>
+
+			<a aria-hidden="true" href="#search" id="search" data-icon="search"></a>
+
+			<a
+				aria-hidden="true"
+				href="#seek-back"
+				id="seek-back"
+				data-icon="seek-back"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#seek-forward"
+				id="seek-forward"
+				data-icon="seek-forward"
+			></a>
+
+			<a aria-hidden="true" href="#select" id="select" data-icon="select"></a>
+
+			<a
+				aria-hidden="true"
+				href="#self-timer"
+				id="self-timer"
+				data-icon="self-timer"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#send-left"
+				id="send-left"
+				data-icon="send-left"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#send-right"
+				id="send-right"
+				data-icon="send-right"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#settings"
+				id="settings"
+				data-icon="settings"
+			></a>
+
+			<a aria-hidden="true" href="#share" id="share" data-icon="share"></a>
+
+			<a
+				aria-hidden="true"
+				href="#shuffle"
+				id="shuffle"
+				data-icon="shuffle"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#signal-0"
+				id="signal-0"
+				data-icon="signal-0"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#signal-1"
+				id="signal-1"
+				data-icon="signal-1"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#signal-2"
+				id="signal-2"
+				data-icon="signal-2"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#signal-3"
+				id="signal-3"
+				data-icon="signal-3"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#signal-4"
+				id="signal-4"
+				data-icon="signal-4"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#signal-5"
+				id="signal-5"
+				data-icon="signal-5"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#signal-roaming"
+				id="signal-roaming"
+				data-icon="signal-roaming"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#sim-toolkit"
+				id="sim-toolkit"
+				data-icon="sim-toolkit"
+			></a>
+
+			<a aria-hidden="true" href="#sim" id="sim" data-icon="sim"></a>
+
+			<a
+				aria-hidden="true"
+				href="#skip-back"
+				id="skip-back"
+				data-icon="skip-back"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#skip-forward"
+				id="skip-forward"
+				data-icon="skip-forward"
+			></a>
+
+			<a aria-hidden="true" href="#songs" id="songs" data-icon="songs"></a>
+
+			<a
+				aria-hidden="true"
+				href="#sound-max"
+				id="sound-max"
+				data-icon="sound-max"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#sound-min"
+				id="sound-min"
+				data-icon="sound-min"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#star-empty"
+				id="star-empty"
+				data-icon="star-empty"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#star-full"
+				id="star-full"
+				data-icon="star-full"
+			></a>
+
+			<a aria-hidden="true" href="#stop" id="stop" data-icon="stop"></a>
+
+			<a
+				aria-hidden="true"
+				href="#storage-circle"
+				id="storage-circle"
+				data-icon="storage-circle"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#storage"
+				id="storage"
+				data-icon="storage"
+			></a>
+
+			<a aria-hidden="true" href="#switch" id="switch" data-icon="switch"></a>
+
+			<a aria-hidden="true" href="#sync" id="sync" data-icon="sync"></a>
+
+			<a
+				aria-hidden="true"
+				href="#tethering"
+				id="tethering"
+				data-icon="tethering"
+			></a>
+
+			<a aria-hidden="true" href="#themes" id="themes" data-icon="themes"></a>
+
+			<a
+				aria-hidden="true"
+				href="#tick-circle"
+				id="tick-circle"
+				data-icon="tick-circle"
+			></a>
+
+			<a aria-hidden="true" href="#tick" id="tick" data-icon="tick"></a>
+
+			<a aria-hidden="true" href="#time" id="time" data-icon="time"></a>
+
+			<a
+				aria-hidden="true"
+				href="#toggle-camera-front"
+				id="toggle-camera-front"
+				data-icon="toggle-camera-front"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#toggle-camera-rear"
+				id="toggle-camera-rear"
+				data-icon="toggle-camera-rear"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#topup-with-code"
+				id="topup-with-code"
+				data-icon="topup-with-code"
+			></a>
+
+			<a aria-hidden="true" href="#topup" id="topup" data-icon="topup"></a>
+
+			<a
+				aria-hidden="true"
+				href="#twitter"
+				id="twitter"
+				data-icon="twitter"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#undo-circular"
+				id="undo-circular"
+				data-icon="undo-circular"
+			></a>
+
+			<a aria-hidden="true" href="#undo" id="undo" data-icon="undo"></a>
+
+			<a aria-hidden="true" href="#unlock" id="unlock" data-icon="unlock"></a>
+
+			<a aria-hidden="true" href="#unpin" id="unpin" data-icon="unpin"></a>
+
+			<a
+				aria-hidden="true"
+				href="#update-balance"
+				id="update-balance"
+				data-icon="update-balance"
+			></a>
+
+			<a aria-hidden="true" href="#usb" id="usb" data-icon="usb"></a>
+
+			<a aria-hidden="true" href="#user" id="user" data-icon="user"></a>
+
+			<a
+				aria-hidden="true"
+				href="#vibrate"
+				id="vibrate"
+				data-icon="vibrate"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#video-mic"
+				id="video-mic"
+				data-icon="video-mic"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#video-size"
+				id="video-size"
+				data-icon="video-size"
+			></a>
+
+			<a aria-hidden="true" href="#video" id="video" data-icon="video"></a>
+
+			<a
+				aria-hidden="true"
+				href="#voicemail"
+				id="voicemail"
+				data-icon="voicemail"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#wallpaper"
+				id="wallpaper"
+				data-icon="wallpaper"
+			></a>
+
+			<a aria-hidden="true" href="#wifi-1" id="wifi-1" data-icon="wifi-1"></a>
+
+			<a aria-hidden="true" href="#wifi-2" id="wifi-2" data-icon="wifi-2"></a>
+
+			<a aria-hidden="true" href="#wifi-3" id="wifi-3" data-icon="wifi-3"></a>
+
+			<a aria-hidden="true" href="#wifi-4" id="wifi-4" data-icon="wifi-4"></a>
+
+			<a
+				aria-hidden="true"
+				href="#wifi-permissions"
+				id="wifi-permissions"
+				data-icon="wifi-permissions"
+			></a>
+		</section>
+		<h2>BiDi icons (include bidi-helper.css if you want them)</h2>
+		<h3>LTR mode</h3>
+		<section dir="ltr">
+			<a aria-hidden="true" href="#back-ltr" id="back-ltr" data-icon="back"></a>
+
+			<a
+				aria-hidden="true"
+				href="#forward-ltr"
+				id="forward-ltr"
+				data-icon="forward"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#back-light-ltr"
+				id="back-light-ltr"
+				data-icon="back-light"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#forward-light-ltr"
+				id="forward-light-ltr"
+				data-icon="forward-light"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#arrow-back-ltr"
+				id="arrow-back-ltr"
+				data-icon="arrow-back"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#arrow-forward-ltr"
+				id="arrow-forward-ltr"
+				data-icon="arrow-forward"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#clear-input-ltr"
+				id="clear-input-ltr"
+				data-icon="clear-input"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#expand-ltr"
+				id="expand-ltr"
+				data-icon="expand"
+			></a>
+
+			<a aria-hidden="true" href="#send-ltr" id="send-ltr" data-icon="send"></a>
+
+			<a aria-hidden="true" href="#edit-ltr" id="edit-ltr" data-icon="edit"></a>
+		</section>
+		<h3>RTL mode</h3>
+		<section dir="rtl">
+			<a aria-hidden="true" href="#back-rtl" id="back-rtl" data-icon="back"></a>
+
+			<a
+				aria-hidden="true"
+				href="#forward-rtl"
+				id="forward-rtl"
+				data-icon="forward"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#back-light-rtl"
+				id="back-light-rtl"
+				data-icon="back-light"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#forward-light-rtl"
+				id="forward-light-rtl"
+				data-icon="forward-light"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#arrow-back-rtl"
+				id="arrow-back-rtl"
+				data-icon="arrow-back"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#arrow-forward-rtl"
+				id="arrow-forward-rtl"
+				data-icon="arrow-forward"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#clear-input-rtl"
+				id="clear-input-rtl"
+				data-icon="clear-input"
+			></a>
+
+			<a
+				aria-hidden="true"
+				href="#expand-rtl"
+				id="expand-rtl"
+				data-icon="expand"
+			></a>
+
+			<a aria-hidden="true" href="#send-rtl" id="send-rtl" data-icon="send"></a>
+
+			<a aria-hidden="true" href="#edit-rtl" id="edit-rtl" data-icon="edit"></a>
+		</section>
+		<footer>
+			<label for="show-view-boxes">Show View Boxes</label>
+		</footer>
+	</body>
+</html>
