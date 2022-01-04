@@ -31,7 +31,7 @@ function runApp(g) {
 	updateTabs();
 }
 
-var aeroInterval = null;
+var aeroSnap = null;
 
 function makeWindowsDrag() {
 	$('.window').draggable({
@@ -56,16 +56,30 @@ function makeWindowsDrag() {
 			e.target.querySelector('.title-bar-controls').classList.remove('notfocused');
 		},
 		drag: (e) => {
-			var faildow = e.target;
-			if (window.innerWidth < Number(faildow.style.left.split('px')[0]) + faildow.offsetWidth && +e.clientX > window.innerWidth - 1 && faildow.classList.contains('ui-resizable')) {
-				console.log('right edge edge edge edge ');
-			}
-			if (Number(faildow.style.left.split('px')[0]) < 0 && e.clientX < 1 && faildow.classList.contains('ui-resizable')) {
-				console.log('left 0 edge edge edge edge ');
-				//	return false;
-			}
-			if (Number(faildow.style.top.split('px')[0]) < 0 && e.clientY < 1 && faildow.classList.contains('ui-resizable')) {
-				console.log('0 top top edge edge ');
+			faildow = e.target;
+			var aero = document.getElementById('aero_snap');
+			var iffunc = () => {
+				clearTimeout(aeroSnap);
+				aero.style.opacity = 1;
+				aero.style.visibility = 'visible';
+			};
+			var elsefunc = () => {
+				aero.style.opacity = 0;
+				aero.style.visibility = 'hidden';
+				aero.className = '';
+			};
+			testing = e;
+			if (window.innerWidth < Number(faildow.style.left.split('px')[0]) + faildow.offsetWidth && e.clientX < window.innerWidth && faildow.classList.contains('ui-resizable')) {
+				iffunc();
+				aero.className = 'snap_right';
+			} else if (Number(faildow.style.left.split('px')[0]) < 0 && e.clientX < 1 && faildow.classList.contains('ui-resizable')) {
+				iffunc();
+				aero.className = 'snap_left';
+			} else if (Number(faildow.style.top.split('px')[0]) < 0 && e.clientY < 1 && faildow.classList.contains('ui-resizable')) {
+				iffunc();
+				aero.className = 'snap';
+			} else {
+				elsefunc();
 			}
 		},
 		stop: (e) => {
@@ -76,6 +90,31 @@ function makeWindowsDrag() {
 				} else if (top > window.innerHeight - 67) {
 					fail.style.top = window.innerHeight - 67 + 'px';
 				}
+			}
+			var aero = document.getElementById('aero_snap');
+			if (aero.style.opacity == 1) {
+				switch (aero.className) {
+					case 'snap':
+						e.delegateTarget.querySelector("[aria-label='Maximize'],[aria-label='Restore']").click();
+						break;
+					case 'snap_left':
+						e.target.style.left = '0px';
+						e.target.style.right = 'auto';
+						e.target.style.top = '0px';
+						e.target.style.width = '50vw';
+						e.target.style.height = 'calc(100vh - 40px)';
+						break;
+					case 'snap_right':
+						e.target.style.left = 'auto';
+						e.target.style.right = '0px';
+						e.target.style.top = '0px';
+						e.target.style.width = '50vw';
+						e.target.style.height = 'calc(100vh - 40px)';
+						break;
+				}
+				aero.style.opacity = 0;
+				aero.style.visibility = 'hidden';
+				aero.className = '';
 			}
 		},
 	});
