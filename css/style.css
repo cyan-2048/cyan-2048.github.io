@@ -18,20 +18,20 @@ body {
 	user-select: none;
 }
 
-.doge {
+#doge {
 	display: inline-block;
 	transition: all 0.5s ease;
 	text-align: center;
 }
 
-.doge img {
+#doge img {
 	user-select: none;
 	width: auto;
 	transition: all 0.5s ease;
 	border: none;
 }
 
-.doge img:hover {
+#doge img:hover {
 	transform: scale(1.1);
 	filter: drop-shadow(0 0 0.75rem var(--shadow-darken));
 	color: var(--shadow-darken);
@@ -45,7 +45,7 @@ h1 {
 	text-align: center;
 }
 
-.bottompart * {
+footer * {
 	margin: 10px;
 	font-family: "milanbold";
 	text-align: center;
@@ -55,16 +55,16 @@ h1 {
 	display: inline-block;
 }
 
-.bottompart *:not(input):hover {
+footer *:not(input):hover {
 	opacity: 0.6;
 }
 
-.bottompart a {
+footer a {
 	padding-top: 3.1px;
 	text-decoration: none;
 }
 
-.bottompart {
+footer {
 	display: flex;
 	justify-content: center;
 	margin-top: 10px;

@@ -1,61 +1,43 @@
-var doge = "";
+let doge = "";
 
-for (let a of document.querySelectorAll(".doge img")) {
-	var o = a.getAttribute("alt"),
-		n = document.createAttribute("title");
-	(n.value = o), a.setAttributeNode(n);
-
+document.querySelectorAll("#doge img").forEach((a, i) => {
+	a.setAttribute("title", a.getAttribute("alt"));
 	a.addEventListener("dragstart", (e) => {
 		e.preventDefault();
 	});
-}
-
-for (let i = 0; i < document.querySelectorAll(".doge img").length; i++) {
-	document.querySelectorAll(".doge img")[i].addEventListener("click", (e) => {
+	a.addEventListener("click", () => {
 		if ([i] == 14) {
 			toggleDoge(doge);
 			doge = "";
 		} else {
 			doge += [i] + "-";
 		}
+		console.log(doge);
 	});
-}
+});
 
 if (localStorage["dark_mode"] == null) {
-	if (
-		window.matchMedia &&
-		window.matchMedia("(prefers-color-scheme: dark)").matches
-	) {
+	if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
 		localStorage["dark_mode"] = true;
 	} else {
 		localStorage["dark_mode"] = false;
 	}
 }
 
-if (localStorage["dark_mode"] == "true") {
-	document.querySelector("#switch").checked = true;
-} else {
-	document.querySelector("#switch").checked = false;
-}
+document.getElementById("switch").checked = localStorage["dark_mode"] == "true";
+document.body.setAttribute(
+	"style",
+	localStorage["dark_mode"] == "true"
+		? "--primary-color: #1f1f1f; --secondary-color: #ffffff; --shadow-darken: rgba(255, 255, 255, 0.2);"
+		: "--primary-color: #ffffff; --secondary-color: #000000; --shadow-darken: rgba(0, 0, 0, 0.4);"
+);
 
-toggleTheme();
-
-function toggleTheme() {
-	if (localStorage["dark_mode"] == "true") {
-		document.body.style =
-			"--primary-color: #1f1f1f; --secondary-color: #ffffff; --shadow-darken: rgba(255, 255, 255, 0.2);";
-	} else {
-		document.body.style =
-			"--primary-color: #ffffff; --secondary-color: #000000; --shadow-darken: rgba(0, 0, 0, 0.4);";
-	}
-}
-
-document.querySelector("#toggle").addEventListener("click", (e) => {
-	document.querySelector("#switch").click();
+document.getElementById("toggle").addEventListener("click", (e) => {
+	document.getElementById("switch").click();
 });
 
-document.querySelector("#switch").addEventListener("click", () => {
-	if (document.querySelector("#switch").checked) {
+document.getElementById("switch").addEventListener("click", () => {
+	if (document.getElementById("switch").checked) {
 		localStorage["dark_mode"] = true;
 	} else {
 		localStorage["dark_mode"] = false;
@@ -65,25 +47,21 @@ document.querySelector("#switch").addEventListener("click", () => {
 });
 
 function toggleDoge(a) {
-	function open(d) {
-		window.open(d, "_blank");
+	let d = false;
+	switch (a) {
+		case "0-1-2-3-4-5-6-7-8-9-10-11-12-13-":
+			return (window.location = "/css/doge/bonk-it.jpg");
+			break;
+		case "2-3-5-9-":
+			d = "https://www.youtube.com/watch?v=3IMItGHeOpE";
+			break;
+		case "4-13-":
+			d = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+			break;
+		case "8-10-12-":
+			d = "https://www.youtube.com/watch?v=fmOEKOjyDxU";
+			break;
 	}
 
-	dogeMap = {
-		"0-1-2-3-4-5-6-7-8-9-10-11-12-13-": () => {
-			window.location = "/css/doge/bonk-it.jpg";
-		},
-		"2-3-5-9-": () => {
-			open("https://www.youtube.com/watch?v=3IMItGHeOpE");
-		},
-		"4-13-": () => {
-			open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-		},
-		"8-10-12-": () => {
-			open("https://www.youtube.com/watch?v=fmOEKOjyDxU");
-		},
-	};
-	if (dogeMap[a]) {
-		dogeMap[a]();
-	}
+	return d ? window.open(d, "_blank") : null;
 }

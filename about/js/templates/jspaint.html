@@ -1,0 +1,22 @@
+<div class="window glass iframe-app" id="jspaint" style="width: 674px; height: 474px">
+	<div class="title-bar">
+		<img src="https://jspaint.app/favicon.ico" style="width: 18px; height: 18px; position: absolute; left: 6px" />
+		<div class="title-bar-text">Paint</div>
+		<div class="title-bar-controls">
+			<button aria-label="Minimize"></button> <button onclick="maxsBtn(this)" aria-label="Maximize"></button> <button aria-label="Close" onclick="closBtn(this)"></button>
+		</div>
+	</div>
+	<div class="window-body">
+		<iframe
+			onload='
+		((a) => {
+			a.onload = null;
+				let src = location.protocol +"//"+ location.hostname;
+				src += (/127|localhost|192/.test(location.hostname)) ? ":8080/" : "/jspaint/";
+				src += "#jspaintwindow"+document.querySelectorAll(".window#jspaint").length;
+				a.src = src;
+		})(this)
+		'
+		></iframe>
+	</div>
+</div>

@@ -6,99 +6,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="shortcut icon" type="image/jpg" href="cheems.png" />
 		<link rel="stylesheet" href=css/style.css> <link rel="stylesheet" href=css/7.css/7.css>
+		<script src="js/libs/jquery.js"></script>
+		<script src="js/libs/jquery-ui.min.js"></script>
 		<script src="js/libs/html2canvas.min.js"></script>
 		<script src="js/libs/ChilledWindows.js"></script>
+		<script src="js/libs/localforage.min.js"></script>
+		<script src="js/app.js" defer></script>
 		<title>garbage about page</title>
 	</head>
 	<body>
 		<div id="aero_snap"></div>
-		<div class="window glass" id="traits" style="left: 723px; width: 400px; top: 87px; height: 317px; z-index: 1">
-			<div class="title-bar">
-				<div class="title-bar-text">Another window with contents</div>
-				<div class="title-bar-controls">
-					<button aria-label="Minimize"></button>
-					<button onclick="maxsBtn(this)" aria-label="Maximize"></button>
-					<button aria-label="Close" onclick="closBtn(this)"></button>
-				</div>
-			</div>
-			<div class="window-body">
-				<menu role="tablist">
-					<button role="tab" aria-controls="music" aria-selected="true">Music</button>
-					<button role="tab" aria-controls="dogs">Dogs</button>
-					<button role="tab" aria-controls="food">Food</button>
-				</menu>
-				<article role="tabpanel" id="music">
-					<p>Set your listening preferences</p>
-					<fieldset>
-						<legend>Today's mood</legend>
-						<div class="field-row">
-							<input id="radio25" type="radio" name="fieldset-example2" />
-							<label for="radio25">Nicki Minaj</label>
-						</div>
-						<div class="field-row">
-							<input id="radio26" type="radio" name="fieldset-example2" />
-							<label for="radio26">Bell Towers</label>
-						</div>
-						<div class="field-row">
-							<input id="radio27" type="radio" name="fieldset-example2" />
-							<label for="radio27">The Glamorous Monique</label>
-						</div>
-						<div class="field-row">
-							<input id="radio28" type="radio" name="fieldset-example2" />
-							<label for="radio28">EN. V</label>
-						</div>
-					</fieldset>
-					<section class="field-row">
-						<button>Reset Alarm...</button>
-						<label>Try this to get some attention</label>
-					</section>
-				</article>
-
-				<article role="tabpanel" hidden id="dogs">
-					<img style="width: 100%" src="css/dog.jpg" />
-				</article>
-
-				<article role="tabpanel" hidden id="food">
-					<p>
-						You create the content for each tab by using an
-						<code>article</code> tag.
-					</p>
-				</article>
-				<section class="field-row" style="justify-content: flex-end">
-					<button>OK</button>
-					<button>Cancel</button>
-				</section>
-			</div>
-		</div>
-
-		<div class="window glass" id="about" style="width: 477px; height: 413px; z-index: 2; left: 448px; top: 87px">
-			<div class="title-bar">
-				<div class="title-bar-text">About Cyan</div>
-				<div class="title-bar-controls">
-					<button aria-label="Close" onclick="(function () {window.location = '/index.html'})()"></button>
-				</div>
-			</div>
-			<div class="window-body">
-				<p>There's so much room for activities!</p>
-			</div>
-		</div>
-
-		<div id="backdrop-not" class="window glass is-bright" role="dialog" aria-labelledby="dialog-title" style="opacity: 0; visibility: visible; z-index: 36; left: 461px; top: 185.5px">
-			<div class="title-bar">
-				<div class="title-bar-text" id="dialog-title">Problem Diagnostics</div>
-				<div class="title-bar-controls">
-					<button aria-label="Close" onclick="$('#backdrop-not').remove()"></button>
-				</div>
-			</div>
-			<div class="window-body">
-				<h2 class="instruction instruction-primary">backdrop-filter not working</h2>
-				<p>Hewo firefox user! please enable backdrop-filter via about:config and refresh the page to get Aero Glass to properly work... That's all thanks!!</p>
-				<div role="progressbar" class="marquee"></div>
-			</div>
-			<footer style="text-align: right">
-				<button onclick="$('#backdrop-not').remove()">Cancel</button>
-			</footer>
-		</div>
 
 		<div id="start_menu">
 			<div id="no_text"></div>
@@ -109,14 +26,40 @@
 		<div id="task-bar">
 			<div id="blur-overlay"></div>
 			<div id="menu-button"></div>
+			<div id="taskbar-items"></div>
 			<div id="datetime">
 				<span class="time"></span>
 				<span class="date"></span>
 			</div>
 			<div id="show-desktop"></div>
 		</div>
+
+		<ul role="menu" id="context_menu" class="can-hover" style="width: 200px">
+			<li role="menuitem" tabindex="0" aria-haspopup="true">View</li>
+			<li role="menuitem" tabindex="0" aria-haspopup="true">
+				Sort by
+				<ul role="menu">
+					<li role="menuitem"><a>Name</a></li>
+					<li role="menuitem"><a>Size</a></li>
+					<li role="menuitem"><a>Item type</a></li>
+					<li role="menuitem"><a>Date modified</a></li>
+				</ul>
+			</li>
+			<li role="menuitem" class="has-divider"><a>Refresh</a></li>
+			<li role="menuitem"><a>Paste</a></li>
+			<li role="menuitem" class="has-divider"><a>Paste shortcut</a></li>
+			<li role="menuitem">
+				<img src="https://img.icons8.com/color/18/000000/monitor--v1.png" />
+				<a>Screen resolution</a>
+			</li>
+			<li role="menuitem">
+				<img src="https://img.icons8.com/color/18/000000/virtual-machine2.png" />
+				<a>Gadgets</a>
+			</li>
+			<li role="menuitem">
+				<img src="https://img.icons8.com/color/18/000000/remote-desktop.png" />
+				<a>Personalize</a>
+			</li>
+		</ul>
 	</body>
-	<script src="js/libs/jquery.js"></script>
-	<script src="js/libs/jquery-ui.min.js"></script>
-	<script src="js/app.js"></script>
 </html>

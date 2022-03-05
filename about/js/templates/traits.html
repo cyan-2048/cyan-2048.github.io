@@ -1,0 +1,31 @@
+<div class="window glass" id="traits" style="width: 400px; height: 317px">
+	<div class="title-bar">
+		<div class="title-bar-text">Another window with contents</div>
+		<div class="title-bar-controls">
+			<button aria-label="Minimize"></button> <button onclick="maxsBtn(this)" aria-label="Maximize"></button> <button aria-label="Close" onclick="closBtn(this)"></button>
+		</div>
+	</div>
+	<div class="window-body">
+		<menu role="tablist"
+			><button role="tab" aria-controls="music" aria-selected="true">Music</button> <button role="tab" aria-controls="dogs">Dogs</button>
+			<button role="tab" aria-controls="food">Food</button></menu
+		>
+		<article role="tabpanel" id="music">
+			<p>Set your listening preferences</p>
+			<fieldset>
+				<legend>Today's mood</legend>
+				<div class="field-row"><input id="radio25" type="radio" name="fieldset-example2" /> <label for="radio25">Nicki Minaj</label></div>
+				<div class="field-row"><input id="radio26" type="radio" name="fieldset-example2" /> <label for="radio26">Bell Towers</label></div>
+				<div class="field-row"><input id="radio27" type="radio" name="fieldset-example2" /> <label for="radio27">The Glamorous Monique</label></div>
+				<div class="field-row"><input id="radio28" type="radio" name="fieldset-example2" /> <label for="radio28">EN. V</label></div>
+			</fieldset>
+			<section class="field-row"><button>Reset Alarm...</button> <label>Try this to get some attention</label></section>
+		</article>
+		<article role="tabpanel" hidden id="dogs"><img style=width:100% src=css/dog.jpg></article>
+		<article role="tabpanel" hidden id="food">
+			<p>You create the content for each tab by using an <code>article</code> tag.</p>
+		</article>
+		<section class="field-row" style="justify-content: flex-end"><button>OK</button> <button>Cancel</button></section>
+	</div>
+</div>
+`

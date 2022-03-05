@@ -1,129 +1,228 @@
-var window_styles = new Object();
-var start_open = false;
+let start_open = false,
+	tabs = [];
 
-var tabs = [];
+const apps = ["vscode", "about", "traits", "minecraft", "jspaint"],
+	cachedApps = {};
+
+/*
+		Welcome!!! here's some functions
+*/
+
+const getId = (e) => document.getElementById(e),
+	actEl = () => document.activeElement,
+	qs = (e) => document.querySelector(e),
+	qsa = (e) => document.querySelectorAll(e);
+
+Element.prototype.qs = Element.prototype.querySelector;
+Element.prototype.qsa = Element.prototype.querySelectorAll;
 
 function updateTabs() {
 	tabs = [];
-	for (let g of $('.window')) {
-		tabs.push(g);
+	const taskbar = getId("taskbar-items");
+	taskbar.innerHTML = "";
+	qsa(".window").forEach((a, i) => {
+		tabs.push(a);
+		let el = document.createElement("div");
+		el.className = "open";
+		el.onclick = function () {
+			a.click();
+		};
+		taskbar.appendChild(el);
+	});
+}
+
+function getTemplate(file, cb, opt) {
+	let element = null;
+	if (Object.keys(cachedApps).includes(file)) {
+		let parser = document.createElement("div");
+		parser.innerHTML = cachedApps[file];
+		element = parser.firstChild;
+		parse();
+	} else {
+		fetch("js/templates/" + file + ".html")
+			.then((res) => res.text())
+			.then((res) => {
+				let parser = document.createElement("div");
+				parser.innerHTML = res;
+				element = parser.firstChild;
+				cachedApps[file] = res;
+				parse();
+			})
+			.catch((err) => {
+				cb(null, err);
+			});
+	}
+	function parse() {
+		if (opt) {
+			if (opt.style) Object.assign(element.style, opt.style);
+			if (opt.class) {
+				let clas = opt.class,
+					arr = [];
+				if (typeof clas == "string") {
+					if (/ /.test(clas)) arr = clas.split(" ");
+					else arr.push(clas);
+				} else if (clas instanceof Array) arr = clas;
+				arr.forEach((a) => element.classList.add(a));
+			}
+		}
+		cb(element);
 	}
 }
 
 setTimeout(updateTabs, 500);
 
 function runApp(g) {
-	switch (g) {
-		case 'minecraft':
-			$('body').append(`<div class="window glass" id="minecraft" style="left:346px;width:674px;top:61px;height:474px;z-index:${highestZ() + 1}"><div class="title-bar"><img src="css/vscode_iframe/crafting.png" style="width:18px;height:18px;position:absolute;left:6px"><div class="title-bar-text">Minecraft</div><div class="title-bar-controls"><button aria-label="Minimize"></button> <button onclick="maxsBtn(this)" aria-label="Maximize"></button> <button aria-label="Close" onclick="closBtn(this)"></button></div></div><div class="window-body"><iframe src="https://classic.minecraft.net"></iframe></div></div>`);
-			break;
-		case 'vscode':
-			$('body').append(`<div class="window" id="vscode" style="left:346px;width:674px;top:61px;height:474px;z-index:${highestZ() + 1}"><div class="title-bar"><div class="vscode_icon"></div><div class="title-bar-text">Visual Studio Code</div><div class="title-bar-controls"><button aria-label="Minimize"></button> <button onclick="maxsBtn(this)" aria-label="Maximize"></button> <button aria-label="Close" onclick="closBtn(this)"></button></div></div><iframe src="https://vscode.dev/"></iframe></div>`);
-			break;
-		case 'traits':
-			$('body').append(`<div class="window glass" id=traits style=left:723px;width:400px;top:87px;height:317px;z-index:${highestZ() + 1}><div class=title-bar><div class=title-bar-text>Another window with contents</div><div class=title-bar-controls><button aria-label=Minimize></button> <button onclick=maxsBtn(this) aria-label=Maximize></button> <button aria-label=Close onclick=closBtn(this)></button></div></div><div class=window-body><menu role=tablist><button role=tab aria-controls=music aria-selected=true>Music</button> <button role=tab aria-controls=dogs>Dogs</button> <button role=tab aria-controls=food>Food</button></menu><article role=tabpanel id=music><p>Set your listening preferences</p><fieldset><legend>Today's mood</legend><div class=field-row><input id=radio25 type=radio name=fieldset-example2> <label for=radio25>Nicki Minaj</label></div><div class=field-row><input id=radio26 type=radio name=fieldset-example2> <label for=radio26>Bell Towers</label></div><div class=field-row><input id=radio27 type=radio name=fieldset-example2> <label for=radio27>The Glamorous Monique</label></div><div class=field-row><input id=radio28 type=radio name=fieldset-example2> <label for=radio28>EN. V</label></div></fieldset><section class=field-row><button>Reset Alarm...</button> <label>Try this to get some attention</label></section></article><article role=tabpanel hidden id=dogs><img style=width:100% src=css/dog.jpg></article><article role=tabpanel hidden id=food><p>You create the content for each tab by using an <code>article</code> tag.</p></article><section class=field-row style=justify-content:flex-end><button>OK</button> <button>Cancel</button></section></div></div>`);
-			makeTabsWorkAgain();
-			break;
+	startLostFocus();
+	let left = "35px",
+		top = "35px",
+		getto = getHighestZ("#" + g);
+	if (getto && Number(getto.style.top.split("px")[0]) + 20 < window.innerHeight - 40) {
+		left = Number(getto.style.left.split("px")[0]) + 20 + "px";
+		top = Number(getto.style.top.split("px")[0]) + 20 + "px";
 	}
 
-	makeWindowsDrag();
+	if (apps.includes(g)) getTemplate(g, next, { style: { top, left, zIndex: highestZ() + 1 } });
 
-	updateTabs();
+	function next(el, err) {
+		if (err) {
+			console.error("error occured", err);
+			return;
+		}
+		document.body.appendChild(el);
+		unfocusAll();
+		el.qs(".title-bar-controls").classList.remove("notfocused");
+		makeWindowsDrag();
+		if (g == "traits") makeTabsWorkAgain();
+		updateTabs();
+	}
+}
+
+function showError(msg, info) {
+	return getTemplate(
+		"error",
+		(e) => {
+			unfocusAll();
+			e.qs(".title-bar-controls").classList.remove("notfocused");
+			e.qs("details").style.display = info ? "block" : "none";
+			e.qs("pre").innerHTML = info;
+			e.qs("img+div").insertAdjacentText("afterbegin", msg);
+			document.body.appendChild(e);
+			makeWindowsDrag();
+		},
+		{ class: "error no-resize", style: { top: window.innerHeight / 2 - 78 + "px", left: window.innerWidth / 2 - 205 + "px", zIndex: highestZ() + 1 } }
+	);
 }
 
 var aeroSnap = null;
 
 function makeWindowsDrag() {
-	$('.window').draggable({
-		handle: '.title-bar',
-		stack: '.window',
+	qsa(".window").forEach(
+		(e) =>
+			(e.onclick = function () {
+				if (this != getHighestZ()) {
+					console.log(this);
+					unfocusAll();
+					this.style.zIndex = highestZ() + 1;
+					this.qs(".title-bar-controls").classList.remove("notfocused");
+				}
+				const taskbar = getId("taskbar-items"),
+					indexu = tabs.indexOf(this);
+				for (const s of taskbar.children) {
+					s.classList.remove("active");
+				}
+				if (indexu != -1) {
+					taskbar.children[indexu].classList.add("active");
+				}
+				startLostFocus();
+			})
+	);
+	$(".window").draggable({
+		handle: ".title-bar",
+		stack: ".window",
 		start: (e) => {
-			if (e.target.classList.contains('maximu')) {
-				resBtn(e.target.querySelector('[aria-label="Restore"]'));
-				$(e.target.querySelector('.title-bar')).trigger('mouseup');
-				setTimeout(() => {
-					$(e.target.querySelector('.title-bar')).trigger('mousedown');
-				}, 5);
-				return false;
-			}
-
 			startLostFocus();
-
-			for (let a of document.querySelectorAll('.title-bar-controls')) {
-				a.classList.add('notfocused');
+			unfocusAll();
+			if (e.target.classList.contains("maximu")) {
+				e.target.classList.remove("maximu");
+				e.target.qs('[aria-label="Restore"]').outerHTML = '<button onclick="maxsBtn(this)" aria-label="Maximize"></button>';
 			}
-
-			e.target.querySelector('.title-bar-controls').classList.remove('notfocused');
+			e.target.qs(".title-bar-controls").classList.remove("notfocused");
+			e.target.click();
 		},
 		drag: (e) => {
-			faildow = e.target;
-			var aero = document.getElementById('aero_snap');
+			var aero = getId("aero_snap");
 			var iffunc = () => {
 				clearTimeout(aeroSnap);
 				aero.style.opacity = 1;
-				aero.style.visibility = 'visible';
+				aero.style.visibility = "visible";
 			};
 			var elsefunc = () => {
 				aero.style.opacity = 0;
-				aero.style.visibility = 'hidden';
-				aero.className = '';
+				aero.style.visibility = "hidden";
+				aero.className = "";
 			};
-			testing = e;
-			if (window.innerWidth < Number(faildow.style.left.split('px')[0]) + faildow.offsetWidth && e.clientX < window.innerWidth && faildow.classList.contains('ui-resizable')) {
-				iffunc();
-				aero.className = 'snap_right';
-			} else if (Number(faildow.style.left.split('px')[0]) < 0 && e.clientX < 1 && faildow.classList.contains('ui-resizable')) {
-				iffunc();
-				aero.className = 'snap_left';
-			} else if (Number(faildow.style.top.split('px')[0]) < 0 && e.clientY < 1 && faildow.classList.contains('ui-resizable')) {
-				iffunc();
-				aero.className = 'snap';
-			} else {
-				elsefunc();
-			}
+			// console.log(`ClientX : ${e.clientX} - ClientY : ${e.clientY}`);
+			var faildow = e.target;
+			if (faildow.classList.contains("ui-resizable")) {
+				if (window.innerWidth - 9 > Number(faildow.style.left.split("px")[0]) && e.clientX > window.innerWidth - 9) {
+					iffunc();
+					aero.className = "snap_right";
+				} else if (Number(faildow.style.left.split("px")[0]) < 0 && e.clientX < 1) {
+					iffunc();
+					aero.className = "snap_left";
+				} else if (Number(faildow.style.top.split("px")[0]) < 0 && e.clientY < 1) {
+					iffunc();
+					aero.className = "snap";
+				} else elsefunc();
+			} else elsefunc();
 		},
 		stop: (e) => {
-			for (let fail of $('.window')) {
-				var top = Number(fail.style.top.split('px')[0]);
+			for (let fail of qsa(".window")) {
+				var top = Number(fail.style.top.split("px")[0]);
 				if (top < 0) {
-					fail.style.top = '0px';
+					fail.style.top = "0px";
 				} else if (top > window.innerHeight - 67) {
-					fail.style.top = window.innerHeight - 67 + 'px';
+					fail.style.top = window.innerHeight - 67 + "px";
 				}
 			}
-			var aero = document.getElementById('aero_snap');
+			var aero = getId("aero_snap");
 			if (aero.style.opacity == 1) {
 				switch (aero.className) {
-					case 'snap':
-						e.delegateTarget.querySelector("[aria-label='Maximize'],[aria-label='Restore']").click();
+					case "snap":
+						e.target.qs("[aria-label='Maximize'],[aria-label='Restore']").click();
 						break;
-					case 'snap_left':
-						e.target.style.left = '0px';
-						e.target.style.right = 'auto';
-						e.target.style.top = '0px';
-						e.target.style.width = '50vw';
-						e.target.style.height = 'calc(100vh - 40px)';
+					case "snap_left":
+						aero.style.transition = "all ease 0s";
+						e.target.style.left = "0px";
+						e.target.style.right = "auto";
+						e.target.style.top = "0px";
+						e.target.style.width = "50vw";
+						e.target.style.height = "calc(100vh - 40px)";
 						break;
-					case 'snap_right':
-						e.target.style.left = 'auto';
-						e.target.style.right = '0px';
-						e.target.style.top = '0px';
-						e.target.style.width = '50vw';
-						e.target.style.height = 'calc(100vh - 40px)';
+					case "snap_right":
+						aero.style.transition = "all ease 0s";
+						e.target.style.left = "auto";
+						e.target.style.right = "0px";
+						e.target.style.top = "0px";
+						e.target.style.width = "50vw";
+						e.target.style.height = "calc(100vh - 40px)";
 						break;
 				}
 				aero.style.opacity = 0;
-				aero.style.visibility = 'hidden';
-				aero.className = '';
+				aero.style.visibility = "hidden";
+				aero.className = "";
+				setTimeout(() => {
+					aero.style.transition = "";
+				}, 500);
 			}
 		},
 	});
 
-	for (let object of document.querySelectorAll('.window')) {
+	for (let object of qsa(".window")) {
 		var initX, initY, firstX, firstY;
 
 		object.addEventListener(
-			'touchstart',
+			"touchstart",
 			function (e) {
 				e.preventDefault();
 				initX = this.offsetLeft;
@@ -132,13 +231,13 @@ function makeWindowsDrag() {
 				firstX = touch[0].pageX;
 				firstY = touch[0].pageY;
 
-				this.addEventListener('touchmove', swipeIt, false);
+				this.addEventListener("touchmove", swipeIt, false);
 
 				window.addEventListener(
-					'touchend',
+					"touchend",
 					function (e) {
 						e.preventDefault();
-						object.removeEventListener('touchmove', swipeIt, false);
+						object.removeEventListener("touchmove", swipeIt, false);
 					},
 					false
 				);
@@ -148,43 +247,48 @@ function makeWindowsDrag() {
 
 		function swipeIt(e) {
 			var contact = e.touches;
-			this.style.left = initX + contact[0].pageX - firstX + 'px';
-			this.style.top = initY + contact[0].pageY - firstY + 'px';
+			this.style.left = initX + contact[0].pageX - firstX + "px";
+			this.style.top = initY + contact[0].pageY - firstY + "px";
 		}
 	}
 
-	$('.window').on('click', (e) => {
-		console.log(e);
-		startLostFocus();
-		e.delegateTarget.style['z-index'] = highestZ() + 1;
-		for (let a of document.querySelectorAll('.title-bar-controls')) {
-			a.classList.add('notfocused');
-		}
-		e.delegateTarget.querySelector('.title-bar-controls').classList.remove('notfocused');
+	$(".window:not(.no-resize)").resizable({
+		handles: "all",
+		containment: "body",
+		minWidth: 229,
+		minHeight: 113,
+		start: (e) => {
+			const target = e.target;
+			if (target.classList.contains("maximu")) {
+				target.style.width = window.innerWidth + "px";
+				target.style.top = "1px";
+				target.style.left = "1px";
+				target.style.height = window.innerHeight + "px";
+				target.classList.remove("maximu");
+				target.qs('[aria-label="Restore"]').outerHTML = '<button onclick="maxsBtn(this)" aria-label="Maximize"></button>';
+			}
+		},
 	});
 
-	$('.window#vscode, .window#minecraft').resizable({
-		handles: 'all',
-		containment: 'body',
+	$(".window#vscode, .window#minecraft").resizable({
+		handles: "all",
+		containment: "body",
 		minWidth: 576,
 		minHeight: 380,
 	});
 
-	$('.window#traits').resizable({
-		handles: 'all',
-		containment: 'body',
+	$(".window#traits").resizable({
+		handles: "all",
 		minWidth: 400,
 		minHeight: 317,
-		start: (e) => {
-			if (e.target.classList.contains('maximu')) {
-				e.target.classList.remove('maximu');
-				e.target.querySelector('[aria-label="Restore"]').outerHTML = '<button onclick="maxsBtn(this)" aria-label="Maximize"></button>';
-			}
-		},
+	});
+
+	qsa(".window.ui-resizable .title-bar").forEach((a) => {
+		a.ondblclick = function (e) {
+			a.qs("[aria-label='Maximize'],[aria-label='Restore']").click();
+		};
 	});
 }
-
-makeWindowsDrag();
 
 function startLostFocus() {
 	start_open = false;
@@ -193,92 +297,80 @@ function startLostFocus() {
 
 function maxsBtn(e) {
 	console.log(e);
-	var a = e.parentElement.parentElement.parentElement;
-	console.log('hmmm');
-	a.classList.add('maximu');
-	window_styles[a.id] = a.getAttribute('style');
-	if (a.id == 'vscode') {
-		a.style = `top: 0px; left: -1px; width: 100vw; height: calc(-40px + 100vh); z-index: ${a.style.zIndex};`;
-	} else {
-		a.style = `top: -2px; left: -1px; width: 100.4vw; height: calc(100vh - 42px); z-index: ${a.style.zIndex};`;
-	}
+	var a = e.closest(".window");
+	if (!a.classList.contains("window")) return console.error("parent x3 not window");
+	a.classList.add("maximu");
+
 	setTimeout(() => {
 		e.outerHTML = '<button onclick="resBtn(this)" aria-label="Restore"></button>';
 	}, 100);
 }
-function closBtn(e) {
-	var a = e.parentElement.parentElement.parentElement;
-	console.log(`closing: ${a.id}`);
-	$(a).addClass('closing');
+function resBtn(e) {
+	var a = e.closest(".window");
+	if (!a.classList.contains("window")) return console.error("parent x3 not window");
+	var b = a.id;
+	a.classList.remove("maximu");
 	setTimeout(() => {
-		$(a).remove();
-		updateTabs();
-	}, 400);
+		e.outerHTML = '<button onclick="maxsBtn(this)" aria-label="Maximize"></button>';
+	}, 1);
 }
-$(document).on('focusout', function () {
-	setTimeout(function () {
+function closBtn(e) {
+	var a = e.closest(".window");
+	if (!a.classList.contains("window")) return console.error("parent x3 not window");
+	console.log(`closing: ${a.id}`);
+	a.classList.add("closing");
+	setTimeout(() => {
+		let getto = getHighestZ();
+		if (getto) {
+			getto.qs(".title-bar-controls").classList.remove("notfocused");
+		}
+		if (a.classList.contains("iframe-app")) {
+			let b = a.qs("iframe").onabort;
+			if (b) b();
+		}
+		a.remove();
+		updateTabs();
+	}, 300);
+}
+$(document).on("focusout", function () {
+	setTimeout(() => {
 		// using the 'setTimout' to let the event pass the run loop
-		if (document.activeElement instanceof HTMLIFrameElement) {
+		if (actEl() instanceof HTMLIFrameElement) {
 			// Do your logic here..
-			$(document.activeElement).closest('.window')[0].style['z-index'] = highestZ() + 1;
-			for (let a of document.querySelectorAll('.title-bar-controls')) {
-				a.classList.add('notfocused');
-			}
+			unfocusAll();
+			actEl().closest(".window").style.zIndex = highestZ() + 1;
+			actEl().closest(".window").qs(".title-bar-controls").classList.remove("notfocused");
 		}
 	}, 0);
 });
-function resBtn(e) {
-	console.log(e);
-	var a = e.parentElement.parentElement.parentElement;
-	var b = a.id;
-	a.classList.remove('maximu');
-	if (window_styles[b]) {
-		console.log(window_styles[b]);
-		a.setAttribute('style', window_styles[b]);
-		setTimeout(() => {
-			e.outerHTML = '<button onclick="maxsBtn(this)" aria-label="Maximize"></button>';
-		}, 100);
-	}
-}
+
 // Tabs
 
 function makeTabsWorkAgain() {
-	var tabButtons = document.querySelectorAll('[role=tab]');
+	var tabButtons = qsa("[role=tab]");
 	tabButtons.forEach((tabButton) => {
-		tabButton.addEventListener('click', (e) => {
+		tabButton.addEventListener("click", (e) => {
 			e.preventDefault();
 			const tabContainer = e.target.parentElement.parentElement.parentElement;
-			const targetId = e.target.getAttribute('aria-controls');
-			tabContainer.querySelectorAll("button[role='tab']").forEach((_tabButton) => _tabButton.setAttribute('aria-selected', false));
-			tabButton.setAttribute('aria-selected', true);
-			tabContainer.querySelectorAll('[role=tabpanel]').forEach((tabPanel) => tabPanel.setAttribute('hidden', true));
-			tabContainer.querySelector(`[role=tabpanel]#${targetId}`).removeAttribute('hidden');
+			const targetId = e.target.getAttribute("aria-controls");
+			tabContainer.qsa("button[role='tab']").forEach((_tabButton) => _tabButton.setAttribute("aria-selected", false));
+			tabButton.setAttribute("aria-selected", true);
+			tabContainer.qsa("[role=tabpanel]").forEach((tabPanel) => tabPanel.setAttribute("hidden", true));
+			tabContainer.qs(`[role=tabpanel]#${targetId}`).removeAttribute("hidden");
 		});
 	});
 }
 
-updateTime = () => {
-	var datetime = new Date();
-	if (datetime.getMinutes() < 10) {
-		minutes = '0' + datetime.getMinutes();
-	} else {
-		minutes = datetime.getMinutes();
-	}
-	var pam = 'AM';
-	var hour = datetime.getHours();
-	if (hour > 12) {
-		hour = hour - 12;
-		pam = 'PM';
-	}
-	if (hour == 0) {
-		hour = 12;
-	}
-	var time = hour + ':' + minutes + ' ' + pam;
-	var date = datetime.getMonth() + 1 + '/' + datetime.getDate() + '/' + datetime.getFullYear();
-	$('#datetime > .time').text(time);
-	$('#datetime > .date').text(date);
-};
-
+makeTabsWorkAgain();
+function updateTime() {
+	var e = new Date(),
+		t = e.getHours(),
+		n = e.getMinutes(),
+		m = t >= 12 ? "PM" : "AM",
+		a = (t = (t %= 12) || 12) + ":" + (n = n < 10 ? "0" + n : n) + " " + m;
+	qs("#datetime .time").innerText = a;
+	qs("#datetime .date").innerText = e.toLocaleDateString();
+}
 updateTime();
 
 function repeatEvery(func, interval) {
@@ -295,17 +387,16 @@ function repeatEvery(func, interval) {
 
 repeatEvery(updateTime, 60000);
 
-for (let a of document.querySelectorAll('.title-bar-controls')) {
-	a.classList.add('notfocused');
+function unfocusAll() {
+	for (let a of qsa(".title-bar-controls")) {
+		a.classList.add("notfocused");
+	}
 }
 
-if (!CSS.supports('backdrop-filter', 'blur(15px)')) {
-	document.body.style.setProperty('--backdrop', 'url("marble_blur.jpeg") 0 / cover fixed');
-	document.querySelector('#backdrop-not').style.opacity = '1';
-} else {
-	$('#backdrop-not').remove();
+if (!CSS.supports("backdrop-filter", "blur(15px)")) {
+	document.body.style.setProperty("--backdrop", 'url("marble_blur.jpeg") 0 / cover fixed');
+	showError("Aero glass won't work if backdrop-filter is not working...");
 }
-
 var toggler = 0;
 function toggleFullscreen() {
 	if (toggler == 0) {
@@ -317,35 +408,38 @@ function toggleFullscreen() {
 	}
 }
 
-$('body').on('dblclick', function (e) {
+document.body.ondblclick = function (e) {
 	if (e.target !== this) return;
 	toggleFullscreen();
-});
+};
 
-$('.window.ui-resizable .title-bar').on('dblclick', function (e) {
-	e.delegateTarget.querySelector("[aria-label='Maximize'],[aria-label='Restore']").click();
-});
-
-document.querySelector('#start_input').addEventListener('keypress', function (e) {
-	if (e.key === 'Enter') {
-		window.open(`http://www.google.com/search?q=${encodeURIComponent(e.target.value)}`, '_blank');
+qs("#start_input").addEventListener("keypress", function (e) {
+	if (e.key === "Enter") {
+		window.open(`http://www.google.com/search?q=${encodeURIComponent(e.target.value)}`, "_blank");
 	}
 });
 
 function highestZ() {
-	var array = [];
-	$('.window').each(function () {
-		if (Number.isInteger(Number($(this).css('z-index')))) {
-			array.push($(this).css('z-index'));
-		}
+	let highest = 0;
+	qsa(".window").forEach((a) => {
+		const z = Number(a.style.zIndex);
+		if (a.style.zIndex !== "" && z !== NaN && z > highest) highest = z;
 	});
-	var index_highest = Math.max.apply(Math, array);
-	return index_highest;
+	return highest;
 }
 
-makeTabsWorkAgain();
+function getHighestZ(a) {
+	let highest = null;
+	qsa(".window" + (a || "")).forEach((b) => {
+		const z = Number(b.style.zIndex);
+		if (b.style.zIndex !== "" && z !== NaN) {
+			if (!highest || z > Number(highest.style.zIndex)) highest = b;
+		}
+	});
+	return highest;
+}
 
-document.getElementById('menu-button').onclick = () => {
+getId("menu-button").onclick = () => {
 	if (start_open) {
 		start_open = false;
 	} else {
@@ -357,24 +451,121 @@ document.getElementById('menu-button').onclick = () => {
 toggleStart();
 
 function toggleStart() {
-	function whenBlur(e) {
-		console.log(e);
-		e.preventDefault();
-		setTimeout(() => {
-			document.getElementById('start_input').focus();
-		}, 5);
-	}
 	if (start_open) {
-		document.getElementById('start_menu').setAttribute('style', '');
-		setTimeout(() => {
-			document.getElementById('start_menu').style.opacity = '1';
-		}, 10);
-		document.getElementById('menu-button').style.backgroundImage = 'url(css/start-selected.png)';
-		document.getElementById('start_input').focus();
-		document.getElementById('start_input').addEventListener('blur', whenBlur);
+		getId("start_menu").setAttribute("style", "display: block;");
+		getId("menu-button").style.backgroundImage = "url(css/start-selected.png)";
+		getId("start_input").focus();
 	} else {
-		document.getElementById('start_input').removeEventListener('blur', whenBlur);
-		document.getElementById('menu-button').setAttribute('style', '');
-		document.getElementById('start_menu').setAttribute('style', 'display: none;');
+		getId("menu-button").removeAttribute("style");
+		getId("start_menu").removeAttribute("style");
 	}
+}
+
+window.onmessage = function (e) {
+	const obj = e.data,
+		parent = Array.from(qsa("iframe"))
+			.find((a) => a.contentWindow == e.source)
+			.closest(".window"),
+		data = obj.data;
+	if ("object" != typeof obj) return;
+	if (parent) {
+		if (parent.id == "jspaint") {
+			switch (obj.func) {
+				case "title":
+					parent.qs(".title-bar-text").innerText = data;
+					break;
+				case "wallpaper":
+					setWallpaper(data, obj.repeat.toString(), true);
+					break;
+			}
+		}
+	}
+};
+
+function setWallpaper(file, repeat, storage) {
+	const blob_url = URL.createObjectURL(file),
+		body = document.body;
+
+	body.style.backgroundImage = `url(${blob_url})`;
+	body.style.backgroundRepeat = repeat == "true" ? "repeat" : "no-repeat";
+	body.style.backgroundSize = repeat == "true" ? "auto" : "cover";
+
+	if (!CSS.supports("backdrop-filter", "blur(15px)")) {
+		let img = new Image();
+		img.src = blob_url;
+		img.onload = (e) => {
+			document.body.style.setProperty(
+				"--backdrop",
+				(function getAverageRGB(t) {
+					var e,
+						a,
+						r,
+						g,
+						n = document.createElement("canvas"),
+						d = n.getContext && n.getContext("2d"),
+						h = -4,
+						u = { r: 0, g: 0, b: 0 },
+						b = 0;
+					if (!d) return null;
+					(r = n.height = t.height), (a = n.width = t.width), d.drawImage(t, 0, 0);
+					try {
+						e = d.getImageData(0, 0, a, r);
+					} catch (t) {
+						return null;
+					}
+					for (g = e.data.length; (h += 80) < g; ) ++b, (u.r += e.data[h]), (u.g += e.data[h + 1]), (u.b += e.data[h + 2]);
+					return (u.r = ~~(u.r / b)), (u.g = ~~(u.g / b)), (u.b = ~~(u.b / b)), "rgb(" + u.r + "," + u.g + "," + u.b + ")";
+				})(img)
+			);
+		};
+	}
+
+	if (storage) {
+		localStorage["wallpaper-repeat"] = repeat;
+		localforage.setItem("wallpaper-data", file);
+	}
+}
+var wallpaper_repeat = localStorage["wallpaper-repeat"];
+localforage.getItem("wallpaper-data", function (err, value) {
+	if (err) return console.error(err);
+	if (value) setWallpaper(value, wallpaper_repeat || false);
+});
+
+// stolen from 98.js.org
+
+document.onmousedown = function (e) {
+	const k = e.target;
+	if (e.buttons == 2 && !/INPUT/.test(k.tagName)) {
+		console.log(k);
+		k.oncontextmenu = () => {
+			k.oncontextmenu = null;
+			return false;
+		};
+		if (k == document.body) openMenuDesktop(e);
+	}
+};
+
+runApp("about");
+
+getId("taskbar-items").onwheel = function (e) {
+	e.preventDefault();
+	this.scrollLeft += e.deltaY;
+};
+
+function openMenuDesktop(e) {
+	if (!e instanceof Event) throw new TypeError("argument not an Event, needs event so that we can locate the mouse");
+	let el = getId("context_menu");
+	el.style.left = e.clientX + "px";
+	el.style.top = e.clientY + "px";
+}
+
+function crel(t, opt) {
+	let el = document.createElement(t);
+	if (typeof opt !== "object") return el;
+	if (opt.html && typeof opt.html == "string") el.innerHTML = opt.html;
+	if (opt.class) el.className = opt.class instanceof Array ? opt.class.join(" ") : opt.class;
+
+	if (opt.style) Object.assign(document.querySelector("#taskbar-items>div").style, opt.style);
+	if (opt.dataset) Object.keys(opt.dataset).forEach((a) => (el.dataset[a] = opt.dataset[a]));
+	return el;
 }
