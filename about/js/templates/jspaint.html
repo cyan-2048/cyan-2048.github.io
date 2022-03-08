@@ -13,6 +13,8 @@
 			a.onload = null;
 				let src = location.protocol +"//"+ location.hostname;
 				src += (/127|localhost|192/.test(location.hostname)) ? ":8080/" : "/jspaint/";
+				this.closest(".window").qs("img[style]").src = src+"favicon.ico";
+				if (window._jspaint) {src += _jspaint; delete window._jspaint} else
 				src += "#jspaintwindow"+document.querySelectorAll(".window#jspaint").length;
 				a.src = src;
 		})(this)

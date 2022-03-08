@@ -6,20 +6,30 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="shortcut icon" type="image/jpg" href="cheems.png" />
 		<link rel="stylesheet" href=css/style.css> <link rel="stylesheet" href=css/7.css/7.css>
+		<script src="js/socials.js"></script>
 		<script src="js/libs/jquery.js"></script>
 		<script src="js/libs/jquery-ui.min.js"></script>
 		<script src="js/libs/html2canvas.min.js"></script>
 		<script src="js/libs/ChilledWindows.js"></script>
 		<script src="js/libs/localforage.min.js"></script>
+		<script src="js/libs/jquery.ui.touch-punch.min.js"></script>
+		<script src="js/libs/universalClientXY.js" defer></script>
 		<script src="js/app.js" defer></script>
 		<title>garbage about page</title>
 	</head>
 	<body>
 		<div id="aero_snap"></div>
+		<div id="aero_anim"></div>
 
 		<div id="start_menu">
 			<div id="no_text"></div>
 			<div id="blur_start"></div>
+			<div id="menu_programs">
+				<div onclick="showError('testo')">
+					<img src="css/error.ico" />
+					<p>Testo</p>
+				</div>
+			</div>
 			<input id="start_input" placeholder="Search programs and files" />
 		</div>
 
