@@ -1,6 +1,6 @@
 <div class="window glass iframe-app" id="jspaint" style="width: 674px; height: 474px">
 	<div class="title-bar">
-		<img src="https://jspaint.app/favicon.ico" style="width: 18px; height: 18px; position: absolute; left: 6px" />
+		<img src="css/jspaint.ico" style="width: 18px; height: 18px; position: absolute; left: 6px" />
 		<div class="title-bar-text">Paint</div>
 		<div class="title-bar-controls">
 			<button aria-label="Minimize"></button> <button onclick="maxsBtn(this)" aria-label="Maximize"></button> <button aria-label="Close" onclick="closBtn(this)"></button>
@@ -11,12 +11,19 @@
 			onload='
 		((a) => {
 			a.onload = null;
+				animCur("stop")
 				let src = location.protocol +"//"+ location.hostname;
-				src += (/127|localhost|192/.test(location.hostname)) ? ":8080/" : "/jspaint/";
+				src += (/127|localhost|192|5500/.test(location.origin)) ? ":8080/" : "/jspaint/";
 				this.closest(".window").qs("img[style]").src = src+"favicon.ico";
 				if (window._jspaint) {src += _jspaint; delete window._jspaint} else
 				src += "#jspaintwindow"+document.querySelectorAll(".window#jspaint").length;
 				a.src = src;
+			if (window._jspaintOpen) {
+				a.onload = function () {
+					this.contentWindow.postMessage({open:true, data: window._jspaintOpen},"*")
+					delete window._jspaintOpen;
+				}
+			}
 		})(this)
 		'
 		></iframe>

@@ -1,0 +1,64 @@
+<div class="window glass favicon" id="photo_viewer" style="width: 477px; height: 413px; z-index: 2; left: 448px; top: 87px">
+	<div class="title-bar">
+		<img src="css/photo_viewer/icon.ico" style="width: 18px; height: 18px; position: absolute; left: 6px" />
+		<div class="title-bar-text">Untitled - Windows Photo Viewer</div>
+		<div class="title-bar-controls">
+			<button aria-label="Minimize"></button> <button onclick="maxsBtn(this)" aria-label="Maximize"></button> <button aria-label="Close" onclick="closBtn(this)"></button>
+		</div>
+	</div>
+	<div class="window-body">
+		<ul role="menubar" style="border: rgb(160, 175, 195) solid 1px" class="can-hover">
+			<li role="menuitem" aria-haspopup="true">
+				File
+				<ul role="menu">
+					<li id="menu_del" role="menuitem"><a>Delete</a></li>
+					<li role="menuitem"><a>Copy</a></li>
+					<li role="menuitem"><a onclick="closBtn(this)">Exit</a></li>
+				</ul>
+			</li>
+			<li role="menuitem" aria-haspopup="false">Print</li>
+			<li role="menuitem" aria-haspopup="false">Email</li>
+			<li role="menuitem" aria-haspopup="false">Burn</li>
+			<li role="menuitem" aria-haspopup="true">
+				Open
+				<ul role="menu">
+					<li onclick="convertToBlobPaint(this)" role="menuitem"><img src="css/jspaint.ico" alt="" style="width: 16px; margin-left: 2px" /><a>Paint</a></li>
+					<li onclick='newTab(this.closest(".window").qs("#images img").src)' role="menuitem"><a>New Tab</a></li>
+				</ul>
+			</li>
+		</ul>
+		<div id="images-container">
+			<div id="images">
+				<img data-index="0" alt="loading" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" />
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<style>
+			.goaway {
+				display: none;
+			}
+			.goaway + div {
+				display: none;
+			}
+		</style>
+		<div id="spacer69" class="goaway" style="position: absolute; width: 30px; background: whitesmoke; border: gray solid 1px; height: 90px; bottom: 11px; left: 27.5px"></div>
+		<div id="spacerX" class="is-vertical" style="position: absolute; bottom: -17px; left: 41px; background: none">
+			<input style="width: 75px; margin: 0" type="range" min="0" max="100" value="0" />
+		</div>
+		<img src onerror="photoViewer(this)" />
+		<div id="spacer1"></div>
+		<div id="zoom"></div>
+		<div id="spacer2"></div>
+		<div id="back"></div>
+		<div id="spacer3"></div>
+		<div id="goback"></div>
+		<div id="slide"></div>
+		<div id="goforward"></div>
+		<div id="spacer4"></div>
+		<div id="rotate1"></div>
+		<div id="rotate2"></div>
+		<div id="spacer5"></div>
+		<div id="del"></div>
+	</div>
+</div>

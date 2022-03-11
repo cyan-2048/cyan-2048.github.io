@@ -32,18 +32,23 @@ document.body.setAttribute(
 		: "--primary-color: #ffffff; --secondary-color: #000000; --shadow-darken: rgba(0, 0, 0, 0.4);"
 );
 
-document.getElementById("toggle").addEventListener("click", (e) => {
+const toggle = document.getElementById("toggle");
+toggle.addEventListener("click", (e) => {
 	document.getElementById("switch").click();
 });
+toggle.onmouseover = () => (document.querySelector(".toggle").style.opacity = 0.6);
+
+toggle.onmouseout = () => document.querySelector(".toggle").removeAttribute("style");
 
 document.getElementById("switch").addEventListener("click", () => {
-	if (document.getElementById("switch").checked) {
-		localStorage["dark_mode"] = true;
-	} else {
-		localStorage["dark_mode"] = false;
-	}
-
-	toggleTheme();
+	if (document.getElementById("switch").checked) localStorage["dark_mode"] = true;
+	else localStorage["dark_mode"] = false;
+	document.body.setAttribute(
+		"style",
+		localStorage["dark_mode"] == "true"
+			? "--primary-color: #1f1f1f; --secondary-color: #ffffff; --shadow-darken: rgba(255, 255, 255, 0.2);"
+			: "--primary-color: #ffffff; --secondary-color: #000000; --shadow-darken: rgba(0, 0, 0, 0.4);"
+	);
 });
 
 function toggleDoge(a) {
@@ -65,3 +70,9 @@ function toggleDoge(a) {
 
 	return d ? window.open(d, "_blank") : null;
 }
+
+document.getElementById("about").onclick = () => {
+	document.body.style.opacity = 0;
+	document.body.style.overflow = "hidden";
+	setTimeout(() => (location.href = "/about"), 500);
+};

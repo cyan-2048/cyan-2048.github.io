@@ -1,7 +1,25 @@
 let tabs = [],
-	volume = 1;
+	volume = 1,
+	images = [
+		"/css/doge/doge1.jpg",
+		"/css/doge/doge2.jpg",
+		"/css/doge/doge3.jpg",
+		"/css/doge/doge3_1.png",
+		"/css/doge/doge4.png",
+		"/css/doge/doge5.jpg",
+		"/css/doge/doge6.jpg",
+		"/css/doge/doge7.jpg",
+		"/css/doge/doge8.jpg",
+		"/css/doge/doge9.png",
+		"/css/doge/doge10.jpg",
+		"/css/doge/doge11.jpg",
+		"/css/doge/doge12.jpg",
+		"/css/doge/doge13.jpg",
+		"/css/doge/doge14.jpg",
+		"/css/doge/doge15.jpg",
+	];
 
-const apps = ["vscode", "about", "traits", "minecraft", "jspaint"],
+const apps = ["run", "vscode", "about", "traits", "minecraft", "jspaint", "photo_viewer"],
 	cachedApps = {},
 	isMobile =
 		(navigator.userAgentData && navigator.userAgentData.mobile) || /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase());
@@ -18,12 +36,25 @@ const getId = (e) => document.getElementById(e),
 Element.prototype.qs = Element.prototype.querySelector;
 Element.prototype.qsa = Element.prototype.querySelectorAll;
 
+function animCur(cur) {
+	document.body.removeAttribute("class");
+	if (cur == "stop") return (document.body.style.cursor = "url(./css/cursor/aero_arrow.png), auto");
+	switch (cur) {
+		case "busy":
+			document.body.className = "cursor-busy";
+			break;
+		case "working":
+			document.body.className = "cursor-working";
+			break;
+	}
+}
+
 function updateTabs() {
 	tabs = [];
 	const taskbar = getId("taskbar-items");
 	taskbar.innerHTML = "";
 
-	qsa(".window").forEach((a, i) => {
+	qsa(".window:not(.sys-win)").forEach((a, i) => {
 		tabs.push(a);
 		let el = document.createElement("div");
 		el.className = "open";
@@ -39,13 +70,15 @@ function updateTabs() {
 					el.style.backgroundImage = `url(${a.qs("img").src})`;
 				});
 			else el.style.backgroundImage = `url(${a.qs("img").src})`;
-		} else el.style.backgroundImage = "url(./css/app.ico)";
+		} else if (a.qs(".title-bar img")) el.style.backgroundImage = `url(${a.qs(".title-bar img").src})`;
+		else el.style.backgroundImage = "url(./css/app.ico)";
 		taskbar.appendChild(el);
 	});
 }
 
 function getTemplate(file, cb, opt) {
 	let element = null;
+	animCur("working");
 	if (Object.keys(cachedApps).includes(file)) {
 		let parser = document.createElement("div");
 		parser.innerHTML = cachedApps[file];
@@ -79,6 +112,7 @@ function getTemplate(file, cb, opt) {
 				arr.forEach((a) => element.classList.add(a));
 			}
 		}
+		animCur("stop");
 		cb(element);
 	}
 }
@@ -90,6 +124,10 @@ function runApp(g) {
 	if (getto && Number(getto.style.top.split("px")[0]) + 20 < window.innerHeight - 40) {
 		left = Number(getto.style.left.split("px")[0]) + 20 + "px";
 		top = Number(getto.style.top.split("px")[0]) + 20 + "px";
+	}
+	if (g == "run") {
+		left = "8px";
+		top = window.innerHeight - 255 + "px";
 	}
 
 	if (apps.includes(g)) getTemplate(g, next, { style: { top, left, zIndex: highestZ() + 1 } });
@@ -104,14 +142,75 @@ function runApp(g) {
 		el.qs(".title-bar-controls").classList.remove("notfocused");
 		makeWindowsDrag();
 		if (g == "traits") makeTabsWorkAgain();
+		if (el.classList.contains("iframe-app")) {
+			animCur("busy");
+			el.qs("iframe").addEventListener("load", function load() {
+				this.removeEventListener("load", load);
+				animCur("stop");
+			});
+		}
 		updateTabs();
 	}
 }
 
 function playAudio(a) {
-	let audio = new Audio(`./audio/${a}.mp3`);
+	const audio = new Audio(`./audio/${a}.mp3`);
 	audio.volume = volume;
+	audio.load();
 	audio.play();
+
+	const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+	function filterData(audioBuffer) {
+		const rawData = audioBuffer.getChannelData(0); // We only need to work with one channel of data
+		const samples = Number(audio.duration.toFixed()) / 0.01; // Number of samples we want to have in our final data set
+		const blockSize = Math.floor(rawData.length / samples); // the number of samples in each subdivision
+		const filteredData = [];
+		for (let i = 0; i < samples; i++) {
+			let blockStart = blockSize * i; // the location of the first sample in the block
+			let sum = 0;
+			for (let j = 0; j < blockSize; j++) {
+				sum = sum + Math.abs(rawData[blockStart + j]); // find the sum of all the samples in the block
+			}
+			filteredData.push(sum / blockSize); // divide the sum by the block size to get the average
+		}
+		const multiplier = Math.pow(Math.max(...filteredData), -1);
+		return filteredData.map((n) => n * multiplier);
+	}
+
+	audio.ontimeupdate = () => (audio.volume = volume);
+
+	if (qs("#volume-bar").getAttribute("style") == null) {
+		qs("#volume-bar").setAttribute("style", "");
+		fetch(`./audio/${a}.mp3`)
+			.then((response) => response.arrayBuffer())
+			.then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
+			.then((audioBuffer) => {
+				const data = filterData(audioBuffer);
+				data.forEach((a, i) => {
+					data[i] = a * 100;
+				});
+				let index = Number(audio.currentTime.toFixed()) / 0.01;
+				function wave() {
+					const sync = Number(audio.currentTime.toFixed() / 0.01).toFixed() - index;
+					if (sync > 40 || sync < -40) index = Number(audio.currentTime.toFixed()) / 0.01;
+					audio.volume = volume;
+					const bar = qs("#volume-bar");
+					if (!audio.paused && data[index] != 0 && data[index] != undefined) {
+						index++;
+						if (getId("volume").style.display == "block") bar.style.setProperty("--wave", data[index] + "%");
+						else bar.removeAttribute("style");
+						setTimeout(wave, 10);
+					} else {
+						bar.removeAttribute("style");
+					}
+				}
+				if (!audio.paused) {
+					wave();
+					audio.onplaying = wave;
+				}
+			});
+	}
+	return audio;
 }
 
 function showError(msg, info) {
@@ -154,13 +253,21 @@ var aeroSnap = null;
 function makeWindowsDrag() {
 	let cursorCSS = () => (document.body.style.cursor = "url(./css/cursor/aero_arrow.png), auto");
 
-	qsa(".window").forEach(
+	qsa(".sys-win").forEach(
+		(e) =>
+			(e.onclick = () => {
+				e.style.zIndex = highestZ() + 1;
+				startLostFocus(e);
+			})
+	);
+
+	qsa(".window:not(.sys-win)").forEach(
 		(e) =>
 			(e.onclick = function () {
 				if (this != getHighestZ()) {
-					console.log(this);
 					unfocusAll();
 					this.style.zIndex = highestZ() + 1;
+					this.classList.add("focus");
 					this.qs(".title-bar-controls").classList.remove("notfocused");
 				}
 				const taskbar = getId("taskbar-items"),
@@ -174,12 +281,14 @@ function makeWindowsDrag() {
 				startLostFocus();
 			})
 	);
-	$(".window").draggable({
+	$(".window:not(.sys-win)").draggable({
 		handle: ".title-bar",
 		stack: ".window",
 		start: (e) => {
+			e.target.style.zIndex = Number(e.target.style.zIndex) + 5;
 			startLostFocus();
 			unfocusAll();
+			e.target.classList.add("focus");
 			if (e.target.classList.contains("maximu")) {
 				e.target.classList.remove("maximu");
 				e.target.qs('[aria-label="Restore"]').outerHTML = '<button onclick="maxsBtn(this)" aria-label="Maximize"></button>';
@@ -228,18 +337,10 @@ function makeWindowsDrag() {
 			// when windows goes to top or bottom way too far?? not sure
 			const top = Number(target.style.top.split("px")[0]),
 				left = Number(target.style.left.split("px")[0]);
-
-			if (top < 0) {
-				target.style.top = "0px";
-			} else if (top > window.innerHeight - 67) {
-				target.style.top = window.innerHeight - 67 + "px";
-			}
-
-			if (left > window.innerWidth + 1) {
-				target.style.left = window.innerWidth - target.offsetWidth + "px";
-			} else if (left < -1) {
-				target.style.left = "0px";
-			}
+			if (top < 0) target.style.top = "0px";
+			else if (top > window.innerHeight - 67) target.style.top = window.innerHeight - 67 + "px";
+			if (left > window.innerWidth + 1) target.style.left = window.innerWidth - target.offsetWidth + "px";
+			else if (left < -target.offsetWidth) target.style.left = "0px";
 
 			var aero = getId("aero_snap");
 			if (aero.style.opacity == 1) {
@@ -280,7 +381,6 @@ function makeWindowsDrag() {
 
 	$(".window:not(.no-resize)").resizable({
 		handles: "all",
-		containment: "body",
 		minWidth: 229,
 		minHeight: 113,
 		cursor: false,
@@ -300,7 +400,6 @@ function makeWindowsDrag() {
 
 	$(".window#vscode, .window#minecraft").resizable({
 		handles: "all",
-		containment: "body",
 		minWidth: 576,
 		minHeight: 380,
 		cursor: false,
@@ -314,6 +413,13 @@ function makeWindowsDrag() {
 		cursor: false,
 		stop: cursorCSS,
 	});
+	$(".window#photo_viewer").resizable({
+		handles: "all",
+		minWidth: 425,
+		minHeight: 336,
+		cursor: false,
+		stop: cursorCSS,
+	});
 
 	qsa(".window.ui-resizable .title-bar").forEach((a) => {
 		a.ondblclick = function (e) {
@@ -323,26 +429,21 @@ function makeWindowsDrag() {
 }
 
 window.onresize = () => {
-	qsa(".window").forEach((target) => {
+	qsa(".window:not(.sys-win)").forEach((target) => {
 		const top = Number(target.style.top.split("px")[0]),
 			left = Number(target.style.left.split("px")[0]);
-
-		if (top < 0) {
-			target.style.top = "0px";
-		} else if (top > window.innerHeight - 67) {
-			target.style.top = window.innerHeight - 67 + "px";
-		}
-
-		if (left > window.innerWidth + 1) {
-			target.style.left = window.innerWidth - target.offsetWidth + "px";
-		} else if (left < -1) {
-			target.style.left = "0px";
-		}
+		if (top < 0) target.style.top = "0px";
+		else if (top > window.innerHeight - 67) target.style.top = window.innerHeight - 67 + "px";
+		if (left > window.innerWidth + 1) target.style.left = window.innerWidth - target.offsetWidth + "px";
+		else if (left < -target.offsetWidth) target.style.left = "0px";
 	});
 };
 
-function startLostFocus() {
-	getId("start_menu").style.display = "none";
+function startLostFocus(target) {
+	["volume", "start_menu"].forEach((a) => {
+		if (target && a == target.id) return;
+		getId(a).style.display = "none";
+	});
 	toggleStart();
 }
 function toggleStart() {
@@ -462,6 +563,9 @@ function repeatEvery(func, interval) {
 repeatEvery(updateTime, 60000);
 
 function unfocusAll() {
+	for (let a of qsa(".window")) {
+		a.classList.remove("focus");
+	}
 	for (let a of qsa(".title-bar-controls")) {
 		a.classList.add("notfocused");
 	}
@@ -491,7 +595,7 @@ qs("#start_input").addEventListener("keypress", function (e) {
 
 function highestZ() {
 	let highest = 0;
-	qsa(".window").forEach((a) => {
+	qsa(".window:not(.sys-win)").forEach((a) => {
 		const z = Number(a.style.zIndex);
 		if (a.style.zIndex !== "" && z !== NaN && z > highest) highest = z;
 	});
@@ -550,42 +654,7 @@ function setWallpaper(file, repeat, storage) {
 		let img = new Image();
 		img.src = blob_url;
 		img.onload = (e) => {
-			const canvafunc = (function (t) {
-				var e,
-					a,
-					r,
-					n = document.createElement("canvas"),
-					g,
-					d = n.getContext && n.getContext("2d"),
-					h = -4,
-					u = { r: 0, g: 0, b: 0 },
-					b = 0;
-				if (!d) return null;
-				(r = n.height = t.height), (a = n.width = t.width), d.drawImage(t, 0, 0);
-
-				if (localStorage.forceBlur == "true") {
-					d.globalAlpha = 0.3;
-					let offset = 7;
-					for (var i = 1; i <= 8; i += 1) {
-						d.drawImage(n, offset, 0, n.width - offset, n.height, 0, 0, n.width - offset, n.height);
-						d.drawImage(n, 0, offset, n.width, n.height - offset, 0, 0, n.width, n.height - offset);
-					}
-
-					n.toBlob((blob) => {
-						document.body.style.setProperty("--backdrop", `url("${URL.createObjectURL(blob)}") 0 / cover fixed`, "important");
-					});
-					return null;
-				} else {
-					try {
-						e = d.getImageData(0, 0, a, r);
-					} catch (t) {
-						return null;
-					}
-					for (g = e.data.length; (h += 80) < g; ) ++b, (u.r += e.data[h]), (u.g += e.data[h + 1]), (u.b += e.data[h + 2]);
-					return (u.r = ~~(u.r / b)), (u.g = ~~(u.g / b)), (u.b = ~~(u.b / b)), "rgb(" + u.r + "," + u.g + "," + u.b + ")";
-				}
-			})(img);
-
+			const canvafunc = colorOrBlur(img);
 			if (canvafunc) document.body.style.setProperty("--backdrop", canvafunc, "important");
 		};
 	}
@@ -595,15 +664,6 @@ function setWallpaper(file, repeat, storage) {
 		localforage.setItem("wallpaper-data", file);
 	}
 }
-(() => {
-	let wallpaper_repeat = localStorage["wallpaper-repeat"];
-	localforage.getItem("wallpaper-data", function (err, value) {
-		if (err) return console.error(err);
-		if (value) setWallpaper(value, wallpaper_repeat || false);
-	});
-})();
-
-// stolen from 98.js.org
 
 document.onmousedown = function (e) {
 	const k = e.target;
@@ -616,8 +676,6 @@ document.onmousedown = function (e) {
 		if (k == document.body) openMenuDesktop(e);
 	}
 };
-
-runApp("about");
 
 getId("taskbar-items").onwheel = function (e) {
 	e.preventDefault();
@@ -643,11 +701,257 @@ function crel(t, opt) {
 	return el;
 }
 
-if (!CSS.supports("backdrop-filter", "blur(15px)")) {
-	document.body.style.setProperty("--backdrop", 'url("marble_blur.jpeg") 0 / cover fixed');
-	showError("Aero glass won't work if backdrop-filter is not working...");
+runApp("about");
+
+window.addEventListener("load", function load() {
+	window.removeEventListener("load", load);
+	setTimeout(() => {
+		console.log("LOADED");
+		const bat = getId("battery_btn"),
+			int = getId("internet");
+		let social_tries = 0;
+		(function hmm() {
+			social_tries++;
+			try {
+				getId("start_avatar").src = socials.discord.avatar + "?size=48";
+				int.className = int.className.replace(/\d/g, "1");
+				return;
+			} catch (e) {
+				setTimeout(hmm, 1000 * social_tries);
+			}
+			console.log("socials not found, tried: " + social_tries);
+		})();
+
+		function changeBat(e) {
+			bat.style.setProperty("--percent", e.level * 100 + "%");
+			bat.className = e.charging ? "charging" : "";
+		}
+		if (navigator.getBattery) navigator.getBattery().then(changeBat);
+		else bat.remove();
+		int.className = "lan0";
+		try {
+			let a = navigator.connection.type;
+			if (a && !/none|ethernet/.test(a)) int.className = "wlan0";
+		} catch (e) {
+			if (isMobile) int.className = "wlan0";
+		}
+
+		getId("whalecum").style.opacity = "0";
+		getId("whalecum").style.visibility = "hidden";
+		setTimeout(() => playAudio("startup"), 300);
+		runApp("run");
+		setTimeout(() => showError("this website is under construction, may or may never be finished...."), 1000);
+	}, 2000);
+
+	if (!CSS.supports("backdrop-filter", "blur(15px)")) {
+		document.body.style.setProperty("--backdrop", 'url("marble_blur.jpeg") 0 / cover fixed');
+		showError("Aero glass won't work if backdrop-filter is not working...");
+	}
+	// stolen from 98.js.org
+	let wallpaper_repeat = localStorage["wallpaper-repeat"];
+	localforage.getItem("wallpaper-data", function (err, value) {
+		if (err) return console.error(err);
+		if (value) setWallpaper(value, wallpaper_repeat || false);
+	});
+});
+
+function photoViewer(e) {
+	const parent = e.closest(".window"),
+		paE = e.parentElement;
+	e.parentElement.onmousedown = function (e) {
+		const target = e.target;
+		if (target == this) return;
+		if (target.id.includes("spacer")) return;
+		target.setAttribute("clicked", "");
+		document.body.addEventListener("mouseup", function mouseu(e) {
+			document.body.removeEventListener("mouseup", mouseu);
+			const target = e.target;
+			if (target == this) return;
+			target.removeAttribute("clicked");
+		});
+	};
+	e.remove();
+
+	(function () {
+		let e,
+			o,
+			t,
+			f,
+			s = parent.qs("#images"),
+			n = !1,
+			l = () => (n = !1);
+		(s.onmousemove = (l) => {
+			if ((l.preventDefault(), !n)) return;
+			const p = l.pageX - s.offsetLeft - e,
+				u = l.pageY - s.offsetTop - t;
+			(s.scrollTop = f - u), (s.scrollLeft = o - p);
+		}),
+			(s.onmousedown = function (l) {
+				l.preventDefault(), (n = !0), (e = l.pageX - s.offsetLeft), (o = s.scrollLeft), (t = l.pageY - s.offsetTop), (f = s.scrollTop);
+			}),
+			(s.onmouseup = l),
+			(s.onmouseleave = l);
+	})();
+
+	let arr = [0, 90, 180, 270],
+		index = 0;
+
+	function back() {
+		paE.qs("input").value = 0;
+		parent.qs("#images img").removeAttribute("style");
+	}
+	function zoom3x(a) {
+		back();
+		if (a == -1) index = index == 0 ? 3 : index + a;
+		else index = index == 3 ? 0 : index + a;
+		parent.qs("#images img").className = "rotate" + arr[index];
+	}
+
+	function cycle(a) {
+		if (images.length == 1) paE.qsa(".footer>*[id^='go']").forEach((a) => a.setAttribute("disabled", ""));
+		if (images.length == 0) {
+			parent.qs(".title-bar-text").innerText = "Windows Photo Viewer";
+			parent.qs("#images img").dataset.index = 0;
+			parent.qs("#images img").src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E";
+			paE.qsa(".footer>*:not([id^='spacer'])").forEach((a) => a.setAttribute("disabled", ""));
+			return;
+		}
+		let index = Number(parent.qs("#images img").dataset.index),
+			lastI = (e) => e.length - 1,
+			last = (e) => e[e.length - 1];
+		back();
+		if (index > lastI(images)) {
+			parent.qs("#images img").dataset.index = 0;
+			cycle(a);
+			return;
+		}
+		if (a == -1) index = index == 0 ? lastI(images) : index + a;
+		else index = index == lastI(images) ? 0 : index + a;
+		parent.qs("#images img").dataset.index = index;
+		parent.qs("#images img").src = images[index];
+		parent.qs(".title-bar-text").innerText = last(images[index].split("/")) + " - Windows Photo Viewer";
+	}
+	cycle(0);
+	paE.qs("#rotate1").onclick = () => zoom3x(-1);
+	paE.qs("#rotate2").onclick = () => zoom3x(1);
+	paE.qs("#back").onclick = back;
+	paE.qs("#zoom").onclick = function () {
+		if (this.getAttribute("disabled") !== null) return;
+		paE.qs("#spacer69").classList.toggle("goaway");
+	};
+	paE.qs("input").oninput = function () {
+		const image = parent.qs("#images img"),
+			value = this.value;
+		if (value == 0) return back();
+		image.style.width = `calc(${image.naturalWidth}px + ${value * 2}vw)`;
+	};
+	paE.qs("#goback").onclick = () => cycle(-1);
+	paE.qs("#goforward").onclick = () => cycle(1);
+
+	function del() {
+		const index = Number(parent.qs("#images img").dataset.index);
+		if (index > -1 && index < images.length && images.length != 0) {
+			images.splice(index, 1);
+			cycle(1);
+		}
+	}
+	parent.qsa("#menu_del, .footer #del").forEach((e) => (e.onclick = del));
 }
 
-showError("this website is under construction, may or may never be finished....");
+function runAppGUI(g) {
+	if (/eval:/.test(g)) window.eval(g.split("eval:")[1]);
+	else if (/func:/.test(g)) {
+		let a = g.split("func:")[1].split(":");
+		if (a == "eval") return console.warn("you're not supposed to use eval...");
+		window[a[0]](a[1]);
+	} else if (/jspaint|mspaint/.test(g)) runApp("jspaint");
+	else if (/photos|photo_viewer/.test(g)) runApp("photo_viewer");
+	else if (/traits|run|minecraft|vscode/.test(g)) runApp(g);
+	else if (/about|winver/.test(g)) runApp("about");
+	else {
+		showError(`Windows cannot find '${g}'. Make sure you typed the name correctly, and then try again.`);
+		runApp("run");
+	}
+}
 
-runApp("traits");
+(function inp_val() {
+	const target = qs("#volume_slider input");
+	const value = target.value;
+	volume = value / 100;
+	target.closest(".window-body").qs(".bar").style.height = value + "%";
+	getId("volume_btn").onclick = () => {
+		getId("volume").style.display = getId("volume").style.display == "block" ? "none" : "block";
+		getId("volume").click();
+	};
+	target.oninput = inp_val;
+	let vol = 3;
+	if (value == 0) vol = 0;
+	else if (value < 33) vol = 1;
+	else if (value < 65) vol = 2;
+	getId("volume_btn").className = "_" + vol;
+	target.onchange = () => playAudio("ding");
+})();
+
+function colorOrBlur(t, blur = false, blur_callback = false) {
+	var e,
+		a,
+		r,
+		n = document.createElement("canvas"),
+		g,
+		d = n.getContext && n.getContext("2d"),
+		h = -4,
+		u = { r: 0, g: 0, b: 0 },
+		b = 0;
+	if (!d) return null;
+	(r = n.height = t.height), (a = n.width = t.width), d.drawImage(t, 0, 0);
+
+	if (localStorage.forceBlur == "true" || blur) {
+		d.globalAlpha = 0.3;
+		let offset = 7;
+		for (var i = 1; i <= 8; i += 1) {
+			d.drawImage(n, offset, 0, n.width - offset, n.height, 0, 0, n.width - offset, n.height);
+			d.drawImage(n, 0, offset, n.width, n.height - offset, 0, 0, n.width, n.height - offset);
+		}
+
+		n.toBlob((blob) => {
+			if (blur_callback) blur_callback(blob);
+			else document.body.style.setProperty("--backdrop", `url("${URL.createObjectURL(blob)}") 0 / cover fixed`, "important");
+		});
+		return null;
+	} else {
+		try {
+			e = d.getImageData(0, 0, a, r);
+		} catch (t) {
+			return null;
+		}
+		for (g = e.data.length; (h += 80) < g; ) ++b, (u.r += e.data[h]), (u.g += e.data[h + 1]), (u.b += e.data[h + 2]);
+		return (u.r = ~~(u.r / b)), (u.g = ~~(u.g / b)), (u.b = ~~(u.b / b)), "rgb(" + u.r + "," + u.g + "," + u.b + ")";
+	}
+}
+
+function newTab(url) {
+	// creating a element instead of window.open does not cause prevent popup
+	// ...i think
+	const a = document.createElement("a");
+	a.href = url;
+	a.target = "_blank";
+	a.click();
+}
+
+// e has to be a blob
+function openImagePaint(e) {
+	const fr = new FileReader();
+	fr.readAsDataURL(e);
+	fr.onloadend = function () {
+		window._jspaintOpen = this.result;
+		console.log(this.result);
+		runApp("jspaint");
+	};
+}
+
+function convertToBlobPaint(el) {
+	const src = el.closest(".window").qs("#images img").src;
+	fetch(src)
+		.then((e) => e.blob())
+		.then(openImagePaint);
+}

@@ -18,30 +18,132 @@
 		<title>garbage about page</title>
 	</head>
 	<body>
+		<div
+			id="whalecum"
+			style="
+				position: fixed;
+				z-index: 69696969;
+				background: url(css/wallpapers/lockscreen.jpg) 0 / cover fixed;
+				background-color: #1f1f1f;
+				width: 100vw;
+				height: 100vh;
+				top: 0;
+				left: 0;
+				transition: opacity 0.3s ease, visibility 0.3s ease;
+				cursor: none !important;
+			"
+		>
+			<div
+				style="
+					position: fixed;
+					height: 40px;
+					width: 100vw;
+					top: 40.7vh;
+					user-select: none;
+					color: white;
+					font-size: 25px;
+					text-align: center;
+					line-height: 40px;
+					letter-spacing: -0.5px;
+					text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+					padding-right: 16px;
+				"
+			>
+				<img style="position: relative; top: 6px; right: -5px" src="css/busy.gif" />
+				Welcome
+			</div>
+			<div
+				style="
+					height: 72px;
+					width: 100%;
+					position: fixed;
+					bottom: 0;
+					left: 0;
+					background-image: url(css/whalecum-refrence.png);
+					background-position: center;
+					background-repeat: no-repeat;
+				"
+			></div>
+		</div>
 		<div id="aero_snap"></div>
 		<div id="aero_anim"></div>
 
 		<div id="start_menu">
 			<div id="no_text"></div>
 			<div id="blur_start"></div>
+			<div id="menu_menu">
+				<div onclick="runApp('about')">Cyan</div>
+				<div>Documents</div>
+				<div>Pictures</div>
+				<div>Music</div>
+				<div id="spacer"></div>
+				<div>Favorites</div>
+				<div>This PC</div>
+				<div id="spacer"></div>
+				<div>Control Panel</div>
+				<div>Devices and Printers</div>
+				<div onclick="runApp('run')">Run...</div>
+			</div>
 			<div id="menu_programs">
+				<div onclick="runApp('run')">
+					<img src="css/run.ico" />
+					<p>Run</p>
+				</div>
+				<div onclick="runApp('run')">
+					<img src="css/run.ico" />
+					<p>Run</p>
+				</div>
+				<div onclick="runApp('run')">
+					<img src="css/run.ico" />
+					<p>Run</p>
+				</div>
+				<div onclick="runApp('run')">
+					<img src="css/run.ico" />
+					<p>Run</p>
+				</div>
+				<div id="spacer"></div>
 				<div onclick="showError('testo')">
 					<img src="css/error.ico" />
 					<p>Testo</p>
 				</div>
+				<div onclick="runApp('run')">
+					<img src="css/run.ico" />
+					<p>Run</p>
+				</div>
+				<div onclick="runApp('run')">
+					<img src="css/run.ico" />
+					<p>Run</p>
+				</div>
+				<div onclick="runApp('run')">
+					<img src="css/run.ico" />
+					<p>Run</p>
+				</div>
+				<div onclick="runApp('run')">
+					<img src="css/run.ico" />
+					<p>Run</p>
+				</div>
 			</div>
-			<input id="start_input" placeholder="Search programs and files" />
+			<img src="css/default_.bmp" id="start_avatar" />
+			<button id="shutdown">Shut Down</button>
+			<input type="text" id="start_input" placeholder="Search programs and files" />
 		</div>
 
 		<div id="task-bar">
 			<div id="blur-overlay"></div>
 			<div id="menu-button"></div>
 			<div id="taskbar-items"></div>
+			<div id="tray">
+				<div id="battery_btn">
+					<div id="bar"></div>
+				</div>
+				<div id="internet"></div>
+				<div id="volume_btn"></div>
+			</div>
 			<div id="datetime">
 				<span class="time"></span>
 				<span class="date"></span>
 			</div>
-			<div id="show-desktop"></div>
+			<button id="show-desktop"></button>
 		</div>
 
 		<ul role="menu" id="context_menu" class="can-hover" style="width: 200px">
@@ -59,17 +161,37 @@
 			<li role="menuitem"><a>Paste</a></li>
 			<li role="menuitem" class="has-divider"><a>Paste shortcut</a></li>
 			<li role="menuitem">
-				<img src="https://img.icons8.com/color/18/000000/monitor--v1.png" />
+				<img />
 				<a>Screen resolution</a>
 			</li>
 			<li role="menuitem">
-				<img src="https://img.icons8.com/color/18/000000/virtual-machine2.png" />
+				<img />
 				<a>Gadgets</a>
 			</li>
 			<li role="menuitem">
-				<img src="https://img.icons8.com/color/18/000000/remote-desktop.png" />
+				<img />
 				<a>Personalize</a>
 			</li>
 		</ul>
+
+		<div
+			id="volume"
+			class="window no-resize glass is-bright sys-win"
+			style="width: 84px; right: 52px; bottom: 50px; height: 304px; opacity: 1; visibility: visible; display: none; position: fixed"
+		>
+			<div class="window-body" style="background-image: url(css/volume/background.png)">
+				<div id="volume-bar">
+					<div class="bar">
+						<div id="bar1"></div>
+					</div>
+					<div class="bar">
+						<div id="bar2"></div>
+					</div>
+				</div>
+				<div id="volume_slider" class="is-vertical">
+					<input type="range" min="0" max="100" value="100" />
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

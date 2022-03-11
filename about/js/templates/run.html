@@ -1,0 +1,31 @@
+<div id="run" style="height: 210px; width: 410px; opacity: 1; visibility: visible" class="favicon window glass no-resize is-bright">
+	<div class="title-bar">
+		<img src="css/run.ico" style="width: 18px; height: 18px; position: absolute; left: 6px" />
+		<div class="title-bar-text">Run</div>
+		<div class="title-bar-controls">
+			<button aria-label="Close" onclick="closBtn(this)"></button>
+		</div>
+	</div>
+	<div class="window-body" style="padding: 0">
+		<div style="display: flex; flex-flow: row">
+			<img style="width: 32px; height: 32px; margin-left: 12px; margin-top: 15px" src="css/run.ico" />
+			<p style="margin: 17px; margin-left: 19.5px">Type the name of a program, folder, document, or Internet resource, and Windows will open it for you.</p>
+		</div>
+		<div style="margin-left: 10px">
+			<label>Open: </label>
+			<img src onerror='this.parentElement.qs("input").focus();this.remove()' />
+			<input
+				onkeydown="if(event.keyCode == 13 && this.value!=''){closBtn(this);runAppGUI(this.value);this.value=''}"
+				style="width: 320px; margin-left: 18px; margin-bottom: 21px"
+				type="text"
+				oninput="this.parentElement.qs(`[role='tooltip']`).hidden = true;"
+			/>
+			<div role="tooltip" style="position: absolute; z-index: 100; left: 64px">Try running "traits" or "photos"</div>
+		</div>
+		<footer style="height: 60px; text-align: right; margin: 0; border: none; line-height: 40px">
+			<button onclick=" let val = this.closest('.window-body').qs('input'); if(val.value!=''){closBtn(this);runAppGUI(val.value);val.value=''} " id="ok_">OK</button>
+			<button onclick="closBtn(this)">Cancel</button>
+			<button disabled>Browse...</button>
+		</footer>
+	</div>
+</div>

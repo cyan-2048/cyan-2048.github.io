@@ -1,6 +1,24 @@
 /* background to put when backdrop-filter is not present
 url("marble_blur.jpeg") 0 / cover fixed !important
 */
+body::before {
+	content: url("marble_blur.jpeg") url("marble.jpeg") url("cursor/aero_nesw.png") url("cursor/aero_nwse.png") url("cursor/aero_nwse.png") url("cursor/aero_nesw.png")
+		url("cursor/aero_ew.png") url("cursor/aero_ew.png") url("cursor/aero_ns.png") url("cursor/aero_ns.png") url("cursor/aero_busy/1.png") url("cursor/aero_busy/2.png")
+		url("cursor/aero_busy/3.png") url("cursor/aero_busy/4.png") url("cursor/aero_busy/5.png") url("cursor/aero_busy/6.png") url("cursor/aero_busy/7.png")
+		url("cursor/aero_busy/8.png") url("cursor/aero_busy/9.png") url("cursor/aero_busy/10.png") url("cursor/aero_busy/11.png") url("cursor/aero_busy/12.png")
+		url("cursor/aero_busy/13.png") url("cursor/aero_busy/14.png") url("cursor/aero_busy/15.png") url("cursor/aero_busy/16.png") url("cursor/aero_busy/17.png")
+		url("cursor/aero_busy/18.png") url("cursor/aero_busy/18.png") url("cursor/aero_working/1.png") url("cursor/aero_working/2.png") url("cursor/aero_working/3.png")
+		url("cursor/aero_working/4.png") url("cursor/aero_working/5.png") url("cursor/aero_working/6.png") url("cursor/aero_working/7.png") url("cursor/aero_working/8.png")
+		url("cursor/aero_working/9.png") url("cursor/aero_working/10.png") url("cursor/aero_working/11.png") url("cursor/aero_working/12.png") url("cursor/aero_working/13.png")
+		url("cursor/aero_working/14.png") url("cursor/aero_working/15.png") url("cursor/aero_working/16.png") url("cursor/aero_working/17.png") url("cursor/aero_working/18.png")
+		url("cursor/aero_working/18.png") url(cursor/aero_arrow.png) url(cursor/aero_select.png) url(vscode_iframe/mini.png) url(vscode_iframe/res.png) url(vscode_iframe/max.png)
+		url(vscode_iframe/close.png) url(vscode_iframe/mini_hovered.png) url(vscode_iframe/res_hovered.png) url(vscode_iframe/max_hovered.png) url(vscode_iframe/close_hovered.png)
+		url(vscode_iframe/vscode\ icon\ for\ iframe.png) url(start.png) url(start-hovered.png) url("program_hover.png") url(no_text_better_.png) url("glass.png") url("sprite.png")
+		url("./volume/0.ico") url("./volume/1.ico") url("./volume/2.ico") url("./volume/3.ico") url("./volume/mute.ico") url("./battery/battery.png") url("./battery/charging_.png")
+		url("network/wifi-0.ico") url("network/wifi-1.ico") url("network/lan-0.ico") url("network/lan-1.ico") url("photo_viewer/buttons.png") url("photo_viewer/buttons_focus.png")
+		url("photo_viewer/buttons_click.png") url("photo_viewer/buttons_disabled.png") url("aero_peek_sprite.png") url("shutdown/shutdown.png") url("shutdown/shutdown_clicked.png")
+		url("shutdown/shutdown_hover.png") !important;
+}
 
 body {
 	background: url("marble.jpeg") 0 / cover fixed;
@@ -100,6 +118,11 @@ body {
 	top: -5px;
 }
 
+html,
+body {
+	cursor: url(cursor/aero_arrow.png), auto;
+}
+
 @keyframes cur_busy {
 	0% {
 		cursor: url("cursor/aero_busy/1.png") 15 15, auto;
@@ -159,20 +182,81 @@ body {
 		cursor: url("cursor/aero_busy/18.png") 15 15, auto;
 	}
 }
+@keyframes cur_working {
+	0% {
+		cursor: url("cursor/aero_working/1.png") 0 8, auto;
+	}
+	5% {
+		cursor: url("cursor/aero_working/2.png") 0 8, auto;
+	}
+	11% {
+		cursor: url("cursor/aero_working/3.png") 0 8, auto;
+	}
+	16% {
+		cursor: url("cursor/aero_working/4.png") 0 8, auto;
+	}
+	22% {
+		cursor: url("cursor/aero_working/5.png") 0 8, auto;
+	}
+	27% {
+		cursor: url("cursor/aero_working/6.png") 0 8, auto;
+	}
+	33% {
+		cursor: url("cursor/aero_working/7.png") 0 8, auto;
+	}
+	38% {
+		cursor: url("cursor/aero_working/8.png") 0 8, auto;
+	}
+	44% {
+		cursor: url("cursor/aero_working/9.png") 0 8, auto;
+	}
+	50% {
+		cursor: url("cursor/aero_working/10.png") 0 8, auto;
+	}
+	55% {
+		cursor: url("cursor/aero_working/11.png") 0 8, auto;
+	}
+	61% {
+		cursor: url("cursor/aero_working/12.png") 0 8, auto;
+	}
+	66% {
+		cursor: url("cursor/aero_working/13.png") 0 8, auto;
+	}
+	72% {
+		cursor: url("cursor/aero_working/14.png") 0 8, auto;
+	}
+	77% {
+		cursor: url("cursor/aero_working/15.png") 0 8, auto;
+	}
+	83% {
+		cursor: url("cursor/aero_working/16.png") 0 8, auto;
+	}
+	88% {
+		cursor: url("cursor/aero_working/17.png") 0 8, auto;
+	}
+	94% {
+		cursor: url("cursor/aero_working/18.png") 0 8, auto;
+	}
+	100% {
+		cursor: url("cursor/aero_working/18.png") 0 8, auto;
+	}
+}
 
+body.cursor-working {
+	animation: cur_working 0.9s infinite;
+}
 body.cursor-busy {
 	animation: cur_busy 0.9s infinite;
 }
 
-html,
-body,
 .ui-draggable-dragging,
 ul[role],
-button {
-	cursor: url(cursor/aero_arrow.png), auto;
+button,
+input[type="range"] {
+	cursor: url(cursor/aero_arrow.png), auto !important;
 }
 
-input {
+input[type="text"] {
 	cursor: url(cursor/aero_select.png), auto !important;
 }
 
@@ -184,6 +268,10 @@ input {
 
 .glass.window {
 	backdrop-filter: blur(5px) !important;
+}
+
+.window.focus {
+	box-shadow: 2px 2px 13px 0 rgba(0, 0, 0, 1);
 }
 
 .window-body::before {
@@ -217,7 +305,7 @@ input {
 	width: auto !important;
 }
 
-.window {
+.window:not(.sys-win) {
 	position: fixed !important;
 	animation: openwindow 0.3s ease;
 }
@@ -360,7 +448,8 @@ input {
 }
 
 #minecraft .title-bar-text,
-.iframe-app .title-bar-text {
+.iframe-app .title-bar-text,
+.favicon .title-bar-text {
 	margin-left: 24px;
 }
 
@@ -479,20 +568,35 @@ input {
 }
 
 #show-desktop {
-	position: absolute;
-	top: 2px;
-	right: 0;
-	bottom: 0;
 	width: 15px;
-	background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 30%, rgba(0, 0, 0, 0.2) 31%, rgba(0, 0, 0, 0.2) 100%);
-	border: solid 1px rgba(255, 255, 255, 0.2);
-	z-index: 3;
-	box-shadow: -1px 0 0 0 #000;
+	height: 40px;
+	background-image: url("aero_peek_sprite.png");
+	background-position-x: 0px;
+	right: 0;
+	position: fixed;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	z-index: 5;
+	bottom: -1px;
+}
+
+.revert-button,
+#shutdown,
+#show-desktop {
+	outline: none;
+	border-radius: 0px;
+	border: none;
+	box-shadow: none;
+	padding: 0;
+	min-width: 0;
+	min-height: 0;
 }
 
 #show-desktop:hover {
-	background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.2) 30%, rgba(255, 255, 255, 0.2) 31%, rgba(255, 255, 255, 0.2) 100%);
-	border: solid 1px rgba(255, 255, 255, 0.2);
+	background-position-x: -15px;
+}
+#show-desktop:active {
+	background-position-x: -30px;
 }
 
 @keyframes openwindow {
@@ -518,7 +622,7 @@ input {
 }
 
 .closing {
-	animation: closewindow 0.3s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+	animation: closewindow 0.3s cubic-bezier(0.86, 0, 0.07, 1) forwards !important;
 }
 
 @keyframes startmenu {
@@ -543,6 +647,15 @@ input {
 	animation: startmenu ease 0.2s;
 }
 
+#start_avatar {
+	width: 46px;
+	height: 46px;
+	position: absolute;
+	top: 6px;
+	right: 51px;
+	border-radius: 2px;
+}
+
 #menu_programs,
 #all_apps {
 	width: 242px;
@@ -550,16 +663,20 @@ input {
 	position: absolute;
 	top: 34px;
 	left: 9px;
+	padding: 1px;
 }
 
 #menu_programs > div {
 	display: flex;
 	flex-direction: row;
-	margin-left: 1px;
-	margin-top: 1px;
 	height: 38px;
 	width: 240px;
 	user-select: none;
+}
+#menu_programs > #spacer {
+	width: 0px;
+	height: 0px;
+	margin-bottom: 3px;
 }
 #menu_programs > div:hover {
 	background-image: url("program_hover.png");
@@ -698,7 +815,7 @@ input {
 }
 
 #taskbar-items {
-	width: calc(100vw - 180px);
+	width: calc(100vw - 210px);
 	display: block;
 	height: 100%;
 	position: absolute;
@@ -715,6 +832,86 @@ input {
 	display: none;
 }
 
+#tray {
+	height: 100%;
+	width: 67px;
+	right: 85px;
+	position: absolute;
+	font-size: 0;
+	white-space: nowrap;
+	text-align: right;
+	z-index: 4;
+}
+
+#tray > * {
+	width: 22px;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: 16px;
+	background-position: center;
+	display: inline-block;
+}
+
+#volume_btn._0 {
+	background-image: url("./volume/0.ico");
+}
+#volume_btn._1 {
+	background-image: url("./volume/1.ico");
+}
+#volume_btn._2 {
+	background-image: url("./volume/2.ico");
+}
+#volume_btn._3 {
+	background-image: url("./volume/3.ico");
+}
+#volume_btn {
+	background-image: url("./volume/mute.ico");
+}
+
+#battery_btn:not(.charging) {
+	background-image: url("./battery/battery.png");
+	background-position-x: 5px;
+}
+#battery_btn.charging {
+	background-image: url("./battery/charging_.png");
+}
+#battery_btn {
+	--percent: 0%;
+	filter: drop-shadow(0 0 1px black);
+}
+#battery_btn #bar {
+	position: relative;
+	width: 5px;
+	height: 12px;
+	bottom: -13px;
+	left: 7.5px;
+	z-index: -1;
+}
+#battery_btn.charging #bar {
+	left: 6.4px;
+}
+#battery_btn #bar::before {
+	content: "";
+	background: white;
+	width: 100%;
+	height: var(--percent);
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+#internet.wlan0 {
+	background-image: url("network/wifi-0.ico");
+}
+#internet.wlan1 {
+	background-image: url("network/wifi-1.ico");
+}
+#internet.lan0 {
+	background-image: url("network/lan-0.ico");
+}
+#internet.lan1 {
+	background-image: url("network/lan-1.ico");
+}
 #taskbar-items > div {
 	width: 56px;
 	background: center no-repeat;
@@ -762,4 +959,246 @@ input {
 #context_menu {
 	display: none;
 	position: fixed;
+}
+
+.ultra-clear .window-body {
+	border: none;
+	background-color: transparent;
+	box-shadow: none;
+}
+
+#photo_viewer {
+	text-align: center;
+}
+
+#photo_viewer .window-body {
+	padding: 0;
+	background-color: #e0e4ec;
+	height: calc(100% - 93px);
+	margin-bottom: 0;
+	text-align: left !important;
+}
+
+#photo_viewer #images-container {
+	background-color: #e0e4ec;
+	height: calc(100% - 30px);
+}
+
+#images {
+	display: grid;
+	scrollbar-width: none;
+	overflow: scroll;
+	height: 100%;
+}
+#images::-webkit-scrollbar {
+	display: none;
+}
+
+#images-container img {
+	margin: auto;
+	image-rendering: pixelated;
+	transform-origin: top left;
+}
+
+#images img.rotate90 {
+	transform: rotate(90deg) translateY(-100%);
+}
+#images img.rotate180 {
+	transform: rotate(180deg) translate(-100%, -100%);
+}
+#images img.rotate270 {
+	transform: rotate(270deg) translateX(-100%);
+}
+
+#photo_viewer > .footer {
+	height: 58px;
+	background-repeat: no-repeat;
+	width: 410px;
+	margin-top: 2px;
+	display: inline-flex;
+	flex-direction: row;
+	position: relative;
+}
+#photo_viewer::before {
+	left: 0;
+}
+#photo_viewer.window.maximu {
+	height: calc(100vh - 36px) !important;
+}
+#photo_viewer [role="menubar"].can-hover {
+	margin: 1px;
+}
+
+.footer * {
+	background-image: url("photo_viewer/buttons.png");
+	height: 100%;
+}
+.footer *:not([disabled]):hover {
+	background-image: url("photo_viewer/buttons_focus.png");
+}
+.footer *:not([disabled])[clicked] {
+	background-image: url("photo_viewer/buttons_click.png");
+}
+.footer *[disabled] {
+	background-image: url("photo_viewer/buttons_disabled.png");
+}
+.footer #spacer1 {
+	width: 28px;
+}
+.footer #zoom {
+	width: 42px;
+	background-position: -28px;
+}
+.footer #spacer2 {
+	width: 15px;
+	background-position: -70px;
+}
+.footer #back {
+	width: 32px;
+	background-position: -85px;
+}
+.footer #spacer3 {
+	width: 15px;
+	background-position: -117px;
+}
+.footer #goback {
+	width: 51px;
+	background-position: -132px;
+}
+.footer #slide {
+	width: 43px;
+	background-position: -183px;
+}
+.footer #goforward {
+	width: 53px;
+	background-position: -226px;
+}
+.footer #spacer4 {
+	width: 10px;
+	background-position: -279px;
+}
+.footer #rotate1 {
+	width: 30px;
+	background-position: -289px;
+}
+.footer #rotate2 {
+	width: 32px;
+	background-position: -319px;
+}
+.footer #spacer5 {
+	width: 17px;
+	background-position: -351px;
+}
+.footer #del {
+	width: 42px;
+	background-position: -368px;
+}
+
+#volume-bar {
+	position: relative;
+	height: 115px;
+	width: 3px;
+	top: 63px;
+	left: 18px;
+	white-space: nowrap;
+	--wave: 0;
+}
+#volume-bar .bar {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	bottom: 0;
+}
+#volume-bar #bar1 {
+	color: rgb(51, 194, 51);
+	z-index: 1;
+}
+#volume-bar #bar2 {
+	color: rgb(195, 197, 197);
+}
+#volume-bar .bar > * {
+	background: currentColor;
+	width: 100%;
+	height: var(--wave);
+	position: absolute;
+	bottom: 0;
+	transition: height linear 0.07s;
+}
+
+#volume_slider input {
+	width: 122px;
+}
+#volume_slider input::-moz-range-track,
+#volume_slider input::-webkit-slider-runnable-track,
+#volume_slider input::-webkit-scrollbar-corner {
+	-webkit-appearance: none;
+	background: transparent;
+	box-shadow: none;
+}
+#volume_slider input::-webkit-slider-runnable-track {
+	-webkit-appearance: none;
+	width: 20px;
+	height: 0px;
+	background: rgb(231, 234, 234);
+}
+
+#volume_slider {
+	position: absolute;
+	top: 56px;
+	left: 23px;
+}
+
+#shutdown {
+	color: white;
+	background: url("shutdown/shutdown.png");
+	width: 100px;
+	height: 24px;
+	position: absolute;
+	bottom: 13px;
+	right: 43px;
+	text-align: left;
+	padding-left: 8px;
+}
+#shutdown::after {
+	content: "";
+	background: url(shutdown/chev.png);
+	width: 7px;
+	height: 9px;
+	display: block;
+	position: absolute;
+	right: 7px;
+	top: 8px;
+}
+#shutdown:hover {
+	background: url("shutdown/shutdown_hover.png");
+}
+#shutdown:active {
+	background: url("shutdown/shutdown_clicked.png");
+}
+#shutdown:active::after {
+	opacity: 0.3;
+}
+
+#menu_menu {
+	position: absolute;
+	width: 146px;
+	/*  n i c e  */
+	top: 69px;
+	right: -1.5px;
+}
+#menu_menu > div {
+	color: white;
+	width: 140px;
+	height: 29px;
+	line-height: 28px;
+	padding-left: 8px;
+}
+#menu_menu > div:hover {
+	background-image: url("start_focus_glass.png");
+}
+#menu_menu > #spacer {
+	margin: 8px 0;
+	width: 0;
+	height: 0;
 }
