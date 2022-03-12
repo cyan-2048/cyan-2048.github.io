@@ -46,7 +46,7 @@
 					line-height: 40px;
 					letter-spacing: -0.5px;
 					text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-					padding-right: 16px;
+					padding-right: 30px;
 				"
 			>
 				<img style="position: relative; top: 6px; right: -5px" src="css/busy.gif" />
@@ -62,6 +62,7 @@
 					background-image: url(css/whalecum-refrence.png);
 					background-position: center;
 					background-repeat: no-repeat;
+					filter: drop-shadow(0 0 2px black);
 				"
 			></div>
 		</div>
@@ -75,7 +76,16 @@
 				<div onclick="runApp('about')">Cyan</div>
 				<div>Documents</div>
 				<div>Pictures</div>
-				<div>Music</div>
+				<div
+					onclick='
+				if (!window.audo){playAudio("http://cyan-socials.herokuapp.com/yt/?v=7MHlhHaLcTA",true).then(el => window.audo = el); window.audo = "pending"}
+				else if (typeof window.audo == "string") {}
+				else if (!window.audo.paused) window.audo.pause();
+				else window.audo.play();
+				'
+				>
+					Music
+				</div>
 				<div id="spacer"></div>
 				<div>Favorites</div>
 				<div>This PC</div>
@@ -191,6 +201,7 @@
 				<div id="volume_slider" class="is-vertical">
 					<input type="range" min="0" max="100" value="100" />
 				</div>
+				<button id="volume_button" class="revert-button" data-mute="false"></button>
 			</div>
 		</div>
 	</body>

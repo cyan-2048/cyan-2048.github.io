@@ -153,62 +153,88 @@ function runApp(g) {
 	}
 }
 
-function playAudio(a) {
-	const audio = new Audio(`./audio/${a}.mp3`);
-	audio.volume = volume;
-	audio.load();
-	audio.play();
-
-	const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-	function filterData(audioBuffer) {
-		const rawData = audioBuffer.getChannelData(0); // We only need to work with one channel of data
-		const samples = Number(audio.duration.toFixed()) / 0.01; // Number of samples we want to have in our final data set
-		const blockSize = Math.floor(rawData.length / samples); // the number of samples in each subdivision
-		const filteredData = [];
-		for (let i = 0; i < samples; i++) {
-			let blockStart = blockSize * i; // the location of the first sample in the block
-			let sum = 0;
-			for (let j = 0; j < blockSize; j++) {
-				sum = sum + Math.abs(rawData[blockStart + j]); // find the sum of all the samples in the block
+function playAudio(a, url = false) {
+	let audio;
+	function wavy(b) {
+		if (!(window.AudioContext || window.webkitAudioContext)) return showError("audioContext is not available, please tell Cyan so that they can do something about it...");
+		const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+		function filterData(audioBuffer) {
+			const rawData = audioBuffer.getChannelData(0); // We only need to work with one channel of data
+			const samples = Number(audio.duration.toFixed()) / 0.01; // Number of samples we want to have in our final data set
+			const blockSize = Math.floor(rawData.length / samples); // the number of samples in each subdivision
+			const filteredData = [];
+			for (let i = 0; i < samples; i++) {
+				let blockStart = blockSize * i; // the location of the first sample in the block
+				let sum = 0;
+				for (let j = 0; j < blockSize; j++) {
+					sum = sum + Math.abs(rawData[blockStart + j]); // find the sum of all the samples in the block
+				}
+				filteredData.push(sum / blockSize); // divide the sum by the block size to get the average
 			}
-			filteredData.push(sum / blockSize); // divide the sum by the block size to get the average
+			const multiplier = Math.pow(Math.max(...filteredData), -1);
+			return filteredData.map((n) => n * multiplier);
 		}
-		const multiplier = Math.pow(Math.max(...filteredData), -1);
-		return filteredData.map((n) => n * multiplier);
-	}
-
-	audio.ontimeupdate = () => (audio.volume = volume);
-
-	if (qs("#volume-bar").getAttribute("style") == null) {
-		qs("#volume-bar").setAttribute("style", "");
-		fetch(`./audio/${a}.mp3`)
-			.then((response) => response.arrayBuffer())
-			.then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
-			.then((audioBuffer) => {
-				const data = filterData(audioBuffer);
-				data.forEach((a, i) => {
-					data[i] = a * 100;
-				});
-				let index = Number(audio.currentTime.toFixed()) / 0.01;
-				function wave() {
-					const sync = Number(audio.currentTime.toFixed() / 0.01).toFixed() - index;
-					if (sync > 40 || sync < -40) index = Number(audio.currentTime.toFixed()) / 0.01;
-					audio.volume = volume;
-					const bar = qs("#volume-bar");
-					if (!audio.paused && data[index] != 0 && data[index] != undefined) {
-						index++;
-						if (getId("volume").style.display == "block") bar.style.setProperty("--wave", data[index] + "%");
-						else bar.removeAttribute("style");
-						setTimeout(wave, 10);
-					} else {
-						bar.removeAttribute("style");
+		audio.ontimeupdate = () => (audio.volume = volume);
+		let vol_attr = qs("#volume-bar").getAttribute("style");
+		if (vol_attr == null || vol_attr == "") {
+			qs("#volume-bar").setAttribute("style", "");
+			fetch(b)
+				.then((response) => response.arrayBuffer())
+				.then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
+				.then((audioBuffer) => {
+					const data = filterData(audioBuffer);
+					e;
+					data.forEach((a, i) => {
+						data[i] = a * 100;
+					});
+					let index = Number(audio.currentTime.toFixed()) / 0.01;
+					function wave() {
+						const sync = Number(audio.currentTime.toFixed() / 0.01).toFixed() - index;
+						if (sync > 40 || sync < -40) index = Number(audio.currentTime.toFixed()) / 0.01;
+						audio.volume = volume;
+						const bar = qs("#volume-bar");
+						if (!audio.paused && data[index] != 0 && data[index] != undefined) {
+							index++;
+							if (getId("volume").style.display == "block") bar.style.setProperty("--wave", data[index] + "%");
+							else bar.removeAttribute("style");
+							setTimeout(wave, 10);
+						} else {
+							bar.removeAttribute("style");
+						}
 					}
-				}
-				if (!audio.paused) {
-					wave();
-					audio.onplaying = wave;
-				}
-			});
+					if (!audio.paused) {
+						wave();
+						audio.onplaying = wave;
+					}
+				})
+				.catch(console.error);
+		}
+	}
+	function play(url) {
+		audio = new Audio(url);
+		audio.volume = volume;
+		audio.load();
+		audio.play();
+	}
+	// if it's a url we load it up to ram instead of making it buffer again and again...
+	if (url) {
+		// rejecting for some reason creates a dom exception
+		return new Promise(function (resolve, reject) {
+			fetch(a)
+				.then((res) => res.blob())
+				.then((res) => {
+					const url = URL.createObjectURL(res);
+					play(url);
+					console.log(url);
+					wavy(url);
+					audio.onended = () => URL.revokeObjectURL(url);
+					resolve(audio);
+				});
+		});
+	} else {
+		const url = `./audio/${a}.mp3`;
+		play(url);
+		wavy(url);
 	}
 	return audio;
 }
@@ -452,8 +478,12 @@ function toggleStart() {
 		getId("menu-button").style.backgroundImage = "url(css/start-selected.png)";
 		if (!isMobile) getId("start_input").focus();
 	} else {
-		getId("menu-button").removeAttribute("style");
-		getId("start_menu").removeAttribute("style");
+		["menu-button", "start_menu"].forEach((a) => {
+			const _attr = getId(a).getAttribute.style;
+			if (_attr != null || _attr != "") {
+				getId(a).removeAttribute("style");
+			}
+		});
 	}
 }
 
@@ -536,7 +566,6 @@ function makeTabsWorkAgain() {
 	});
 }
 
-makeTabsWorkAgain();
 function updateTime() {
 	var e = new Date(),
 		t = e.getHours(),
@@ -705,7 +734,7 @@ runApp("about");
 
 window.addEventListener("load", function load() {
 	window.removeEventListener("load", load);
-	setTimeout(() => {
+	function init() {
 		console.log("LOADED");
 		const bat = getId("battery_btn"),
 			int = getId("internet");
@@ -738,14 +767,26 @@ window.addEventListener("load", function load() {
 
 		getId("whalecum").style.opacity = "0";
 		getId("whalecum").style.visibility = "hidden";
-		setTimeout(() => playAudio("startup"), 300);
-		runApp("run");
-		setTimeout(() => showError("this website is under construction, may or may never be finished...."), 1000);
-	}, 2000);
+		let a = new Audio("audio/startup.mp3");
+		a.load();
+		var promise = a.play();
+		if (promise) {
+			promise.catch((_) => {
+				showError("please consider enabling autoplay on this website so that audio can play properly", _);
+			});
+		}
 
+		setTimeout(() => {
+			showError("this website is under construction, may or may never be finished....");
+			if (!CSS.supports("backdrop-filter", "blur(15px)")) {
+				setTimeout(() => showError("Aero glass won't work if backdrop-filter is not working..."), 100);
+			}
+		}, 3000);
+		runApp("run");
+	}
+	init();
 	if (!CSS.supports("backdrop-filter", "blur(15px)")) {
 		document.body.style.setProperty("--backdrop", 'url("marble_blur.jpeg") 0 / cover fixed');
-		showError("Aero glass won't work if backdrop-filter is not working...");
 	}
 	// stolen from 98.js.org
 	let wallpaper_repeat = localStorage["wallpaper-repeat"];
@@ -763,11 +804,12 @@ function photoViewer(e) {
 		if (target == this) return;
 		if (target.id.includes("spacer")) return;
 		target.setAttribute("clicked", "");
+		function removeClick() {
+			target.removeAttribute("clicked");
+		}
 		document.body.addEventListener("mouseup", function mouseu(e) {
 			document.body.removeEventListener("mouseup", mouseu);
-			const target = e.target;
-			if (target == this) return;
-			target.removeAttribute("clicked");
+			removeClick();
 		});
 	};
 	e.remove();
@@ -835,7 +877,7 @@ function photoViewer(e) {
 	paE.qs("#rotate1").onclick = () => zoom3x(-1);
 	paE.qs("#rotate2").onclick = () => zoom3x(1);
 	paE.qs("#back").onclick = back;
-	paE.qs("#zoom").onclick = function () {
+	paE.qs("#zoom").onmousedown = function (e) {
 		if (this.getAttribute("disabled") !== null) return;
 		paE.qs("#spacer69").classList.toggle("goaway");
 	};
@@ -877,12 +919,15 @@ function runAppGUI(g) {
 (function inp_val() {
 	const target = qs("#volume_slider input");
 	const value = target.value;
+	const mute = qs("#volume #volume_button").dataset.mute == "true";
 	volume = value / 100;
 	target.closest(".window-body").qs(".bar").style.height = value + "%";
 	getId("volume_btn").onclick = () => {
 		getId("volume").style.display = getId("volume").style.display == "block" ? "none" : "block";
 		getId("volume").click();
 	};
+	if (mute) qs("#volume #volume_button").dataset.mute = false;
+	getId("bar1").style.opacity = 1;
 	target.oninput = inp_val;
 	let vol = 3;
 	if (value == 0) vol = 0;
@@ -890,6 +935,26 @@ function runAppGUI(g) {
 	else if (value < 65) vol = 2;
 	getId("volume_btn").className = "_" + vol;
 	target.onchange = () => playAudio("ding");
+	qs("#volume #volume_button").onclick = function () {
+		let _mute = this.dataset.mute;
+		let ismute = _mute == "true" ? false : true;
+		this.dataset.mute = ismute;
+		if (ismute) {
+			volume = 0;
+			getId("volume_btn").className = "";
+			getId("bar1").style.opacity = 0;
+		} else {
+			getId("bar1").style.opacity = 1;
+			((value) => {
+				let vol = 3;
+				if (value == 0) vol = 0;
+				else if (value < 33) vol = 1;
+				else if (value < 65) vol = 2;
+				getId("volume_btn").className = "_" + vol;
+				volume = value / 100;
+			})(qs("#volume_slider input").value);
+		}
+	};
 })();
 
 function colorOrBlur(t, blur = false, blur_callback = false) {

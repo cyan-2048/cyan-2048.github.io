@@ -1,22 +1,22 @@
-<div id="error" data-icon="css/error.ico" style="width: 410px; opacity: 1; visibility: visible" class="window glass is-bright">
+<div id="error" data-icon="css/error.ico" style="width: 410px; opacity: 1; visibility: visible; z-index: 0" class="window glass is-bright">
 	<div class="title-bar">
 		<div class="title-bar-text">Error</div>
-		<div class="title-bar-controls">
+		<div class="title-bar-controls notfocused">
 			<button aria-label="Close" onclick="closBtn(this)"></button>
 		</div>
 	</div>
-	<div class="window-body">
-		<div style="display: flex; flex-direction: row">
+	<div class="window-body" style="padding: 0; margin-bottom: 7px">
+		<div style="display: flex; flex-direction: row; margin: 6px">
 			<img src="./css/error.ico" style="margin: 16px; display: block" width="32" height="32" />
 			<div style="text-align: left; font-size: 14px; margin-top: 14px; flex: 1 1 1px; min-width: 0px">
 				<details>
 					<summary><span>Details</span></summary>
-					<pre style="font-family: monospace !important; max-width: 100%; overflow: auto; margin: 0; padding: 4px; max-height: 500px">crap</pre>
+					<pre style="font-family: monospace !important; max-width: 100%; overflow: auto; margin: 0; padding: 4px; max-height: 500px; white-space: pre-wrap">crap</pre>
 				</details>
 			</div>
 		</div>
+		<footer style="text-align: right; border: 0; margin: 0">
+			<button onclick="closBtn(this)">Close</button>
+		</footer>
 	</div>
-	<footer style="text-align: right">
-		<button onclick="closBtn(this)">Close</button>
-	</footer>
 </div>
