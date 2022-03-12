@@ -742,7 +742,9 @@ window.addEventListener("load", function load() {
 			social_tries++;
 			try {
 				getId("start_avatar").src = socials.discord.avatar + "?size=48";
-				int.className = int.className.replace(/\d/g, "1");
+				setTimeout(() => {
+					int.className = int.className.replace("0", "1");
+				}, 1000);
 				return;
 			} catch (e) {
 				setTimeout(hmm, 1000 * social_tries);
