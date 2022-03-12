@@ -570,7 +570,7 @@ input[type="text"] {
 #show-desktop {
 	width: 15px;
 	height: 40px;
-	background-image: url("aero_peek_sprite.png");
+	background-image: url("aero_peek_sprite.png") !important;
 	background-position-x: 0px;
 	right: -1px;
 	position: fixed;
