@@ -183,7 +183,6 @@ function playAudio(a, url = false) {
 				.then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
 				.then((audioBuffer) => {
 					const data = filterData(audioBuffer);
-					e;
 					data.forEach((a, i) => {
 						data[i] = a * 100;
 					});
