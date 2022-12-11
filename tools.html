@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tools</title>
+  </head>
+  <body>
+    <h1>Cyan's tools</h1>
+    <main>
+      <fieldset>
+        <b>Eval</b>
+        <textarea name="eval" id="evalText"></textarea>
+        <div>
+          <button onclick="evalFunc()">Eval!!!</button>
+          <button onclick="evalFunc(true)">Eval & Copy</button>
+          <button onclick="evalFunc(false, true)">Show Result</button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <b>Local Video Player</b>
+        <video id="videoPlayer" controls>WTF upgrade your browser bruh</video>
+        <div>
+          <input onchange="playVideo(this.files)" type="file" accept="video/mp4,video/x-m4v,video/*" id="videoInput" />
+        </div>
+      </fieldset>
+      <fieldset>
+        <b>JSON.stringify</b>
+        <textarea id="jsonText"></textarea>
+        <div>
+          <input style="height: 5vmin; width: 40px" value="0" type="text" />
+          <button onclick="jsonStringify(this.previousElementSibling.value)">Submit</button>
+          <button onclick="copyValue('jsonText')">Copy Text</button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <b>DataURI</b>
+        <textarea id="dataURLText"></textarea>
+        <div>
+          <input onchange="dataURLFunc(this.files[0])" type="file" id="dataUrlInput" />
+          <button onclick="copyValue('dataURLText')">Copy Text</button>
+        </div>
+      </fieldset>
+    </main>
+  </body>
+  <script src="./js/tools.js" defer></script>
+  <style>
+    main {
+      width: 100%;
+      display: grid;
+      grid-row-gap: 0.5em;
+      grid-column-gap: 1em;
+      justify-content: center;
+    }
+
+    @media screen and (min-width: 720px) {
+      main {
+        grid-template-columns: repeat(auto-fill, 60vmin);
+      }
+    }
+
+    fieldset {
+      margin: 2px;
+    }
+
+    fieldset textarea {
+      width: 100%;
+      height: 20vmin;
+      background-color: inherit;
+      color: var(--secondary-color);
+    }
+    button {
+      height: 6vmin;
+    }
+    #evalText:focus {
+      outline: none;
+    }
+    #videoPlayer {
+      width: 100%;
+      height: 20vmin;
+      border: 2px solid grey;
+    }
+
+    @font-face {
+      font-family: "milan";
+      src: url(/css/milan.ttf) format("truetype");
+    }
+
+    @font-face {
+      font-family: "milanbold";
+      src: url(/css/milanbold.ttf) format("truetype");
+    }
+
+    body {
+      background-color: var(--primary-color);
+      transition: all 0.4s ease-in-out;
+      user-select: none;
+    }
+
+    h1 {
+      color: var(--secondary-color);
+      font-family: "milan";
+      text-align: center;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+  </style>
+</html>
