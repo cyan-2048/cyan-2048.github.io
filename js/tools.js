@@ -64,3 +64,32 @@ document.body.setAttribute(
     ? "--primary-color: #1f1f1f; --secondary-color: #ffffff; --shadow-darken: rgba(255, 255, 255, 0.2);"
     : "--primary-color: #ffffff; --secondary-color: #000000; --shadow-darken: rgba(0, 0, 0, 0.4);"
 );
+
+sponsorBlockSettings = {
+  dontShowNotice: false,
+  barTypes: {
+    sponsor: { color: "#00D400" },
+    intro: { color: "#00FFFF" },
+    outro: { color: "#0202ED" },
+    interaction: { color: "#CC00FF" },
+    selfpromo: { color: "#FFFF00" },
+    music_offtopic: { color: "#FF9900" },
+    preview: { color: "#008FD6" },
+    filler: { color: "#7300FF" },
+  },
+  showTimeWithSkips: true,
+  minDuration: 0,
+  trackViewCount: true,
+  categorySelections: [
+    { name: "sponsor", option: 2 },
+    { name: "intro", option: 1 },
+    { name: "outro", option: 1 },
+    { name: "interaction", option: 2 },
+    { name: "selfpromo", option: 2 },
+    { name: "music_offtopic", option: 1 },
+  ],
+  userID: "",
+  isVip: false,
+  lastIsVipUpdate: 1666460231890,
+  serverAddress: "https://sponsor.ajay.app/api/",
+};
